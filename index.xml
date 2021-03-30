@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Think Before [Enter]</title>
+    <title>kp0zhiqian&#39;s Blog</title>
     <link>http://kp0zhiqian.github.io/</link>
-    <description>Recent content on Think Before [Enter]</description>
+    <description>Recent content on kp0zhiqian&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Mar 2021 14:42:19 +0800</lastBuildDate><atom:link href="http://kp0zhiqian.github.io/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>My First Post</title>
-      <link>http://kp0zhiqian.github.io/posts/my-first-post/</link>
-      <pubDate>Tue, 30 Mar 2021 14:42:19 +0800</pubDate>
-      
-      <guid>http://kp0zhiqian.github.io/posts/my-first-post/</guid>
-      <description></description>
-    </item>
-    
+    <copyright>You</copyright><atom:link href="http://kp0zhiqian.github.io/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
