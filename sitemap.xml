@@ -3,17 +3,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://kp0zhiqian.github.io/iommu-dma-vfio/dma-iommu-vfio/</loc>
-    <lastmod>2020-10-28T18:16:35+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://kp0zhiqian.github.io/iommu-dma-vfio/</loc>
-    <lastmod>2020-10-28T18:16:35+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://kp0zhiqian.github.io/</loc>
+    <loc>http://kp0zhiqian.github.io/dma-iommu-vfio/</loc>
     <lastmod>2020-10-28T18:16:35+08:00</lastmod>
   </url>
   
@@ -23,12 +13,11 @@
   </url>
   
   <url>
-    <loc>http://kp0zhiqian.github.io/hugepage/hugepage/</loc>
-    <lastmod>2020-09-16T18:16:35+08:00</lastmod>
+    <loc>http://kp0zhiqian.github.io/categories/</loc>
   </url>
   
   <url>
-    <loc>http://kp0zhiqian.github.io/categories/</loc>
+    <loc>http://kp0zhiqian.github.io/</loc>
   </url>
   
   <url>

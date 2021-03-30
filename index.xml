@@ -5,14 +5,13 @@
     <link>http://kp0zhiqian.github.io/</link>
     <description>Recent content on kp0zhiqian&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Wed, 28 Oct 2020 18:16:35 +0800</lastBuildDate><atom:link href="http://kp0zhiqian.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language><atom:link href="http://kp0zhiqian.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>IOMMU, DMA and VFIO</title>
-      <link>http://kp0zhiqian.github.io/iommu-dma-vfio/dma-iommu-vfio/</link>
+      <link>http://kp0zhiqian.github.io/dma-iommu-vfio/</link>
       <pubDate>Wed, 28 Oct 2020 18:16:35 +0800</pubDate>
       
-      <guid>http://kp0zhiqian.github.io/iommu-dma-vfio/dma-iommu-vfio/</guid>
+      <guid>http://kp0zhiqian.github.io/dma-iommu-vfio/</guid>
       <description>DMA 一般来说，内存的读写操作，全部是由CPU来进行操作的，其他设备如果想需要针对内存进行读写，则必须经过CPU。 而DMA操作则将这个过程中的CPU解放了出来。在设备需要对内存进行读写的时候，会告诉CPU，而CPU则会将系统总线让出来给设备的DMA控制器使用，DMA控制器会进行对内存的数据传输工作。 传输结束后，CPU则会重新接管系统总线。这个方法一定程度上提高了系统的性能。
 IOMMU 根据上边DMA的介绍可以得知，设备可以通过DMA访问内存中的地址。但这样会有一个问题，如果设备可以任意直接的访问内存中的地址的话，安全性很低，也是不应该允许这样做的。 实际上，在传输数据的时候，CPU告诉DMA控制器需要访问的地址，是一个虚拟的地址，而IOMMU的功能就是将这个虚拟的地址转换成物理内存上的地址去访问，保证物理内存的安全性。 DMA控制器通过IOMMU去访问内存，但是实际上即使没有IOMMU，DMA也可以正常工作，只是在这种情况下，设备就可以任意访问整个内存，内存上数据的安全性堪忧。
 IOMMU和虚拟化 原本对于vm设备的虚拟化，是通过软件对设备进行模拟。而有了DMA和IOMMU的话，宿主机可以直接将物理设备暴露给虚拟机，同时又通过IOMMU保证了隔离安全性。
@@ -21,10 +20,10 @@ VFIO 通过上面我们知道，IOMMU提供了虚拟地址转化成物理地址�
     
     <item>
       <title>Hugepage理解</title>
-      <link>http://kp0zhiqian.github.io/hugepage/hugepage/</link>
+      <link>http://kp0zhiqian.github.io/hugepage/</link>
       <pubDate>Wed, 16 Sep 2020 18:16:35 +0800</pubDate>
       
-      <guid>http://kp0zhiqian.github.io/hugepage/hugepage/</guid>
+      <guid>http://kp0zhiqian.github.io/hugepage/</guid>
       <description>Linux中的虚拟内存 在任务处理中，多个进程对内存的操作会有冲突的问题，为了解决这个问题，则提出了虚拟内存的概念。在进程开始运行时，操作系统会给进程分配虚拟内存地址供进程使用。而操作系统会将这部分虚拟内存地址根据进程的使用情况，来映射到具体的物理内存地址上。而因为有了这个映射关系，则操作系统就需要维护一个映射表。但是，如果将虚拟内存的地址一对一的映射到物理内存上，则需要维护的映射表的大小就太大了，所以为了解决这个问题，则引出了分页和页表的概念。
 Linux中的分页和页表 在Linux的内存管理中，为了节省空间，操作系统会在启动的时候将物理内存以默认4k的大小分割成各个页。而后在为虚拟内存分配物理内存时，都以页为单位。这样一来，虚拟内存到物理内存的这张映射表的大小就会小了很多。而对于某些大内存的情况，操作系统还设计了多级的映射表，这样映射表的大小又进一步的减小。这虚拟内存页到物理内存页的映射表，则被称为页表。
 Hugepages的来源 由上面我们可以知道，操作系统默认情况下会将内存以4k为单位分成不同的页。但是，在内存非常大的情况下，页的数量也会变的特别多，页的数量变大时，CPU检索内存地址的效率也会下降。所以，为了解决这个问题，只有增大页的大小，以此来减少页的数量，提高检索效率。这也就是Hugepages的由来。我们可以将Hugepages定义为2m, 4m, 6m等大小，最大可以定义为1G。
