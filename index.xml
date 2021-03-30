@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>kp0zhiqian&#39;s Blog</title>
+    <link>https://kp0zhiqian.github.com/</link>
+    <description>Recent content on kp0zhiqian&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>You</copyright>
+    <lastBuildDate>Tue, 20 Oct 2020 00:11:23 +0800</lastBuildDate><atom:link href="https://kp0zhiqian.github.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>理解Hugepage</title>
+      <link>https://kp0zhiqian.github.com/posts/hugepage/</link>
+      <pubDate>Tue, 20 Oct 2020 00:11:23 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.com/posts/hugepage/</guid>
+      <description>Hugepage Linux中的虚拟内存 在任务处理中，多个进程对内存的操作会有冲突的问题，为了解决这个问题，则提出了虚拟内存的概念。在进程开始运行时，操作系统会给进程分配虚拟内存地址供进程使用。而操作系统会将这部分虚拟内存地址根据进程的使用情况，来映射到具体的物理内存地址上。而因为有了这个映射关系，则操作系统就需要维护一个映射表。但是，如果将虚拟内存的地址一对一的映射到物理内存上，则需要维护的映射表的大小就太大了，所以为了解决这个问题，则引出了分页和页表的概念。
+Linux中的分页和页表 在Linux的内存管理中，为了节省空间，操作系统会在启动的时候将物理内存以默认4k的大小分割成各个页。而后在为虚拟内存分配物理内存时，都以页为单位。这样一来，虚拟内存到物理内存的这张映射表的大小就会小了很多。而对于某些大内存的情况，操作系统还设计了多级的映射表，这样映射表的大小又进一步的减小。这虚拟内存页到物理内存页的映射表，则被称为页表。
+Hugepages的来源 由上面我们可以知道，操作系统默认情况下会将内存以4k为单位分成不同的页。但是，在内存非常大的情况下，页的数量也会变的特别多，页的数量变大时，CPU检索内存地址的效率也会下降。所以，为了解决这个问题，只有增大页的大小，以此来减少页的数量，提高检索效率。这也就是Hugepages的由来。我们可以将Hugepages定义为2m, 4m, 6m等大小，最大可以定义为1G。
+Hugepage相关术语 TLB Translation Lookside Buffer，是CPU中一块固定大小的cache，用来保存一部分页表的对应关系，用来快速进行虚拟内存到物理内存的映射。
+hugetlb hugetlb指的是 TLB中，一条hugepage的条目。可以说hugetlb是用来处理映射hugepage的。
+hugetlbfs hugetlbfs是一种机遇内存的文件系统类型，TLB通过hugetlb来指向hugepage，而这些操作系统分配的hugepage则会作为hugetlbfs内存文件系统中的文件来供内存使用。
+Hugepage配置 永久配置 修改/etc/default/grub的内容，在内核的启动参数GRUB_CMDLINE_LINUX_DEFAULT内增加：
+default_hugepagesz=1G hugepagesz=1G hugepages=16 hugepagesz=2M hugepages=2048 iommu=pt intel_iommu=on isolcpus=1-13,15-27 ## isolcpus根据本身机器的cpu数量来配置 ## iommu和isolcpus用于虚拟化和dpdk隔离cpu上，与hugepage实际上关系不大 生成grub配置
+grub2-mkconfig -o /boot/grub2/grub.cfg 重启
+reboot 重启后查看内核cmdline
+grep Huge /proc/cmdline 安装hugepage文件系统
+mkdir -p /mnt/hugepage mount -t hugetlbfs hugetlbfs /mnt/hugepage #不指定-o参数的话，挂在的hugepage会按照系统默认的大小挂载 #或者 mkdir -p /mnt/hugepage_2M mount -t hugetlbfs none /mnt/hugepage_2M -o pagesize=2MB #指定挂在了2MB大小的hugepage 临时配置 TODO
+检查Hugepage配置 grep Huge /proc/meminfo AnonHugePages: 0 kB HugePages_Total: 0 # Hugepage的总数量 HugePages_Free: 0 # 剩余的Hugepage数量 HugePages_Rsvd: 0 # 保留的Hugepage数量 HugePages_Surp: 0 #  Hugepagesize: 2048 kB # hugepage的大小 mount -l | grep hugetlbfs #查看hugetlbfs是否挂载成功 参考 理解linux虚拟内存</description>
+    </item>
+    
+    <item>
+      <title>理解Numa</title>
+      <link>https://kp0zhiqian.github.com/posts/numa/</link>
+      <pubDate>Tue, 20 Oct 2020 00:11:23 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.com/posts/numa/</guid>
+      <description>Numa What is Numa NUMA 的全名是Non-Uniform-Memory-Access(Architecture)。对于单核的CPU来说，CPU通过bus访问内存的速度完全取决于bus能够有多大的传输速度，一般来说这种架构下，CPU和内存之间的传输速度并不是一个问题。
+graph LR; CPU --- BUS; BUS --- RAM; 但对于多核CPU来说，如果使用传统的这种方式连接，则在CPU访问内存的过程中会产生冲突和等待的问题，CPU越多，这个问题越严重。
+graph LR; CPU1 --- BUS; CPU2 --- BUS; CPU3 --- BUS; CPU4 --- BUS; BUS --- RAM; 所以NUMA的出现解决了这个问题，NUMA将不同的CPU绑定到不同的内存上，作为CPU的local RAM，而其他的内存则仍然对该CPU可见，作为CPU的remote RAM。在本地RAM不够用时，可以使用remote RAM，只不过效率要低上一些。而这样一个cpu+ram的组合，则在NUMA中被称为一个 numa node。在实际应用中，可能不是单个cpu使用单个ram，有可能是多个cpu使用某个ram或者某几个ram。
+查看numa node numactl numactl --hardware 可以用来查看本机的numa node分配情况，可能需要进行安装
+lstopo lstopo --of png可以将系统的物理结构展示出来
+numa和虚拟机 一般来说，在进行虚拟机资源分配的时候，我们不希望同一台虚拟机使用的cpu资源和内存资源分布在不同的numa node上，这样会造成性能下降。所以在创建虚拟机的时候我们一般会将虚拟机与单个的numa node进行绑定，以达到虚拟机的最大性能。
+vcpu：虚拟机的虚拟机cpu
+pcpu：宿主机的物理cpu
+host numa node：宿主机的numa node拓扑
+guest numa node：虚拟机的numa node拓扑
+在虚拟机需要较大资源，宿主机的单个numa node资源不够的情况下，我们就需要给虚拟机分配多个numa node的资源。在这种情况下，如果我们的虚拟机对宿主机的numa topo不可见的话，则依旧会产生同样的性能问题。所以在这种场景下，会将宿主机的numa topo暴露给虚拟机，虚拟机上同样创建numa node，将host numa node与 guest numa node进行绑定。这样一来，虚拟机依旧会保持着同一进程在同一个numa node上运行的原则。</description>
+    </item>
+    
+    <item>
+      <title>DMA, IOMMU and VFIO</title>
+      <link>https://kp0zhiqian.github.com/posts/dma-iommu-vfio/</link>
+      <pubDate>Fri, 04 Sep 2020 00:10:57 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.com/posts/dma-iommu-vfio/</guid>
+      <description>DMA 一般来说，内存的读写操作，全部是由CPU来进行操作的，其他设备如果想需要针对内存进行读写，则必须经过CPU。而DMA操作则将这个过程中的CPU解放了出来。在设备需要对内存进行读写的时候，会告诉CPU，而CPU则会将系统总线让出来给设备的DMA控制器使用，DMA控制器会进行对内存的数据传输工作，传输结束后，CPU则会重新接管系统总线。这个方法一定程度上提高了系统的性能。
+IOMMU 根据上边DMA的介绍可以得知，设备可以通过DMA访问内存中的地址。但这样会有一个问题，如果设备可以任意直接的访问内存中的地址的话，安全性很低，也是不应该允许这样做的。实际上，在传输数据的时候，CPU告诉DMA控制器需要访问的地址，是一个虚拟的地址，而IOMMU的功能就是将这个虚拟的地址转换成物理内存上的地址去访问，保证物理内存的安全性。DMA控制器通过IOMMU去访问内存，但是实际上即使没有IOMMU，DMA也可以正常工作，只是在这种情况下，设备就可以任意访问整个内存，内存上数据的安全性堪忧。
+IOMMU和虚拟化 原本对于vm设备的虚拟化，是通过软件对设备进行模拟。而有了DMA和IOMMU的话，宿主机可以直接将物理设备暴露给虚拟机，同时又通过IOMMU保证了隔离安全性。
+VFIO 通过上面我们知道，IOMMU提供了虚拟地址转化成物理地址的功能，通过IOMMU可以让物理硬件安全的访问内存中的地址。但IOMMU只是提供了一个地址转化的功能，用户态的程序要如何去使用IOMMU呢？这就引出了VFIO。VFIO实际上就是通过IOMMU，以一种安全的方式将IOMMU的功能开放到用户态中，以便用户态的程序编写对应的驱动来使用IOMMU这个功能。</description>
+    </item>
+    
+    <item>
+      <title>About me</title>
+      <link>https://kp0zhiqian.github.com/about/</link>
+      <pubDate>Wed, 24 Aug 2016 17:51:42 +0000</pubDate>
+      
+      <guid>https://kp0zhiqian.github.com/about/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
