@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tcp on kp0zhiqian&#39;s</title>
+    <link>https://kp0zhiqian.github.io/tags/tcp/</link>
+    <description>Recent content in tcp on kp0zhiqian&#39;s</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>You</copyright>
+    <lastBuildDate>Fri, 14 May 2021 00:11:23 +0800</lastBuildDate><atom:link href="https://kp0zhiqian.github.io/tags/tcp/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>From Simple Reliable Transport Protocol to TCP (1)</title>
+      <link>https://kp0zhiqian.github.io/posts/tcp-seq/</link>
+      <pubDate>Fri, 14 May 2021 00:11:23 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/posts/tcp-seq/</guid>
+      <description>In the first article of this series of articles, we&amp;rsquo;ll discuss the concepts we need to implement to design a very basic reliable transport protocol. How to implement these concepts will be covered in future articles.
+If you found anything incorrect, please don&amp;rsquo;t hesitate to reach me.
+Checksum Imagine you&amp;rsquo;re designing a reliable transport protocol. You&amp;rsquo;ve already implemented the basic send and receive features, including segmenting the whole data when it&amp;rsquo;s too large.</description>
+    </item>
+    
+  </channel>
+</rss>

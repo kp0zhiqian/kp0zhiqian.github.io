@@ -1,13 +1,36 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on kp0zhiqian&#39;s Blog</title>
+    <title>Posts on kp0zhiqian&#39;s</title>
     <link>https://kp0zhiqian.github.io/posts/</link>
-    <description>Recent content in Posts on kp0zhiqian&#39;s Blog</description>
+    <description>Recent content in Posts on kp0zhiqian&#39;s</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>You</copyright>
-    <lastBuildDate>Tue, 20 Oct 2020 00:11:23 +0800</lastBuildDate><atom:link href="https://kp0zhiqian.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 14 May 2021 00:11:23 +0800</lastBuildDate><atom:link href="https://kp0zhiqian.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>From Simple Reliable Transport Protocol to TCP (1)</title>
+      <link>https://kp0zhiqian.github.io/posts/tcp-seq/</link>
+      <pubDate>Fri, 14 May 2021 00:11:23 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/posts/tcp-seq/</guid>
+      <description>In the first article of this series of articles, we&amp;rsquo;ll discuss the concepts we need to implement to design a very basic reliable transport protocol. How to implement these concepts will be covered in future articles.
+If you found anything incorrect, please don&amp;rsquo;t hesitate to reach me.
+Checksum Imagine you&amp;rsquo;re designing a reliable transport protocol. You&amp;rsquo;ve already implemented the basic send and receive features, including segmenting the whole data when it&amp;rsquo;s too large.</description>
+    </item>
+    
+    <item>
+      <title>Leetcode记录</title>
+      <link>https://kp0zhiqian.github.io/posts/leetcode-01/</link>
+      <pubDate>Wed, 28 Apr 2021 00:11:23 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/posts/leetcode-01/</guid>
+      <description>Leetcode记录 本文记录一下自己刷题的过程，从最简单的开始，语言使用python3
+二进制求和 使用了int()把给定的字符串以二进制的base来识别给定的string，然后进行相加，再把相加后的数转成二进制，再把结果转成string，替换前边的0b
+知识点 int()根据文档，第二个参数是base进制数，以什么样的进制来识别给定的字符串。 bin()负责把给定的int来转化成二进制数，在前边会有一个prefix &amp;lsquo;0b&amp;rsquo;
+各位相加 class Solution: def addDigits(self, num: int) -&amp;gt; int: def cal(n): return (n//10) + (n % 10) while True: if num &amp;lt; 10: return num else: num = cal(num) 知识点 使用了递归的写法，每次递归获取个位和前边所有位的和，如果结果不小于10，那就继续递归，直到结果小于10返回</description>
+    </item>
+    
     <item>
       <title>理解Hugepage</title>
       <link>https://kp0zhiqian.github.io/posts/hugepage/</link>
