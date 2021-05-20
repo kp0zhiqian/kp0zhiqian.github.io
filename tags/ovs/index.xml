@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ovs on kp0zhiqian&#39;s</title>
+    <link>https://kp0zhiqian.github.io/tags/ovs/</link>
+    <description>Recent content in ovs on kp0zhiqian&#39;s</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>You</copyright>
+    <lastBuildDate>Thu, 20 May 2021 00:11:23 +0800</lastBuildDate><atom:link href="https://kp0zhiqian.github.io/tags/ovs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Understanding of OpenVswitch Hardware Loading</title>
+      <link>https://kp0zhiqian.github.io/posts/hardware_offload/</link>
+      <pubDate>Thu, 20 May 2021 00:11:23 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/posts/hardware_offload/</guid>
+      <description>This article will focus on the usage of hardware offloading in openvswitch. Our journey will start from the basic concept of openvswitch to the hardware offloading datapath. The driver we use is mlx5_core.
+Basic Concept of OpenVswitch Before talking about hardware offloading, we will review some basic components in the openvswitch world.
+ovs-vswitchd  A daemon that manages and controls any number of Open vSwitch switches on the local machine. (From Official Doc ovs-vswitchd)</description>
+    </item>
+    
+  </channel>
+</rss>
