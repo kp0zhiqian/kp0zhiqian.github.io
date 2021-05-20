@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title> Understanding OpenVswitch Hardware Loading | kp0zhiqian&#39;s</title>
+  <title> Understanding OpenVswitch Hardware Offloading | kp0zhiqian&#39;s</title>
   <meta name="description" content="This is the way.">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="all,follow">
   <meta name="googlebot" content="index,follow,snippet,archive">
-  <meta property="og:title" content="Understanding OpenVswitch Hardware Loading" />
+  <meta property="og:title" content="Understanding OpenVswitch Hardware Offloading" />
 <meta property="og:description" content="This article will focus on the usage of hardware offloading in openvswitch. Our journey will start from the basic concept of openvswitch to the hardware offloading datapath. The driver we use is mlx5_core.
 Basic Concept of OpenVswitch Before talking about hardware offloading, we will review some basic components in the openvswitch world.
 ovs-vswitchd  A daemon that manages and controls any number of Open vSwitch switches on the local machine. (From Official Doc ovs-vswitchd)" />
@@ -18,7 +18,7 @@ ovs-vswitchd  A daemon that manages and controls any number of Open vSwitch swit
 <meta property="article:modified_time" content="2021-05-20T00:11:23+08:00" />
 
   <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Understanding OpenVswitch Hardware Loading"/>
+<meta name="twitter:title" content="Understanding OpenVswitch Hardware Offloading"/>
 <meta name="twitter:description" content="This article will focus on the usage of hardware offloading in openvswitch. Our journey will start from the basic concept of openvswitch to the hardware offloading datapath. The driver we use is mlx5_core.
 Basic Concept of OpenVswitch Before talking about hardware offloading, we will review some basic components in the openvswitch world.
 ovs-vswitchd  A daemon that manages and controls any number of Open vSwitch switches on the local machine. (From Official Doc ovs-vswitchd)"/>
@@ -110,52 +110,52 @@ ovs-vswitchd  A daemon that manages and controls any number of Open vSwitch swit
     </a>
   </li>
   <li>
-    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&text=Understanding%20OpenVswitch%20Hardware%20Loading">
+    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&text=Understanding%20OpenVswitch%20Hardware%20Offloading">
       <i class="fab fa-twitter " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&title=Understanding%20OpenVswitch%20Hardware%20Loading">
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&title=Understanding%20OpenVswitch%20Hardware%20Offloading">
       <i class="fab fa-linkedin " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&is_video=false&description=Understanding%20OpenVswitch%20Hardware%20Loading">
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&is_video=false&description=Understanding%20OpenVswitch%20Hardware%20Offloading">
       <i class="fab fa-pinterest " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="mailto:?subject=Understanding%20OpenVswitch%20Hardware%20Loading&body=Check out this article: https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f">
+    <a class="icon" href="mailto:?subject=Understanding%20OpenVswitch%20Hardware%20Offloading&body=Check out this article: https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f">
       <i class="fas fa-envelope " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&title=Understanding%20OpenVswitch%20Hardware%20Loading">
+    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&title=Understanding%20OpenVswitch%20Hardware%20Offloading">
       <i class="fab fa-get-pocket " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&title=Understanding%20OpenVswitch%20Hardware%20Loading">
+    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&title=Understanding%20OpenVswitch%20Hardware%20Offloading">
       <i class="fab fa-reddit " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.stumbleupon.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&title=Understanding%20OpenVswitch%20Hardware%20Loading">
+    <a class="icon" href="http://www.stumbleupon.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&title=Understanding%20OpenVswitch%20Hardware%20Offloading">
       <i class="fab fa-stumbleupon " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://digg.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&title=Understanding%20OpenVswitch%20Hardware%20Loading">
+    <a class="icon" href="http://digg.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&title=Understanding%20OpenVswitch%20Hardware%20Offloading">
       <i class="fab fa-digg " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&name=Understanding%20OpenVswitch%20Hardware%20Loading&description=This%20article%20will%20focus%20on%20the%20usage%20of%20hardware%20offloading%20in%20openvswitch.%20Our%20journey%20will%20start%20from%20the%20basic%20concept%20of%20openvswitch%20to%20the%20hardware%20offloading%20datapath.%20The%20driver%20we%20use%20is%20mlx5_core.%0aBasic%20Concept%20of%20OpenVswitch%20Before%20talking%20about%20hardware%20offloading%2c%20we%20will%20review%20some%20basic%20components%20in%20the%20openvswitch%20world.%0aovs-vswitchd%20%20A%20daemon%20that%20manages%20and%20controls%20any%20number%20of%20Open%20vSwitch%20switches%20on%20the%20local%20machine.%20%28From%20Official%20Doc%20ovs-vswitchd%29">
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&name=Understanding%20OpenVswitch%20Hardware%20Offloading&description=This%20article%20will%20focus%20on%20the%20usage%20of%20hardware%20offloading%20in%20openvswitch.%20Our%20journey%20will%20start%20from%20the%20basic%20concept%20of%20openvswitch%20to%20the%20hardware%20offloading%20datapath.%20The%20driver%20we%20use%20is%20mlx5_core.%0aBasic%20Concept%20of%20OpenVswitch%20Before%20talking%20about%20hardware%20offloading%2c%20we%20will%20review%20some%20basic%20components%20in%20the%20openvswitch%20world.%0aovs-vswitchd%20%20A%20daemon%20that%20manages%20and%20controls%20any%20number%20of%20Open%20vSwitch%20switches%20on%20the%20local%20machine.%20%28From%20Official%20Doc%20ovs-vswitchd%29">
       <i class="fab fa-tumblr " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&t=Understanding%20OpenVswitch%20Hardware%20Loading">
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&t=Understanding%20OpenVswitch%20Hardware%20Offloading">
       <i class="fab fa-hacker-news " aria-hidden="true"></i>
     </a>
   </li>
@@ -191,7 +191,7 @@ ovs-vswitchd  A daemon that manages and controls any number of Open vSwitch swit
   <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
     <header>
       <h1 class="posttitle" itemprop="name headline">
-        Understanding OpenVswitch Hardware Loading
+        Understanding OpenVswitch Hardware Offloading
       </h1>
       <div class="meta">
         
@@ -332,52 +332,52 @@ metadata.[0]</p>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&text=Understanding%20OpenVswitch%20Hardware%20Loading">
+    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&text=Understanding%20OpenVswitch%20Hardware%20Offloading">
       <i class="fab fa-twitter fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&title=Understanding%20OpenVswitch%20Hardware%20Loading">
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&title=Understanding%20OpenVswitch%20Hardware%20Offloading">
       <i class="fab fa-linkedin fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&is_video=false&description=Understanding%20OpenVswitch%20Hardware%20Loading">
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&is_video=false&description=Understanding%20OpenVswitch%20Hardware%20Offloading">
       <i class="fab fa-pinterest fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="mailto:?subject=Understanding%20OpenVswitch%20Hardware%20Loading&body=Check out this article: https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f">
+    <a class="icon" href="mailto:?subject=Understanding%20OpenVswitch%20Hardware%20Offloading&body=Check out this article: https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f">
       <i class="fas fa-envelope fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&title=Understanding%20OpenVswitch%20Hardware%20Loading">
+    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&title=Understanding%20OpenVswitch%20Hardware%20Offloading">
       <i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&title=Understanding%20OpenVswitch%20Hardware%20Loading">
+    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&title=Understanding%20OpenVswitch%20Hardware%20Offloading">
       <i class="fab fa-reddit fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.stumbleupon.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&title=Understanding%20OpenVswitch%20Hardware%20Loading">
+    <a class="icon" href="http://www.stumbleupon.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&title=Understanding%20OpenVswitch%20Hardware%20Offloading">
       <i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://digg.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&title=Understanding%20OpenVswitch%20Hardware%20Loading">
+    <a class="icon" href="http://digg.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&title=Understanding%20OpenVswitch%20Hardware%20Offloading">
       <i class="fab fa-digg fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&name=Understanding%20OpenVswitch%20Hardware%20Loading&description=This%20article%20will%20focus%20on%20the%20usage%20of%20hardware%20offloading%20in%20openvswitch.%20Our%20journey%20will%20start%20from%20the%20basic%20concept%20of%20openvswitch%20to%20the%20hardware%20offloading%20datapath.%20The%20driver%20we%20use%20is%20mlx5_core.%0aBasic%20Concept%20of%20OpenVswitch%20Before%20talking%20about%20hardware%20offloading%2c%20we%20will%20review%20some%20basic%20components%20in%20the%20openvswitch%20world.%0aovs-vswitchd%20%20A%20daemon%20that%20manages%20and%20controls%20any%20number%20of%20Open%20vSwitch%20switches%20on%20the%20local%20machine.%20%28From%20Official%20Doc%20ovs-vswitchd%29">
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&name=Understanding%20OpenVswitch%20Hardware%20Offloading&description=This%20article%20will%20focus%20on%20the%20usage%20of%20hardware%20offloading%20in%20openvswitch.%20Our%20journey%20will%20start%20from%20the%20basic%20concept%20of%20openvswitch%20to%20the%20hardware%20offloading%20datapath.%20The%20driver%20we%20use%20is%20mlx5_core.%0aBasic%20Concept%20of%20OpenVswitch%20Before%20talking%20about%20hardware%20offloading%2c%20we%20will%20review%20some%20basic%20components%20in%20the%20openvswitch%20world.%0aovs-vswitchd%20%20A%20daemon%20that%20manages%20and%20controls%20any%20number%20of%20Open%20vSwitch%20switches%20on%20the%20local%20machine.%20%28From%20Official%20Doc%20ovs-vswitchd%29">
       <i class="fab fa-tumblr fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&t=Understanding%20OpenVswitch%20Hardware%20Loading">
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhardware_offload%2f&t=Understanding%20OpenVswitch%20Hardware%20Offloading">
       <i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i>
     </a>
   </li>
