@@ -19,5 +19,16 @@ If you found anything incorrect, please don&amp;rsquo;t hesitate to reach me.
 Checksum Imagine you&amp;rsquo;re designing a reliable transport protocol. You&amp;rsquo;ve already implemented the basic send and receive features, including segmenting the whole data when it&amp;rsquo;s too large.</description>
     </item>
     
+    <item>
+      <title>Understanding of OpenVswitch Hardware Loading</title>
+      <link>https://kp0zhiqian.github.io/posts/hardware_offload/</link>
+      <pubDate>Fri, 14 May 2021 00:11:23 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/posts/hardware_offload/</guid>
+      <description>This article will focus on the usage of hardware offloading in openvswitch. Our journey will start from the basic concept of openvswitch to the hardware offloading datapath. The driver we use is mlx5_core.
+Basic Concept of OpenVswitch Before talking about hardware offloading, we will review some basic components in the openvswitch world.
+ovs-vswitchd  A daemon that manages and controls any number of Open vSwitch switches on the local machine. (From Official Doc ovs-vswitchd)</description>
+    </item>
+    
   </channel>
 </rss>
