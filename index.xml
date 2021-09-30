@@ -7,7 +7,16 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>You</copyright>
-    <lastBuildDate>Thu, 20 May 2021 00:11:23 +0800</lastBuildDate><atom:link href="https://kp0zhiqian.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 01 Sep 2021 00:18:57 +0800</lastBuildDate><atom:link href="https://kp0zhiqian.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>网卡多队列</title>
+      <link>https://kp0zhiqian.github.io/posts/nic-multi-queue/</link>
+      <pubDate>Wed, 01 Sep 2021 00:18:57 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/posts/nic-multi-queue/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Understanding OpenVswitch Hardware Offloading</title>
       <link>https://kp0zhiqian.github.io/posts/hardware_offload/</link>
@@ -28,18 +37,6 @@ ovs-vswitchd  A daemon that manages and controls any number of Open vSwitch swit
       <description>In the first article of this series of articles, we&amp;rsquo;ll discuss the concepts we need to implement to design a very basic reliable transport protocol. How to implement these concepts will be covered in future articles.
 If you found anything incorrect, please don&amp;rsquo;t hesitate to reach me.
 Checksum Imagine you&amp;rsquo;re designing a reliable transport protocol. You&amp;rsquo;ve already implemented the basic send and receive features, including segmenting the whole data when it&amp;rsquo;s too large.</description>
-    </item>
-    
-    <item>
-      <title>Leetcode记录</title>
-      <link>https://kp0zhiqian.github.io/posts/leetcode-01/</link>
-      <pubDate>Wed, 28 Apr 2021 00:11:23 +0800</pubDate>
-      
-      <guid>https://kp0zhiqian.github.io/posts/leetcode-01/</guid>
-      <description>Leetcode记录 本文记录一下自己刷题的过程，从最简单的开始，语言使用python3
-二进制求和 使用了int()把给定的字符串以二进制的base来识别给定的string，然后进行相加，再把相加后的数转成二进制，再把结果转成string，替换前边的0b
-知识点 int()根据文档，第二个参数是base进制数，以什么样的进制来识别给定的字符串。 bin()负责把给定的int来转化成二进制数，在前边会有一个prefix &amp;lsquo;0b&amp;rsquo;
-各位相加 class Solution: def addDigits(self, num: int) -&amp;gt; int: def cal(n): return (n//10) + (n % 10) while True: if num &amp;lt; 10: return num else: num = cal(num) 知识点 使用了递归的写法，每次递归获取个位和前边所有位的和，如果结果不小于10，那就继续递归，直到结果小于10返回</description>
     </item>
     
     <item>
@@ -83,15 +80,21 @@ guest numa node：虚拟机的numa node拓扑
     </item>
     
     <item>
-      <title>DMA, IOMMU and VFIO</title>
+      <title>Ansible Reading Notes</title>
+      <link>https://kp0zhiqian.github.io/posts/ansible/</link>
+      <pubDate>Wed, 30 Sep 2020 00:10:57 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/posts/ansible/</guid>
+      <description>Installation&amp;amp;setup  Redhat/Centos need to Install EPEL, fedora has it in its default source Generate ssh, copy ssh to remote, save remote hosts to known_hosts  Host Inventory  default host file: /etc/ansible/hosts We can use [group_name] to setup group, but it&amp;rsquo;s not required [webservers] foo.example.com bar.example.com   CLI tools  ansible &amp;lt;host&amp;gt; [options] ansibel &amp;lt;host&amp;gt; -m &amp;lt;modules&amp;gt;  Playbook: A yaml file that can be excuted by ansible  ansible-playbook deploy.</description>
+    </item>
+    
+    <item>
+      <title>Understanding DMA, IOMMU, and VFIO</title>
       <link>https://kp0zhiqian.github.io/posts/dma-iommu-vfio/</link>
       <pubDate>Fri, 04 Sep 2020 00:10:57 +0800</pubDate>
       
       <guid>https://kp0zhiqian.github.io/posts/dma-iommu-vfio/</guid>
-      <description>DMA 一般来说，内存的读写操作，全部是由CPU来进行操作的，其他设备如果想需要针对内存进行读写，则必须经过CPU。而DMA操作则将这个过程中的CPU解放了出来。在设备需要对内存进行读写的时候，会告诉CPU，而CPU则会将系统总线让出来给设备的DMA控制器使用，DMA控制器会进行对内存的数据传输工作，传输结束后，CPU则会重新接管系统总线。这个方法一定程度上提高了系统的性能。
-IOMMU 根据上边DMA的介绍可以得知，设备可以通过DMA访问内存中的地址。但这样会有一个问题，如果设备可以任意直接的访问内存中的地址的话，安全性很低，也是不应该允许这样做的。实际上，在传输数据的时候，CPU告诉DMA控制器需要访问的地址，是一个虚拟的地址，而IOMMU的功能就是将这个虚拟的地址转换成物理内存上的地址去访问，保证物理内存的安全性。DMA控制器通过IOMMU去访问内存，但是实际上即使没有IOMMU，DMA也可以正常工作，只是在这种情况下，设备就可以任意访问整个内存，内存上数据的安全性堪忧。
-IOMMU和虚拟化 原本对于vm设备的虚拟化，是通过软件对设备进行模拟。而有了DMA和IOMMU的话，宿主机可以直接将物理设备暴露给虚拟机，同时又通过IOMMU保证了隔离安全性。
-VFIO 通过上面我们知道，IOMMU提供了虚拟地址转化成物理地址的功能，通过IOMMU可以让物理硬件安全的访问内存中的地址。但IOMMU只是提供了一个地址转化的功能，用户态的程序要如何去使用IOMMU呢？这就引出了VFIO。VFIO实际上就是通过IOMMU，以一种安全的方式将IOMMU的功能开放到用户态中，以便用户态的程序编写对应的驱动来使用IOMMU这个功能。</description>
+      <description>DMA (Direct Memory Access) Generally speaking, the read and write operation of memory will all issue by the CPU. The read and write of memory of other devices must issue through the CPU. DMA, as in Direct Memory Access, will release the CPU from such a process. When devices need to r/w the memory, they will report to the CPU. The CPU will give the system bus to the DMA controller.</description>
     </item>
     
     <item>
@@ -104,12 +107,14 @@ VFIO 通过上面我们知道，IOMMU提供了虚拟地址转化成物理地址�
     </item>
     
     <item>
-      <title>XDP Articles Archive</title>
-      <link>https://kp0zhiqian.github.io/posts/xdp-blogs-archive/</link>
+      <title>Transcript of XDP Tech Talk</title>
+      <link>https://kp0zhiqian.github.io/posts/xdp-tech-talk-script/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://kp0zhiqian.github.io/posts/xdp-blogs-archive/</guid>
-      <description>XDP CPUMAP Receive Side Scaling (RSS) with eBPF and CPUMAP &amp;ndash; Lorenzo Bianconi</description>
+      <guid>https://kp0zhiqian.github.io/posts/xdp-tech-talk-script/</guid>
+      <description>This is the transcript of my XDP 5 mins tech talk in QE all hands. Only for sharing and archiving.
+ XDP is a technology that can achieve high-speed networking performance. Allowing packets to be reflected, filtered, or redirected, but without traversing kernel networking stack.
+After hearing this, some may think: Oh, I’ve heard of this! Like the famous DPDK, I can bypass the Kernel and do whatever I want in userspace to the incoming packets.</description>
     </item>
     
   </channel>

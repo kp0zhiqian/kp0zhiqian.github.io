@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>system on kp0zhiqian&#39;s</title>
+    <link>https://kp0zhiqian.github.io/tags/system/</link>
+    <description>Recent content in system on kp0zhiqian&#39;s</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>You</copyright>
+    <lastBuildDate>Wed, 30 Sep 2020 00:10:57 +0800</lastBuildDate><atom:link href="https://kp0zhiqian.github.io/tags/system/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Ansible Reading Notes</title>
+      <link>https://kp0zhiqian.github.io/posts/ansible/</link>
+      <pubDate>Wed, 30 Sep 2020 00:10:57 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/posts/ansible/</guid>
+      <description>Installation&amp;amp;setup  Redhat/Centos need to Install EPEL, fedora has it in its default source Generate ssh, copy ssh to remote, save remote hosts to known_hosts  Host Inventory  default host file: /etc/ansible/hosts We can use [group_name] to setup group, but it&amp;rsquo;s not required [webservers] foo.example.com bar.example.com   CLI tools  ansible &amp;lt;host&amp;gt; [options] ansibel &amp;lt;host&amp;gt; -m &amp;lt;modules&amp;gt;  Playbook: A yaml file that can be excuted by ansible  ansible-playbook deploy.</description>
+    </item>
+    
+    <item>
+      <title>Understanding DMA, IOMMU, and VFIO</title>
+      <link>https://kp0zhiqian.github.io/posts/dma-iommu-vfio/</link>
+      <pubDate>Fri, 04 Sep 2020 00:10:57 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/posts/dma-iommu-vfio/</guid>
+      <description>DMA (Direct Memory Access) Generally speaking, the read and write operation of memory will all issue by the CPU. The read and write of memory of other devices must issue through the CPU. DMA, as in Direct Memory Access, will release the CPU from such a process. When devices need to r/w the memory, they will report to the CPU. The CPU will give the system bus to the DMA controller.</description>
+    </item>
+    
+  </channel>
+</rss>

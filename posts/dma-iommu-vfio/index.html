@@ -3,27 +3,21 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title> DMA, IOMMU and VFIO | kp0zhiqian&#39;s</title>
+  <title> Understanding DMA, IOMMU, and VFIO | kp0zhiqian&#39;s</title>
   <meta name="description" content="This is the way.">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="all,follow">
   <meta name="googlebot" content="index,follow,snippet,archive">
-  <meta property="og:title" content="DMA, IOMMU and VFIO" />
-<meta property="og:description" content="DMA 一般来说，内存的读写操作，全部是由CPU来进行操作的，其他设备如果想需要针对内存进行读写，则必须经过CPU。而DMA操作则将这个过程中的CPU解放了出来。在设备需要对内存进行读写的时候，会告诉CPU，而CPU则会将系统总线让出来给设备的DMA控制器使用，DMA控制器会进行对内存的数据传输工作，传输结束后，CPU则会重新接管系统总线。这个方法一定程度上提高了系统的性能。
-IOMMU 根据上边DMA的介绍可以得知，设备可以通过DMA访问内存中的地址。但这样会有一个问题，如果设备可以任意直接的访问内存中的地址的话，安全性很低，也是不应该允许这样做的。实际上，在传输数据的时候，CPU告诉DMA控制器需要访问的地址，是一个虚拟的地址，而IOMMU的功能就是将这个虚拟的地址转换成物理内存上的地址去访问，保证物理内存的安全性。DMA控制器通过IOMMU去访问内存，但是实际上即使没有IOMMU，DMA也可以正常工作，只是在这种情况下，设备就可以任意访问整个内存，内存上数据的安全性堪忧。
-IOMMU和虚拟化 原本对于vm设备的虚拟化，是通过软件对设备进行模拟。而有了DMA和IOMMU的话，宿主机可以直接将物理设备暴露给虚拟机，同时又通过IOMMU保证了隔离安全性。
-VFIO 通过上面我们知道，IOMMU提供了虚拟地址转化成物理地址的功能，通过IOMMU可以让物理硬件安全的访问内存中的地址。但IOMMU只是提供了一个地址转化的功能，用户态的程序要如何去使用IOMMU呢？这就引出了VFIO。VFIO实际上就是通过IOMMU，以一种安全的方式将IOMMU的功能开放到用户态中，以便用户态的程序编写对应的驱动来使用IOMMU这个功能。" />
+  <meta property="og:title" content="Understanding DMA, IOMMU, and VFIO" />
+<meta property="og:description" content="DMA (Direct Memory Access) Generally speaking, the read and write operation of memory will all issue by the CPU. The read and write of memory of other devices must issue through the CPU. DMA, as in Direct Memory Access, will release the CPU from such a process. When devices need to r/w the memory, they will report to the CPU. The CPU will give the system bus to the DMA controller." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://kp0zhiqian.github.io/posts/dma-iommu-vfio/" />
 <meta property="article:published_time" content="2020-09-04T00:10:57+08:00" />
 <meta property="article:modified_time" content="2020-09-04T00:10:57+08:00" />
 
   <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="DMA, IOMMU and VFIO"/>
-<meta name="twitter:description" content="DMA 一般来说，内存的读写操作，全部是由CPU来进行操作的，其他设备如果想需要针对内存进行读写，则必须经过CPU。而DMA操作则将这个过程中的CPU解放了出来。在设备需要对内存进行读写的时候，会告诉CPU，而CPU则会将系统总线让出来给设备的DMA控制器使用，DMA控制器会进行对内存的数据传输工作，传输结束后，CPU则会重新接管系统总线。这个方法一定程度上提高了系统的性能。
-IOMMU 根据上边DMA的介绍可以得知，设备可以通过DMA访问内存中的地址。但这样会有一个问题，如果设备可以任意直接的访问内存中的地址的话，安全性很低，也是不应该允许这样做的。实际上，在传输数据的时候，CPU告诉DMA控制器需要访问的地址，是一个虚拟的地址，而IOMMU的功能就是将这个虚拟的地址转换成物理内存上的地址去访问，保证物理内存的安全性。DMA控制器通过IOMMU去访问内存，但是实际上即使没有IOMMU，DMA也可以正常工作，只是在这种情况下，设备就可以任意访问整个内存，内存上数据的安全性堪忧。
-IOMMU和虚拟化 原本对于vm设备的虚拟化，是通过软件对设备进行模拟。而有了DMA和IOMMU的话，宿主机可以直接将物理设备暴露给虚拟机，同时又通过IOMMU保证了隔离安全性。
-VFIO 通过上面我们知道，IOMMU提供了虚拟地址转化成物理地址的功能，通过IOMMU可以让物理硬件安全的访问内存中的地址。但IOMMU只是提供了一个地址转化的功能，用户态的程序要如何去使用IOMMU呢？这就引出了VFIO。VFIO实际上就是通过IOMMU，以一种安全的方式将IOMMU的功能开放到用户态中，以便用户态的程序编写对应的驱动来使用IOMMU这个功能。"/>
+<meta name="twitter:title" content="Understanding DMA, IOMMU, and VFIO"/>
+<meta name="twitter:description" content="DMA (Direct Memory Access) Generally speaking, the read and write operation of memory will all issue by the CPU. The read and write of memory of other devices must issue through the CPU. DMA, as in Direct Memory Access, will release the CPU from such a process. When devices need to r/w the memory, they will report to the CPU. The CPU will give the system bus to the DMA controller."/>
 
   
   
@@ -82,7 +76,7 @@ VFIO 通过上面我们知道，IOMMU提供了虚拟地址转化成物理地址�
         
         
         <li>
-          <a class="icon" href="https://kp0zhiqian.github.io/posts/numa/">
+          <a class="icon" href="https://kp0zhiqian.github.io/posts/ansible/">
             <i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i>
           </a>
         </li>
@@ -118,52 +112,52 @@ VFIO 通过上面我们知道，IOMMU提供了虚拟地址转化成物理地址�
     </a>
   </li>
   <li>
-    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&text=DMA%2c%20IOMMU%20and%20VFIO">
+    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&text=Understanding%20DMA%2c%20IOMMU%2c%20and%20VFIO">
       <i class="fab fa-twitter " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&title=DMA%2c%20IOMMU%20and%20VFIO">
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&title=Understanding%20DMA%2c%20IOMMU%2c%20and%20VFIO">
       <i class="fab fa-linkedin " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&is_video=false&description=DMA%2c%20IOMMU%20and%20VFIO">
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&is_video=false&description=Understanding%20DMA%2c%20IOMMU%2c%20and%20VFIO">
       <i class="fab fa-pinterest " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="mailto:?subject=DMA%2c%20IOMMU%20and%20VFIO&body=Check out this article: https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f">
+    <a class="icon" href="mailto:?subject=Understanding%20DMA%2c%20IOMMU%2c%20and%20VFIO&body=Check out this article: https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f">
       <i class="fas fa-envelope " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&title=DMA%2c%20IOMMU%20and%20VFIO">
+    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&title=Understanding%20DMA%2c%20IOMMU%2c%20and%20VFIO">
       <i class="fab fa-get-pocket " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&title=DMA%2c%20IOMMU%20and%20VFIO">
+    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&title=Understanding%20DMA%2c%20IOMMU%2c%20and%20VFIO">
       <i class="fab fa-reddit " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.stumbleupon.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&title=DMA%2c%20IOMMU%20and%20VFIO">
+    <a class="icon" href="http://www.stumbleupon.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&title=Understanding%20DMA%2c%20IOMMU%2c%20and%20VFIO">
       <i class="fab fa-stumbleupon " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://digg.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&title=DMA%2c%20IOMMU%20and%20VFIO">
+    <a class="icon" href="http://digg.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&title=Understanding%20DMA%2c%20IOMMU%2c%20and%20VFIO">
       <i class="fab fa-digg " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&name=DMA%2c%20IOMMU%20and%20VFIO&description=DMA%20%e4%b8%80%e8%88%ac%e6%9d%a5%e8%af%b4%ef%bc%8c%e5%86%85%e5%ad%98%e7%9a%84%e8%af%bb%e5%86%99%e6%93%8d%e4%bd%9c%ef%bc%8c%e5%85%a8%e9%83%a8%e6%98%af%e7%94%b1CPU%e6%9d%a5%e8%bf%9b%e8%a1%8c%e6%93%8d%e4%bd%9c%e7%9a%84%ef%bc%8c%e5%85%b6%e4%bb%96%e8%ae%be%e5%a4%87%e5%a6%82%e6%9e%9c%e6%83%b3%e9%9c%80%e8%a6%81%e9%92%88%e5%af%b9%e5%86%85%e5%ad%98%e8%bf%9b%e8%a1%8c%e8%af%bb%e5%86%99%ef%bc%8c%e5%88%99%e5%bf%85%e9%a1%bb%e7%bb%8f%e8%bf%87CPU%e3%80%82%e8%80%8cDMA%e6%93%8d%e4%bd%9c%e5%88%99%e5%b0%86%e8%bf%99%e4%b8%aa%e8%bf%87%e7%a8%8b%e4%b8%ad%e7%9a%84CPU%e8%a7%a3%e6%94%be%e4%ba%86%e5%87%ba%e6%9d%a5%e3%80%82%e5%9c%a8%e8%ae%be%e5%a4%87%e9%9c%80%e8%a6%81%e5%af%b9%e5%86%85%e5%ad%98%e8%bf%9b%e8%a1%8c%e8%af%bb%e5%86%99%e7%9a%84%e6%97%b6%e5%80%99%ef%bc%8c%e4%bc%9a%e5%91%8a%e8%af%89CPU%ef%bc%8c%e8%80%8cCPU%e5%88%99%e4%bc%9a%e5%b0%86%e7%b3%bb%e7%bb%9f%e6%80%bb%e7%ba%bf%e8%ae%a9%e5%87%ba%e6%9d%a5%e7%bb%99%e8%ae%be%e5%a4%87%e7%9a%84DMA%e6%8e%a7%e5%88%b6%e5%99%a8%e4%bd%bf%e7%94%a8%ef%bc%8cDMA%e6%8e%a7%e5%88%b6%e5%99%a8%e4%bc%9a%e8%bf%9b%e8%a1%8c%e5%af%b9%e5%86%85%e5%ad%98%e7%9a%84%e6%95%b0%e6%8d%ae%e4%bc%a0%e8%be%93%e5%b7%a5%e4%bd%9c%ef%bc%8c%e4%bc%a0%e8%be%93%e7%bb%93%e6%9d%9f%e5%90%8e%ef%bc%8cCPU%e5%88%99%e4%bc%9a%e9%87%8d%e6%96%b0%e6%8e%a5%e7%ae%a1%e7%b3%bb%e7%bb%9f%e6%80%bb%e7%ba%bf%e3%80%82%e8%bf%99%e4%b8%aa%e6%96%b9%e6%b3%95%e4%b8%80%e5%ae%9a%e7%a8%8b%e5%ba%a6%e4%b8%8a%e6%8f%90%e9%ab%98%e4%ba%86%e7%b3%bb%e7%bb%9f%e7%9a%84%e6%80%a7%e8%83%bd%e3%80%82%0aIOMMU%20%e6%a0%b9%e6%8d%ae%e4%b8%8a%e8%be%b9DMA%e7%9a%84%e4%bb%8b%e7%bb%8d%e5%8f%af%e4%bb%a5%e5%be%97%e7%9f%a5%ef%bc%8c%e8%ae%be%e5%a4%87%e5%8f%af%e4%bb%a5%e9%80%9a%e8%bf%87DMA%e8%ae%bf%e9%97%ae%e5%86%85%e5%ad%98%e4%b8%ad%e7%9a%84%e5%9c%b0%e5%9d%80%e3%80%82%e4%bd%86%e8%bf%99%e6%a0%b7%e4%bc%9a%e6%9c%89%e4%b8%80%e4%b8%aa%e9%97%ae%e9%a2%98%ef%bc%8c%e5%a6%82%e6%9e%9c%e8%ae%be%e5%a4%87%e5%8f%af%e4%bb%a5%e4%bb%bb%e6%84%8f%e7%9b%b4%e6%8e%a5%e7%9a%84%e8%ae%bf%e9%97%ae%e5%86%85%e5%ad%98%e4%b8%ad%e7%9a%84%e5%9c%b0%e5%9d%80%e7%9a%84%e8%af%9d%ef%bc%8c%e5%ae%89%e5%85%a8%e6%80%a7%e5%be%88%e4%bd%8e%ef%bc%8c%e4%b9%9f%e6%98%af%e4%b8%8d%e5%ba%94%e8%af%a5%e5%85%81%e8%ae%b8%e8%bf%99%e6%a0%b7%e5%81%9a%e7%9a%84%e3%80%82%e5%ae%9e%e9%99%85%e4%b8%8a%ef%bc%8c%e5%9c%a8%e4%bc%a0%e8%be%93%e6%95%b0%e6%8d%ae%e7%9a%84%e6%97%b6%e5%80%99%ef%bc%8cCPU%e5%91%8a%e8%af%89DMA%e6%8e%a7%e5%88%b6%e5%99%a8%e9%9c%80%e8%a6%81%e8%ae%bf%e9%97%ae%e7%9a%84%e5%9c%b0%e5%9d%80%ef%bc%8c%e6%98%af%e4%b8%80%e4%b8%aa%e8%99%9a%e6%8b%9f%e7%9a%84%e5%9c%b0%e5%9d%80%ef%bc%8c%e8%80%8cIOMMU%e7%9a%84%e5%8a%9f%e8%83%bd%e5%b0%b1%e6%98%af%e5%b0%86%e8%bf%99%e4%b8%aa%e8%99%9a%e6%8b%9f%e7%9a%84%e5%9c%b0%e5%9d%80%e8%bd%ac%e6%8d%a2%e6%88%90%e7%89%a9%e7%90%86%e5%86%85%e5%ad%98%e4%b8%8a%e7%9a%84%e5%9c%b0%e5%9d%80%e5%8e%bb%e8%ae%bf%e9%97%ae%ef%bc%8c%e4%bf%9d%e8%af%81%e7%89%a9%e7%90%86%e5%86%85%e5%ad%98%e7%9a%84%e5%ae%89%e5%85%a8%e6%80%a7%e3%80%82DMA%e6%8e%a7%e5%88%b6%e5%99%a8%e9%80%9a%e8%bf%87IOMMU%e5%8e%bb%e8%ae%bf%e9%97%ae%e5%86%85%e5%ad%98%ef%bc%8c%e4%bd%86%e6%98%af%e5%ae%9e%e9%99%85%e4%b8%8a%e5%8d%b3%e4%bd%bf%e6%b2%a1%e6%9c%89IOMMU%ef%bc%8cDMA%e4%b9%9f%e5%8f%af%e4%bb%a5%e6%ad%a3%e5%b8%b8%e5%b7%a5%e4%bd%9c%ef%bc%8c%e5%8f%aa%e6%98%af%e5%9c%a8%e8%bf%99%e7%a7%8d%e6%83%85%e5%86%b5%e4%b8%8b%ef%bc%8c%e8%ae%be%e5%a4%87%e5%b0%b1%e5%8f%af%e4%bb%a5%e4%bb%bb%e6%84%8f%e8%ae%bf%e9%97%ae%e6%95%b4%e4%b8%aa%e5%86%85%e5%ad%98%ef%bc%8c%e5%86%85%e5%ad%98%e4%b8%8a%e6%95%b0%e6%8d%ae%e7%9a%84%e5%ae%89%e5%85%a8%e6%80%a7%e5%a0%aa%e5%bf%a7%e3%80%82%0aIOMMU%e5%92%8c%e8%99%9a%e6%8b%9f%e5%8c%96%20%e5%8e%9f%e6%9c%ac%e5%af%b9%e4%ba%8evm%e8%ae%be%e5%a4%87%e7%9a%84%e8%99%9a%e6%8b%9f%e5%8c%96%ef%bc%8c%e6%98%af%e9%80%9a%e8%bf%87%e8%bd%af%e4%bb%b6%e5%af%b9%e8%ae%be%e5%a4%87%e8%bf%9b%e8%a1%8c%e6%a8%a1%e6%8b%9f%e3%80%82%e8%80%8c%e6%9c%89%e4%ba%86DMA%e5%92%8cIOMMU%e7%9a%84%e8%af%9d%ef%bc%8c%e5%ae%bf%e4%b8%bb%e6%9c%ba%e5%8f%af%e4%bb%a5%e7%9b%b4%e6%8e%a5%e5%b0%86%e7%89%a9%e7%90%86%e8%ae%be%e5%a4%87%e6%9a%b4%e9%9c%b2%e7%bb%99%e8%99%9a%e6%8b%9f%e6%9c%ba%ef%bc%8c%e5%90%8c%e6%97%b6%e5%8f%88%e9%80%9a%e8%bf%87IOMMU%e4%bf%9d%e8%af%81%e4%ba%86%e9%9a%94%e7%a6%bb%e5%ae%89%e5%85%a8%e6%80%a7%e3%80%82%0aVFIO%20%e9%80%9a%e8%bf%87%e4%b8%8a%e9%9d%a2%e6%88%91%e4%bb%ac%e7%9f%a5%e9%81%93%ef%bc%8cIOMMU%e6%8f%90%e4%be%9b%e4%ba%86%e8%99%9a%e6%8b%9f%e5%9c%b0%e5%9d%80%e8%bd%ac%e5%8c%96%e6%88%90%e7%89%a9%e7%90%86%e5%9c%b0%e5%9d%80%e7%9a%84%e5%8a%9f%e8%83%bd%ef%bc%8c%e9%80%9a%e8%bf%87IOMMU%e5%8f%af%e4%bb%a5%e8%ae%a9%e7%89%a9%e7%90%86%e7%a1%ac%e4%bb%b6%e5%ae%89%e5%85%a8%e7%9a%84%e8%ae%bf%e9%97%ae%e5%86%85%e5%ad%98%e4%b8%ad%e7%9a%84%e5%9c%b0%e5%9d%80%e3%80%82%e4%bd%86IOMMU%e5%8f%aa%e6%98%af%e6%8f%90%e4%be%9b%e4%ba%86%e4%b8%80%e4%b8%aa%e5%9c%b0%e5%9d%80%e8%bd%ac%e5%8c%96%e7%9a%84%e5%8a%9f%e8%83%bd%ef%bc%8c%e7%94%a8%e6%88%b7%e6%80%81%e7%9a%84%e7%a8%8b%e5%ba%8f%e8%a6%81%e5%a6%82%e4%bd%95%e5%8e%bb%e4%bd%bf%e7%94%a8IOMMU%e5%91%a2%ef%bc%9f%e8%bf%99%e5%b0%b1%e5%bc%95%e5%87%ba%e4%ba%86VFIO%e3%80%82VFIO%e5%ae%9e%e9%99%85%e4%b8%8a%e5%b0%b1%e6%98%af%e9%80%9a%e8%bf%87IOMMU%ef%bc%8c%e4%bb%a5%e4%b8%80%e7%a7%8d%e5%ae%89%e5%85%a8%e7%9a%84%e6%96%b9%e5%bc%8f%e5%b0%86IOMMU%e7%9a%84%e5%8a%9f%e8%83%bd%e5%bc%80%e6%94%be%e5%88%b0%e7%94%a8%e6%88%b7%e6%80%81%e4%b8%ad%ef%bc%8c%e4%bb%a5%e4%be%bf%e7%94%a8%e6%88%b7%e6%80%81%e7%9a%84%e7%a8%8b%e5%ba%8f%e7%bc%96%e5%86%99%e5%af%b9%e5%ba%94%e7%9a%84%e9%a9%b1%e5%8a%a8%e6%9d%a5%e4%bd%bf%e7%94%a8IOMMU%e8%bf%99%e4%b8%aa%e5%8a%9f%e8%83%bd%e3%80%82">
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&name=Understanding%20DMA%2c%20IOMMU%2c%20and%20VFIO&description=DMA%20%28Direct%20Memory%20Access%29%20Generally%20speaking%2c%20the%20read%20and%20write%20operation%20of%20memory%20will%20all%20issue%20by%20the%20CPU.%20The%20read%20and%20write%20of%20memory%20of%20other%20devices%20must%20issue%20through%20the%20CPU.%20DMA%2c%20as%20in%20Direct%20Memory%20Access%2c%20will%20release%20the%20CPU%20from%20such%20a%20process.%20When%20devices%20need%20to%20r%2fw%20the%20memory%2c%20they%20will%20report%20to%20the%20CPU.%20The%20CPU%20will%20give%20the%20system%20bus%20to%20the%20DMA%20controller.">
       <i class="fab fa-tumblr " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&t=DMA%2c%20IOMMU%20and%20VFIO">
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&t=Understanding%20DMA%2c%20IOMMU%2c%20and%20VFIO">
       <i class="fab fa-hacker-news " aria-hidden="true"></i>
     </a>
   </li>
@@ -173,13 +167,13 @@ VFIO 通过上面我们知道，IOMMU提供了虚拟地址转化成物理地址�
     <div id="toc">
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#dma">DMA</a></li>
-    <li><a href="#iommu">IOMMU</a>
+    <li><a href="#dma-direct-memory-access">DMA (Direct Memory Access)</a></li>
+    <li><a href="#iommu-input-output-memory-management-unit">IOMMU (Input-Output Memory Management Unit)</a>
       <ul>
-        <li><a href="#iommu和虚拟化">IOMMU和虚拟化</a></li>
+        <li><a href="#iommu-and-virtualization">IOMMU and Virtualization</a></li>
       </ul>
     </li>
-    <li><a href="#vfio">VFIO</a></li>
+    <li><a href="#vfio-virtual-function-io">VFIO (Virtual Function I/O)</a></li>
   </ul>
 </nav>
     </div>
@@ -190,7 +184,7 @@ VFIO 通过上面我们知道，IOMMU提供了虚拟地址转化成物理地址�
   <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
     <header>
       <h1 class="posttitle" itemprop="name headline">
-        DMA, IOMMU and VFIO
+        Understanding DMA, IOMMU, and VFIO
       </h1>
       <div class="meta">
         
@@ -205,7 +199,7 @@ VFIO 通过上面我们知道，IOMMU提供了虚拟地址转化成物理地址�
             <i class="fas fa-tag"></i>
             
             
-            <a class="tag-link" href="/tags/%E7%B3%BB%E7%BB%9F" rel="tag">系统</a>
+            <a class="tag-link" href="/tags/system" rel="tag">system</a>
             
         </div>
         
@@ -214,14 +208,14 @@ VFIO 通过上面我们知道，IOMMU提供了虚拟地址转化成物理地址�
 
   
     <div class="content" itemprop="articleBody">
-      <h2 id="dma">DMA</h2>
-<p>一般来说，内存的读写操作，全部是由CPU来进行操作的，其他设备如果想需要针对内存进行读写，则必须经过CPU。而DMA操作则将这个过程中的CPU解放了出来。在设备需要对内存进行读写的时候，会告诉CPU，而CPU则会将系统总线让出来给设备的DMA控制器使用，DMA控制器会进行对内存的数据传输工作，传输结束后，CPU则会重新接管系统总线。这个方法一定程度上提高了系统的性能。</p>
-<h2 id="iommu">IOMMU</h2>
-<p>根据上边DMA的介绍可以得知，设备可以通过DMA访问内存中的地址。但这样会有一个问题，如果设备可以任意直接的访问内存中的地址的话，安全性很低，也是不应该允许这样做的。实际上，在传输数据的时候，CPU告诉DMA控制器需要访问的地址，是一个虚拟的地址，而IOMMU的功能就是将这个虚拟的地址转换成物理内存上的地址去访问，保证物理内存的安全性。DMA控制器通过IOMMU去访问内存，但是实际上即使没有IOMMU，DMA也可以正常工作，只是在这种情况下，设备就可以任意访问整个内存，内存上数据的安全性堪忧。</p>
-<h3 id="iommu和虚拟化">IOMMU和虚拟化</h3>
-<p>原本对于vm设备的虚拟化，是通过软件对设备进行模拟。而有了DMA和IOMMU的话，宿主机可以直接将物理设备暴露给虚拟机，同时又通过IOMMU保证了隔离安全性。</p>
-<h2 id="vfio">VFIO</h2>
-<p>通过上面我们知道，IOMMU提供了虚拟地址转化成物理地址的功能，通过IOMMU可以让物理硬件安全的访问内存中的地址。但IOMMU只是提供了一个地址转化的功能，用户态的程序要如何去使用IOMMU呢？这就引出了VFIO。VFIO实际上就是通过IOMMU，以一种安全的方式将IOMMU的功能开放到用户态中，以便用户态的程序编写对应的驱动来使用IOMMU这个功能。</p>
+      <h2 id="dma-direct-memory-access">DMA (Direct Memory Access)</h2>
+<p>Generally speaking, the read and write operation of memory will all issue by the CPU. The read and write of memory of other devices must issue through the CPU. DMA, as in Direct Memory Access, will release the CPU from such a process. When devices need to r/w the memory, they will report to the CPU. The CPU will give the system bus to the DMA controller. DMA controller will transmit the data between devices and memory. When completing the data transmitting, the CPU will retake the system bus. This process can improve the system performance.</p>
+<h2 id="iommu-input-output-memory-management-unit">IOMMU (Input-Output Memory Management Unit)</h2>
+<p>When we have DMA, devices can directly access the memory address they want, which will be a problem from the security perspective. We should ban such actions. In fact, when transmitting the data, the CPU will tell the DMA controller virtual memory addresses. IOMMU will translate such virtual memory addresses to actual physical memory addresses to keep the physical memory safe. DMA controller can access the memory through the IOMMU. Though we can also access the memory without IOMMU,  it&rsquo;s a bad security practice.</p>
+<h3 id="iommu-and-virtualization">IOMMU and Virtualization</h3>
+<p>Before DMA and IOMMU, we used software to simulate hardware to achieve virtualization. With the help of DMA and IOMMU technology, we can expose the physical devices to VM and keep the isolation and security through IOMMU.</p>
+<h2 id="vfio-virtual-function-io">VFIO (Virtual Function I/O)</h2>
+<p>IOMMU provides the ability to translate virtual memory addresses to physical memory addresses. IOMMU allows physical devices to access memory addresses safely. However, IOMMU only provided a translation ability. How does the user space program use it? Here comes the VFIO. VFIO exposes the IOMMU feature to the user space in a safe way so that the userspace program can develop corresponding drivers to use the IOMMU feature.</p>
 
     </div>
   </article>
@@ -253,13 +247,13 @@ VFIO 通过上面我们知道，IOMMU提供了虚拟地址转化成物理地址�
     <div id="toc-footer" style="display: none">
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#dma">DMA</a></li>
-    <li><a href="#iommu">IOMMU</a>
+    <li><a href="#dma-direct-memory-access">DMA (Direct Memory Access)</a></li>
+    <li><a href="#iommu-input-output-memory-management-unit">IOMMU (Input-Output Memory Management Unit)</a>
       <ul>
-        <li><a href="#iommu和虚拟化">IOMMU和虚拟化</a></li>
+        <li><a href="#iommu-and-virtualization">IOMMU and Virtualization</a></li>
       </ul>
     </li>
-    <li><a href="#vfio">VFIO</a></li>
+    <li><a href="#vfio-virtual-function-io">VFIO (Virtual Function I/O)</a></li>
   </ul>
 </nav>
     </div>
@@ -278,52 +272,52 @@ VFIO 通过上面我们知道，IOMMU提供了虚拟地址转化成物理地址�
     </a>
   </li>
   <li>
-    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&text=DMA%2c%20IOMMU%20and%20VFIO">
+    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&text=Understanding%20DMA%2c%20IOMMU%2c%20and%20VFIO">
       <i class="fab fa-twitter fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&title=DMA%2c%20IOMMU%20and%20VFIO">
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&title=Understanding%20DMA%2c%20IOMMU%2c%20and%20VFIO">
       <i class="fab fa-linkedin fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&is_video=false&description=DMA%2c%20IOMMU%20and%20VFIO">
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&is_video=false&description=Understanding%20DMA%2c%20IOMMU%2c%20and%20VFIO">
       <i class="fab fa-pinterest fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="mailto:?subject=DMA%2c%20IOMMU%20and%20VFIO&body=Check out this article: https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f">
+    <a class="icon" href="mailto:?subject=Understanding%20DMA%2c%20IOMMU%2c%20and%20VFIO&body=Check out this article: https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f">
       <i class="fas fa-envelope fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&title=DMA%2c%20IOMMU%20and%20VFIO">
+    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&title=Understanding%20DMA%2c%20IOMMU%2c%20and%20VFIO">
       <i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&title=DMA%2c%20IOMMU%20and%20VFIO">
+    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&title=Understanding%20DMA%2c%20IOMMU%2c%20and%20VFIO">
       <i class="fab fa-reddit fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.stumbleupon.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&title=DMA%2c%20IOMMU%20and%20VFIO">
+    <a class="icon" href="http://www.stumbleupon.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&title=Understanding%20DMA%2c%20IOMMU%2c%20and%20VFIO">
       <i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://digg.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&title=DMA%2c%20IOMMU%20and%20VFIO">
+    <a class="icon" href="http://digg.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&title=Understanding%20DMA%2c%20IOMMU%2c%20and%20VFIO">
       <i class="fab fa-digg fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&name=DMA%2c%20IOMMU%20and%20VFIO&description=DMA%20%e4%b8%80%e8%88%ac%e6%9d%a5%e8%af%b4%ef%bc%8c%e5%86%85%e5%ad%98%e7%9a%84%e8%af%bb%e5%86%99%e6%93%8d%e4%bd%9c%ef%bc%8c%e5%85%a8%e9%83%a8%e6%98%af%e7%94%b1CPU%e6%9d%a5%e8%bf%9b%e8%a1%8c%e6%93%8d%e4%bd%9c%e7%9a%84%ef%bc%8c%e5%85%b6%e4%bb%96%e8%ae%be%e5%a4%87%e5%a6%82%e6%9e%9c%e6%83%b3%e9%9c%80%e8%a6%81%e9%92%88%e5%af%b9%e5%86%85%e5%ad%98%e8%bf%9b%e8%a1%8c%e8%af%bb%e5%86%99%ef%bc%8c%e5%88%99%e5%bf%85%e9%a1%bb%e7%bb%8f%e8%bf%87CPU%e3%80%82%e8%80%8cDMA%e6%93%8d%e4%bd%9c%e5%88%99%e5%b0%86%e8%bf%99%e4%b8%aa%e8%bf%87%e7%a8%8b%e4%b8%ad%e7%9a%84CPU%e8%a7%a3%e6%94%be%e4%ba%86%e5%87%ba%e6%9d%a5%e3%80%82%e5%9c%a8%e8%ae%be%e5%a4%87%e9%9c%80%e8%a6%81%e5%af%b9%e5%86%85%e5%ad%98%e8%bf%9b%e8%a1%8c%e8%af%bb%e5%86%99%e7%9a%84%e6%97%b6%e5%80%99%ef%bc%8c%e4%bc%9a%e5%91%8a%e8%af%89CPU%ef%bc%8c%e8%80%8cCPU%e5%88%99%e4%bc%9a%e5%b0%86%e7%b3%bb%e7%bb%9f%e6%80%bb%e7%ba%bf%e8%ae%a9%e5%87%ba%e6%9d%a5%e7%bb%99%e8%ae%be%e5%a4%87%e7%9a%84DMA%e6%8e%a7%e5%88%b6%e5%99%a8%e4%bd%bf%e7%94%a8%ef%bc%8cDMA%e6%8e%a7%e5%88%b6%e5%99%a8%e4%bc%9a%e8%bf%9b%e8%a1%8c%e5%af%b9%e5%86%85%e5%ad%98%e7%9a%84%e6%95%b0%e6%8d%ae%e4%bc%a0%e8%be%93%e5%b7%a5%e4%bd%9c%ef%bc%8c%e4%bc%a0%e8%be%93%e7%bb%93%e6%9d%9f%e5%90%8e%ef%bc%8cCPU%e5%88%99%e4%bc%9a%e9%87%8d%e6%96%b0%e6%8e%a5%e7%ae%a1%e7%b3%bb%e7%bb%9f%e6%80%bb%e7%ba%bf%e3%80%82%e8%bf%99%e4%b8%aa%e6%96%b9%e6%b3%95%e4%b8%80%e5%ae%9a%e7%a8%8b%e5%ba%a6%e4%b8%8a%e6%8f%90%e9%ab%98%e4%ba%86%e7%b3%bb%e7%bb%9f%e7%9a%84%e6%80%a7%e8%83%bd%e3%80%82%0aIOMMU%20%e6%a0%b9%e6%8d%ae%e4%b8%8a%e8%be%b9DMA%e7%9a%84%e4%bb%8b%e7%bb%8d%e5%8f%af%e4%bb%a5%e5%be%97%e7%9f%a5%ef%bc%8c%e8%ae%be%e5%a4%87%e5%8f%af%e4%bb%a5%e9%80%9a%e8%bf%87DMA%e8%ae%bf%e9%97%ae%e5%86%85%e5%ad%98%e4%b8%ad%e7%9a%84%e5%9c%b0%e5%9d%80%e3%80%82%e4%bd%86%e8%bf%99%e6%a0%b7%e4%bc%9a%e6%9c%89%e4%b8%80%e4%b8%aa%e9%97%ae%e9%a2%98%ef%bc%8c%e5%a6%82%e6%9e%9c%e8%ae%be%e5%a4%87%e5%8f%af%e4%bb%a5%e4%bb%bb%e6%84%8f%e7%9b%b4%e6%8e%a5%e7%9a%84%e8%ae%bf%e9%97%ae%e5%86%85%e5%ad%98%e4%b8%ad%e7%9a%84%e5%9c%b0%e5%9d%80%e7%9a%84%e8%af%9d%ef%bc%8c%e5%ae%89%e5%85%a8%e6%80%a7%e5%be%88%e4%bd%8e%ef%bc%8c%e4%b9%9f%e6%98%af%e4%b8%8d%e5%ba%94%e8%af%a5%e5%85%81%e8%ae%b8%e8%bf%99%e6%a0%b7%e5%81%9a%e7%9a%84%e3%80%82%e5%ae%9e%e9%99%85%e4%b8%8a%ef%bc%8c%e5%9c%a8%e4%bc%a0%e8%be%93%e6%95%b0%e6%8d%ae%e7%9a%84%e6%97%b6%e5%80%99%ef%bc%8cCPU%e5%91%8a%e8%af%89DMA%e6%8e%a7%e5%88%b6%e5%99%a8%e9%9c%80%e8%a6%81%e8%ae%bf%e9%97%ae%e7%9a%84%e5%9c%b0%e5%9d%80%ef%bc%8c%e6%98%af%e4%b8%80%e4%b8%aa%e8%99%9a%e6%8b%9f%e7%9a%84%e5%9c%b0%e5%9d%80%ef%bc%8c%e8%80%8cIOMMU%e7%9a%84%e5%8a%9f%e8%83%bd%e5%b0%b1%e6%98%af%e5%b0%86%e8%bf%99%e4%b8%aa%e8%99%9a%e6%8b%9f%e7%9a%84%e5%9c%b0%e5%9d%80%e8%bd%ac%e6%8d%a2%e6%88%90%e7%89%a9%e7%90%86%e5%86%85%e5%ad%98%e4%b8%8a%e7%9a%84%e5%9c%b0%e5%9d%80%e5%8e%bb%e8%ae%bf%e9%97%ae%ef%bc%8c%e4%bf%9d%e8%af%81%e7%89%a9%e7%90%86%e5%86%85%e5%ad%98%e7%9a%84%e5%ae%89%e5%85%a8%e6%80%a7%e3%80%82DMA%e6%8e%a7%e5%88%b6%e5%99%a8%e9%80%9a%e8%bf%87IOMMU%e5%8e%bb%e8%ae%bf%e9%97%ae%e5%86%85%e5%ad%98%ef%bc%8c%e4%bd%86%e6%98%af%e5%ae%9e%e9%99%85%e4%b8%8a%e5%8d%b3%e4%bd%bf%e6%b2%a1%e6%9c%89IOMMU%ef%bc%8cDMA%e4%b9%9f%e5%8f%af%e4%bb%a5%e6%ad%a3%e5%b8%b8%e5%b7%a5%e4%bd%9c%ef%bc%8c%e5%8f%aa%e6%98%af%e5%9c%a8%e8%bf%99%e7%a7%8d%e6%83%85%e5%86%b5%e4%b8%8b%ef%bc%8c%e8%ae%be%e5%a4%87%e5%b0%b1%e5%8f%af%e4%bb%a5%e4%bb%bb%e6%84%8f%e8%ae%bf%e9%97%ae%e6%95%b4%e4%b8%aa%e5%86%85%e5%ad%98%ef%bc%8c%e5%86%85%e5%ad%98%e4%b8%8a%e6%95%b0%e6%8d%ae%e7%9a%84%e5%ae%89%e5%85%a8%e6%80%a7%e5%a0%aa%e5%bf%a7%e3%80%82%0aIOMMU%e5%92%8c%e8%99%9a%e6%8b%9f%e5%8c%96%20%e5%8e%9f%e6%9c%ac%e5%af%b9%e4%ba%8evm%e8%ae%be%e5%a4%87%e7%9a%84%e8%99%9a%e6%8b%9f%e5%8c%96%ef%bc%8c%e6%98%af%e9%80%9a%e8%bf%87%e8%bd%af%e4%bb%b6%e5%af%b9%e8%ae%be%e5%a4%87%e8%bf%9b%e8%a1%8c%e6%a8%a1%e6%8b%9f%e3%80%82%e8%80%8c%e6%9c%89%e4%ba%86DMA%e5%92%8cIOMMU%e7%9a%84%e8%af%9d%ef%bc%8c%e5%ae%bf%e4%b8%bb%e6%9c%ba%e5%8f%af%e4%bb%a5%e7%9b%b4%e6%8e%a5%e5%b0%86%e7%89%a9%e7%90%86%e8%ae%be%e5%a4%87%e6%9a%b4%e9%9c%b2%e7%bb%99%e8%99%9a%e6%8b%9f%e6%9c%ba%ef%bc%8c%e5%90%8c%e6%97%b6%e5%8f%88%e9%80%9a%e8%bf%87IOMMU%e4%bf%9d%e8%af%81%e4%ba%86%e9%9a%94%e7%a6%bb%e5%ae%89%e5%85%a8%e6%80%a7%e3%80%82%0aVFIO%20%e9%80%9a%e8%bf%87%e4%b8%8a%e9%9d%a2%e6%88%91%e4%bb%ac%e7%9f%a5%e9%81%93%ef%bc%8cIOMMU%e6%8f%90%e4%be%9b%e4%ba%86%e8%99%9a%e6%8b%9f%e5%9c%b0%e5%9d%80%e8%bd%ac%e5%8c%96%e6%88%90%e7%89%a9%e7%90%86%e5%9c%b0%e5%9d%80%e7%9a%84%e5%8a%9f%e8%83%bd%ef%bc%8c%e9%80%9a%e8%bf%87IOMMU%e5%8f%af%e4%bb%a5%e8%ae%a9%e7%89%a9%e7%90%86%e7%a1%ac%e4%bb%b6%e5%ae%89%e5%85%a8%e7%9a%84%e8%ae%bf%e9%97%ae%e5%86%85%e5%ad%98%e4%b8%ad%e7%9a%84%e5%9c%b0%e5%9d%80%e3%80%82%e4%bd%86IOMMU%e5%8f%aa%e6%98%af%e6%8f%90%e4%be%9b%e4%ba%86%e4%b8%80%e4%b8%aa%e5%9c%b0%e5%9d%80%e8%bd%ac%e5%8c%96%e7%9a%84%e5%8a%9f%e8%83%bd%ef%bc%8c%e7%94%a8%e6%88%b7%e6%80%81%e7%9a%84%e7%a8%8b%e5%ba%8f%e8%a6%81%e5%a6%82%e4%bd%95%e5%8e%bb%e4%bd%bf%e7%94%a8IOMMU%e5%91%a2%ef%bc%9f%e8%bf%99%e5%b0%b1%e5%bc%95%e5%87%ba%e4%ba%86VFIO%e3%80%82VFIO%e5%ae%9e%e9%99%85%e4%b8%8a%e5%b0%b1%e6%98%af%e9%80%9a%e8%bf%87IOMMU%ef%bc%8c%e4%bb%a5%e4%b8%80%e7%a7%8d%e5%ae%89%e5%85%a8%e7%9a%84%e6%96%b9%e5%bc%8f%e5%b0%86IOMMU%e7%9a%84%e5%8a%9f%e8%83%bd%e5%bc%80%e6%94%be%e5%88%b0%e7%94%a8%e6%88%b7%e6%80%81%e4%b8%ad%ef%bc%8c%e4%bb%a5%e4%be%bf%e7%94%a8%e6%88%b7%e6%80%81%e7%9a%84%e7%a8%8b%e5%ba%8f%e7%bc%96%e5%86%99%e5%af%b9%e5%ba%94%e7%9a%84%e9%a9%b1%e5%8a%a8%e6%9d%a5%e4%bd%bf%e7%94%a8IOMMU%e8%bf%99%e4%b8%aa%e5%8a%9f%e8%83%bd%e3%80%82">
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&name=Understanding%20DMA%2c%20IOMMU%2c%20and%20VFIO&description=DMA%20%28Direct%20Memory%20Access%29%20Generally%20speaking%2c%20the%20read%20and%20write%20operation%20of%20memory%20will%20all%20issue%20by%20the%20CPU.%20The%20read%20and%20write%20of%20memory%20of%20other%20devices%20must%20issue%20through%20the%20CPU.%20DMA%2c%20as%20in%20Direct%20Memory%20Access%2c%20will%20release%20the%20CPU%20from%20such%20a%20process.%20When%20devices%20need%20to%20r%2fw%20the%20memory%2c%20they%20will%20report%20to%20the%20CPU.%20The%20CPU%20will%20give%20the%20system%20bus%20to%20the%20DMA%20controller.">
       <i class="fab fa-tumblr fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&t=DMA%2c%20IOMMU%20and%20VFIO">
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fdma-iommu-vfio%2f&t=Understanding%20DMA%2c%20IOMMU%2c%20and%20VFIO">
       <i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i>
     </a>
   </li>

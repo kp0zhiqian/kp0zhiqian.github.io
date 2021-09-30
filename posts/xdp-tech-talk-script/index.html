@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Transcript of XDP Tech Talk | kp0zhiqian&#39;s</title>
+  <meta name="description" content="This is the way.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Transcript of XDP Tech Talk" />
+<meta property="og:description" content="This is the transcript of my XDP 5 mins tech talk in QE all hands. Only for sharing and archiving.
+ XDP is a technology that can achieve high-speed networking performance. Allowing packets to be reflected, filtered, or redirected, but without traversing kernel networking stack.
+After hearing this, some may think: Oh, I’ve heard of this! Like the famous DPDK, I can bypass the Kernel and do whatever I want in userspace to the incoming packets." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kp0zhiqian.github.io/posts/xdp-tech-talk-script/" />
+
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Transcript of XDP Tech Talk"/>
+<meta name="twitter:description" content="This is the transcript of my XDP 5 mins tech talk in QE all hands. Only for sharing and archiving.
+ XDP is a technology that can achieve high-speed networking performance. Allowing packets to be reflected, filtered, or redirected, but without traversing kernel networking stack.
+After hearing this, some may think: Oh, I’ve heard of this! Like the famous DPDK, I can bypass the Kernel and do whatever I want in userspace to the incoming packets."/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="https://kp0zhiqian.github.io/css/style-classic.css">
+  
+  
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://kp0zhiqian.github.io/images/favicon.ico" />
+
+  
+  
+  
+  
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+  <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/posts">Writings</a></li>
+         
+        <li><a href="/tags">Tags</a></li>
+         
+        <li><a href="/about">About</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li>
+          <a class="icon" href="https://kp0zhiqian.github.io/about/">
+            <i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i>
+          </a>
+        </li>
+        
+        <li>
+          <a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">
+            <i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i>
+          </a>
+        </li>
+        <li>
+          <a class="icon" href="#">
+            <i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i>
+          </a>
+        </li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      
+      <ul>
+  
+  
+    
+  
+  
+  <li>
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fxdp-tech-talk-script%2f">
+      <i class="fab fa-facebook " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fxdp-tech-talk-script%2f&text=Transcript%20of%20XDP%20Tech%20Talk">
+      <i class="fab fa-twitter " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fxdp-tech-talk-script%2f&title=Transcript%20of%20XDP%20Tech%20Talk">
+      <i class="fab fa-linkedin " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fxdp-tech-talk-script%2f&is_video=false&description=Transcript%20of%20XDP%20Tech%20Talk">
+      <i class="fab fa-pinterest " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="mailto:?subject=Transcript%20of%20XDP%20Tech%20Talk&body=Check out this article: https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fxdp-tech-talk-script%2f">
+      <i class="fas fa-envelope " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fxdp-tech-talk-script%2f&title=Transcript%20of%20XDP%20Tech%20Talk">
+      <i class="fab fa-get-pocket " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fxdp-tech-talk-script%2f&title=Transcript%20of%20XDP%20Tech%20Talk">
+      <i class="fab fa-reddit " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.stumbleupon.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fxdp-tech-talk-script%2f&title=Transcript%20of%20XDP%20Tech%20Talk">
+      <i class="fab fa-stumbleupon " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://digg.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fxdp-tech-talk-script%2f&title=Transcript%20of%20XDP%20Tech%20Talk">
+      <i class="fab fa-digg " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fxdp-tech-talk-script%2f&name=Transcript%20of%20XDP%20Tech%20Talk&description=This%20is%20the%20transcript%20of%20my%20XDP%205%20mins%20tech%20talk%20in%20QE%20all%20hands.%20Only%20for%20sharing%20and%20archiving.%0a%20XDP%20is%20a%20technology%20that%20can%20achieve%20high-speed%20networking%20performance.%20Allowing%20packets%20to%20be%20reflected%2c%20filtered%2c%20or%20redirected%2c%20but%20without%20traversing%20kernel%20networking%20stack.%0aAfter%20hearing%20this%2c%20some%20may%20think%3a%20Oh%2c%20I%e2%80%99ve%20heard%20of%20this%21%20Like%20the%20famous%20DPDK%2c%20I%20can%20bypass%20the%20Kernel%20and%20do%20whatever%20I%20want%20in%20userspace%20to%20the%20incoming%20packets.">
+      <i class="fab fa-tumblr " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fxdp-tech-talk-script%2f&t=Transcript%20of%20XDP%20Tech%20Talk">
+      <i class="fab fa-hacker-news " aria-hidden="true"></i>
+    </a>
+  </li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <nav id="TableOfContents"></nav>
+    </div>
+  </span>
+</div>
+
+
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+      <h1 class="posttitle" itemprop="name headline">
+        Transcript of XDP Tech Talk
+      </h1>
+      <div class="meta">
+        
+        <div class="postdate">
+          
+          <time datetime="0001-01-01 00:00:00 &#43;0000 UTC" itemprop="datePublished">0001-01-01</time>
+          
+        </div>
+        
+        
+        <div class="article-tag">
+            <i class="fas fa-tag"></i>
+            
+            
+            <a class="tag-link" href="/tags/xdp" rel="tag">XDP</a>
+            
+        </div>
+        
+      </div>
+    </header>
+
+  
+    <div class="content" itemprop="articleBody">
+      <blockquote>
+<p>This is the transcript of my XDP 5 mins tech talk in QE all hands. Only for sharing and archiving.</p>
+</blockquote>
+<p>XDP is a technology that can achieve high-speed networking performance. Allowing packets to be reflected, filtered, or redirected, but without traversing kernel networking stack.</p>
+<p>After hearing this, some may think: Oh, I’ve heard of this! Like the famous DPDK, I can bypass the Kernel and do whatever I want in userspace to the incoming packets. In this case, if we use our network program in the user-space by using DPDK, we’ll call it user-space networking.</p>
+<p>But XDP does the opposite: XDP moves the user-space program into the kernel. and allow us to run our network program or function as soon as the packets flow into the NIC, but before it starts moving up into the kernel network stack. This will lead to a great increase in packets-processing speed. And since XDP doesn’t bypass the kernel network stack, so you won’t need to reimplement other functions that the kernel provided, this is much more convenient in certain scenarios.</p>
+<p>But here’s the question, how does the kernel allow the user to run their programs within the kernel space? Before answering this, we need to take a look at something called BPF.</p>
+<p>Simply saying, BPF is an in-kernel virtual machine model, which allows us to write our program and run it in the BPF VM by using the hooks and probe that BPF provided. As you can see from this diagram, if we want to use BPF, the first thing besides writing code is to generate the BPF bytecode which can be compiled from other code like C code.</p>
+<p>Then we need to load the BPF bytecode to BPF VM through the verifier. The verifier will check if there’s something bad in your code that may have an impact on the kernel. You can assume the XDP program is just a BPF program that uses the XDP feature.</p>
+<p>This kind of XDP program is the data-plane of XDP, it can only do whatever you’ve already programmed in the code statically. If we want to control this XDP program dynamically, we also need a userspace program that controls it via the BPF maps. We won’t cover too much about this part in this talk.</p>
+<p>From this diagram, you can see the basic workflow. The XDP program will return actions after the traffic hits it. The actions are XDP_DROP, PASS, TX, ABORTED, and REDIRECT. The meaning of these actions is pretty straightforward. After getting the actions from the XDP program, the XDP packet processor will do the action to the packets.</p>
+<p>The XDP I was talking about all along the way is called the “native mode XDP”, which means the nic driver has XDP support and the XDP program will be running before SK buffer is allocated. There are two more modes of loading the XDP program.</p>
+<p>Generic mode and hardware offload mode. Generic mode, means the driver doesn’t need to support XDP, the kernel will implement the xdp feature, the XDP program will run after the SK buffer is allocated. In this case, there’s no performance benefit, but the good thing is you don’t need the driver support to run an XDP program. () As for hardware offload mode, it means the XDP program can load and run directly inside the network card, which will have the best performance, but only a handful of NICs can support this.</p>
+
+    </div>
+  </article>
+
+  
+  
+
+
+
+
+
+  <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/posts">Writings</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <nav id="TableOfContents"></nav>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      
+      <ul>
+  
+  
+    
+  
+  
+  <li>
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fxdp-tech-talk-script%2f">
+      <i class="fab fa-facebook fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fxdp-tech-talk-script%2f&text=Transcript%20of%20XDP%20Tech%20Talk">
+      <i class="fab fa-twitter fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fxdp-tech-talk-script%2f&title=Transcript%20of%20XDP%20Tech%20Talk">
+      <i class="fab fa-linkedin fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fxdp-tech-talk-script%2f&is_video=false&description=Transcript%20of%20XDP%20Tech%20Talk">
+      <i class="fab fa-pinterest fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="mailto:?subject=Transcript%20of%20XDP%20Tech%20Talk&body=Check out this article: https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fxdp-tech-talk-script%2f">
+      <i class="fas fa-envelope fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fxdp-tech-talk-script%2f&title=Transcript%20of%20XDP%20Tech%20Talk">
+      <i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fxdp-tech-talk-script%2f&title=Transcript%20of%20XDP%20Tech%20Talk">
+      <i class="fab fa-reddit fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.stumbleupon.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fxdp-tech-talk-script%2f&title=Transcript%20of%20XDP%20Tech%20Talk">
+      <i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://digg.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fxdp-tech-talk-script%2f&title=Transcript%20of%20XDP%20Tech%20Talk">
+      <i class="fab fa-digg fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fxdp-tech-talk-script%2f&name=Transcript%20of%20XDP%20Tech%20Talk&description=This%20is%20the%20transcript%20of%20my%20XDP%205%20mins%20tech%20talk%20in%20QE%20all%20hands.%20Only%20for%20sharing%20and%20archiving.%0a%20XDP%20is%20a%20technology%20that%20can%20achieve%20high-speed%20networking%20performance.%20Allowing%20packets%20to%20be%20reflected%2c%20filtered%2c%20or%20redirected%2c%20but%20without%20traversing%20kernel%20networking%20stack.%0aAfter%20hearing%20this%2c%20some%20may%20think%3a%20Oh%2c%20I%e2%80%99ve%20heard%20of%20this%21%20Like%20the%20famous%20DPDK%2c%20I%20can%20bypass%20the%20Kernel%20and%20do%20whatever%20I%20want%20in%20userspace%20to%20the%20incoming%20packets.">
+      <i class="fab fa-tumblr fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fxdp-tech-talk-script%2f&t=Transcript%20of%20XDP%20Tech%20Talk">
+      <i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;">
+          <i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;">
+          <i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;">
+          <i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">
+          <i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+
+  <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2021  You 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/posts">Writings</a></li>
+         
+        <li><a href="/tags">Tags</a></li>
+         
+        <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+  </div>
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+
+
+
+</html>

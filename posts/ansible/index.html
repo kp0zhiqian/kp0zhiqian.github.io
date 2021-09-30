@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Ansible Reading Notes | kp0zhiqian&#39;s</title>
+  <meta name="description" content="This is the way.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Ansible Reading Notes" />
+<meta property="og:description" content="Installation&amp;setup  Redhat/Centos need to Install EPEL, fedora has it in its default source Generate ssh, copy ssh to remote, save remote hosts to known_hosts  Host Inventory  default host file: /etc/ansible/hosts We can use [group_name] to setup group, but it&rsquo;s not required [webservers] foo.example.com bar.example.com   CLI tools  ansible &lt;host&gt; [options] ansibel &lt;host&gt; -m &lt;modules&gt;  Playbook: A yaml file that can be excuted by ansible  ansible-playbook deploy." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kp0zhiqian.github.io/posts/ansible/" />
+<meta property="article:published_time" content="2020-09-30T00:10:57+08:00" />
+<meta property="article:modified_time" content="2020-09-30T00:10:57+08:00" />
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Ansible Reading Notes"/>
+<meta name="twitter:description" content="Installation&amp;setup  Redhat/Centos need to Install EPEL, fedora has it in its default source Generate ssh, copy ssh to remote, save remote hosts to known_hosts  Host Inventory  default host file: /etc/ansible/hosts We can use [group_name] to setup group, but it&rsquo;s not required [webservers] foo.example.com bar.example.com   CLI tools  ansible &lt;host&gt; [options] ansibel &lt;host&gt; -m &lt;modules&gt;  Playbook: A yaml file that can be excuted by ansible  ansible-playbook deploy."/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="https://kp0zhiqian.github.io/css/style-classic.css">
+  
+  
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://kp0zhiqian.github.io/images/favicon.ico" />
+
+  
+  
+  
+  
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+  <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/posts">Writings</a></li>
+         
+        <li><a href="/tags">Tags</a></li>
+         
+        <li><a href="/about">About</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li>
+          <a class="icon" href=" https://kp0zhiqian.github.io/posts/dma-iommu-vfio/">
+            <i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i>
+          </a>
+        </li>
+        
+        
+        <li>
+          <a class="icon" href="https://kp0zhiqian.github.io/posts/numa/">
+            <i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i>
+          </a>
+        </li>
+        
+        <li>
+          <a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">
+            <i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i>
+          </a>
+        </li>
+        <li>
+          <a class="icon" href="#">
+            <i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i>
+          </a>
+        </li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      
+      <ul>
+  
+  
+    
+  
+  
+  <li>
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible%2f">
+      <i class="fab fa-facebook " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible%2f&text=Ansible%20Reading%20Notes">
+      <i class="fab fa-twitter " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible%2f&title=Ansible%20Reading%20Notes">
+      <i class="fab fa-linkedin " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible%2f&is_video=false&description=Ansible%20Reading%20Notes">
+      <i class="fab fa-pinterest " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="mailto:?subject=Ansible%20Reading%20Notes&body=Check out this article: https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible%2f">
+      <i class="fas fa-envelope " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible%2f&title=Ansible%20Reading%20Notes">
+      <i class="fab fa-get-pocket " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible%2f&title=Ansible%20Reading%20Notes">
+      <i class="fab fa-reddit " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.stumbleupon.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible%2f&title=Ansible%20Reading%20Notes">
+      <i class="fab fa-stumbleupon " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://digg.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible%2f&title=Ansible%20Reading%20Notes">
+      <i class="fab fa-digg " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible%2f&name=Ansible%20Reading%20Notes&description=Installation%26amp%3bsetup%20%20Redhat%2fCentos%20need%20to%20Install%20EPEL%2c%20fedora%20has%20it%20in%20its%20default%20source%20Generate%20ssh%2c%20copy%20ssh%20to%20remote%2c%20save%20remote%20hosts%20to%20known_hosts%20%20Host%20Inventory%20%20default%20host%20file%3a%20%2fetc%2fansible%2fhosts%20We%20can%20use%20%5bgroup_name%5d%20to%20setup%20group%2c%20but%20it%26rsquo%3bs%20not%20required%20%5bwebservers%5d%20foo.example.com%20bar.example.com%20%20%20CLI%20tools%20%20ansible%20%26lt%3bhost%26gt%3b%20%5boptions%5d%20ansibel%20%26lt%3bhost%26gt%3b%20-m%20%26lt%3bmodules%26gt%3b%20%20Playbook%3a%20A%20yaml%20file%20that%20can%20be%20excuted%20by%20ansible%20%20ansible-playbook%20deploy.">
+      <i class="fab fa-tumblr " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible%2f&t=Ansible%20Reading%20Notes">
+      <i class="fab fa-hacker-news " aria-hidden="true"></i>
+    </a>
+  </li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#installationsetup">Installation&amp;setup</a></li>
+    <li><a href="#host-inventory">Host Inventory</a></li>
+    <li><a href="#cli-tools">CLI tools</a></li>
+    <li><a href="#playbook-a-yaml-file-that-can-be-excuted-by-ansible">Playbook: A yaml file that can be excuted by ansible</a></li>
+    <li><a href="#module">Module</a></li>
+  </ul>
+</nav>
+    </div>
+  </span>
+</div>
+
+
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+      <h1 class="posttitle" itemprop="name headline">
+        Ansible Reading Notes
+      </h1>
+      <div class="meta">
+        
+        <div class="postdate">
+          
+          <time datetime="2020-09-30 00:10:57 &#43;0800 CST" itemprop="datePublished">2020-09-30</time>
+          
+        </div>
+        
+        
+        <div class="article-tag">
+            <i class="fas fa-tag"></i>
+            
+            
+            <a class="tag-link" href="/tags/ansible" rel="tag">ansible</a>
+            
+             ,  
+            <a class="tag-link" href="/tags/system" rel="tag">system</a>
+            
+             ,  
+            <a class="tag-link" href="/tags/automation" rel="tag">automation</a>
+            
+        </div>
+        
+      </div>
+    </header>
+
+  
+    <div class="content" itemprop="articleBody">
+      <h2 id="installationsetup">Installation&amp;setup</h2>
+<ul>
+<li>Redhat/Centos need to Install EPEL, fedora has it in its default source</li>
+<li>Generate ssh, copy ssh to remote, save remote hosts to known_hosts</li>
+</ul>
+<h2 id="host-inventory">Host Inventory</h2>
+<ul>
+<li>default host file: <code>/etc/ansible/hosts</code></li>
+<li>We can use [group_name] to setup group, but it&rsquo;s not required
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>webservers<span style="color:#f92672">]</span>
+foo.example.com
+bar.example.com
+</code></pre></div></li>
+</ul>
+<h2 id="cli-tools">CLI tools</h2>
+<ul>
+<li><code>ansible &lt;host&gt; [options]</code></li>
+<li><code>ansibel &lt;host&gt; -m &lt;modules&gt;</code></li>
+</ul>
+<h2 id="playbook-a-yaml-file-that-can-be-excuted-by-ansible">Playbook: A yaml file that can be excuted by ansible</h2>
+<ul>
+<li><code>ansible-playbook deploy.yml</code></li>
+<li>keywords:
+<ul>
+<li><code>hosts</code>: host IP or group name or all</li>
+<li><code>remote_user</code>: excute using some uses</li>
+<li><code>vars</code>: variables</li>
+<li><code>tasks</code>: core of playbook, define action, every action can call a modules</li>
+</ul>
+</li>
+</ul>
+<h2 id="module">Module</h2>
+<p>Ansible Module: <code>module</code> in ansible is <code>cmd</code> in bash</p>
+<ul>
+<li>Use module in cli
+<ul>
+<li><code>-m &lt;module_name&gt;</code></li>
+<li><code>-a &lt;module_param&gt;</code></li>
+</ul>
+</li>
+<li>Use module in playbook
+<ul>
+<li><code>module_name: module_option=option_value</code></li>
+</ul>
+</li>
+<li>common modules
+<ul>
+<li>ping
+<ul>
+<li>not only check connectivity, also check ssh availiability and python version</li>
+<li>don&rsquo;t need any param</li>
+</ul>
+</li>
+<li>debug
+<ul>
+<li>similer to <code>echo</code>, it can print some debugging msg</li>
+<li><code>msg: &lt;some info&gt;</code></li>
+<li><code>var: &lt;some variables&gt;</code></li>
+</ul>
+</li>
+<li>copy
+<ul>
+<li>copy files from the mgt host to remote host</li>
+<li><code>mode</code> to set permission</li>
+<li><code>backup</code> can backup files before copy</li>
+<li><code>validate</code> can set some script to validate</li>
+</ul>
+</li>
+<li>template
+<ul>
+<li>copy files, but there&rsquo;re some dynamic variables to change in the files</li>
+<li>use <code>{{ var_name }}</code> in files to access remote host env variables and vars in playbook&rsquo;s var section.</li>
+<li>also support permission and user/group/validate&hellip;</li>
+</ul>
+</li>
+<li>file
+<ul>
+<li>configure files, symlinks and folders' permission, create and delete them.</li>
+<li><code>mode</code> to configure permission</li>
+<li><code>src</code> and <code>dest</code> to create symlinks</li>
+<li><code>state: touch</code> to create file</li>
+<li><code>state: directory</code> to create folder</li>
+</ul>
+</li>
+<li>user
+<ul>
+<li>create user and attribute</li>
+<li><code>groups</code> to add user to group</li>
+<li><code>state: absent</code> to delete user</li>
+<li>change user attribute like ssh key, and expires</li>
+</ul>
+</li>
+<li>yum
+<ul>
+<li>use <code>state:latest</code> to install the latest package</li>
+<li>use <code>state:absent</code> to delete the package</li>
+<li>use <code>state:present</code> and <code>name:&lt;pkgname_with_version&gt;</code> to install a certain version</li>
+<li>use <code>enablerepo: &lt;some_repo&gt;</code> to install package from a certain repo</li>
+<li>use <code>name: @Development</code> tools to install a group of packages</li>
+<li>use <code>name: &lt;path_to_rpm_file&gt;</code> to install a local package</li>
+<li>use <code>name: &lt;url_to_rpm&gt;</code> to install a package from URL</li>
+</ul>
+</li>
+<li>service
+<ul>
+<li><code>state: started</code> to start servvce</li>
+<li><code>state: stopped</code> to stop service</li>
+<li><code>state: restarted</code> to restart service</li>
+<li><code>state: reloaded</code> to reload service</li>
+<li><code>enable: yes</code> to start it when the host online</li>
+<li><code>args: eth0</code> in <code>network</code> service to enable network&rsquo;s interface</li>
+</ul>
+</li>
+<li>firewalld
+<ul>
+<li>add rules for service</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">- <span style="color:#f92672">firewalld</span>:
+    <span style="color:#f92672">service</span>: <span style="color:#ae81ff">https</span>
+    <span style="color:#f92672">permanent</span>: <span style="color:#66d9ef">true</span>
+    <span style="color:#f92672">state</span>: <span style="color:#ae81ff">enabled</span>
+</code></pre></div><ul>
+<li>add rules for port</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">port</span>: <span style="color:#ae81ff">8081</span><span style="color:#ae81ff">/tcp</span>
+</code></pre></div><ul>
+<li>other rules <code>rich_rule, source, zone, interface, masquerade</code></li>
+</ul>
+</li>
+<li>shell: issue cmds in remote host
+<ul>
+<li>support operators like <code>HOME, &lt; &gt; | ; &amp; &amp;&amp; &gt;&gt; ||</code></li>
+<li>call script <code>- shell: script.sh &gt;&gt; log.txt</code></li>
+<li>use <code>args:</code> to
+<ul>
+<li><code>chdir</code> change working directory</li>
+<li><code>creates</code> excute only when file non-exist</li>
+<li><code>executable</code> use certain bash</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>command: similar to shell, but doesn&rsquo;t support operator</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </article>
+
+  
+  
+
+
+
+
+
+  <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/posts">Writings</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#installationsetup">Installation&amp;setup</a></li>
+    <li><a href="#host-inventory">Host Inventory</a></li>
+    <li><a href="#cli-tools">CLI tools</a></li>
+    <li><a href="#playbook-a-yaml-file-that-can-be-excuted-by-ansible">Playbook: A yaml file that can be excuted by ansible</a></li>
+    <li><a href="#module">Module</a></li>
+  </ul>
+</nav>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      
+      <ul>
+  
+  
+    
+  
+  
+  <li>
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible%2f">
+      <i class="fab fa-facebook fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible%2f&text=Ansible%20Reading%20Notes">
+      <i class="fab fa-twitter fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible%2f&title=Ansible%20Reading%20Notes">
+      <i class="fab fa-linkedin fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible%2f&is_video=false&description=Ansible%20Reading%20Notes">
+      <i class="fab fa-pinterest fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="mailto:?subject=Ansible%20Reading%20Notes&body=Check out this article: https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible%2f">
+      <i class="fas fa-envelope fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible%2f&title=Ansible%20Reading%20Notes">
+      <i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible%2f&title=Ansible%20Reading%20Notes">
+      <i class="fab fa-reddit fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.stumbleupon.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible%2f&title=Ansible%20Reading%20Notes">
+      <i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://digg.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible%2f&title=Ansible%20Reading%20Notes">
+      <i class="fab fa-digg fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible%2f&name=Ansible%20Reading%20Notes&description=Installation%26amp%3bsetup%20%20Redhat%2fCentos%20need%20to%20Install%20EPEL%2c%20fedora%20has%20it%20in%20its%20default%20source%20Generate%20ssh%2c%20copy%20ssh%20to%20remote%2c%20save%20remote%20hosts%20to%20known_hosts%20%20Host%20Inventory%20%20default%20host%20file%3a%20%2fetc%2fansible%2fhosts%20We%20can%20use%20%5bgroup_name%5d%20to%20setup%20group%2c%20but%20it%26rsquo%3bs%20not%20required%20%5bwebservers%5d%20foo.example.com%20bar.example.com%20%20%20CLI%20tools%20%20ansible%20%26lt%3bhost%26gt%3b%20%5boptions%5d%20ansibel%20%26lt%3bhost%26gt%3b%20-m%20%26lt%3bmodules%26gt%3b%20%20Playbook%3a%20A%20yaml%20file%20that%20can%20be%20excuted%20by%20ansible%20%20ansible-playbook%20deploy.">
+      <i class="fab fa-tumblr fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible%2f&t=Ansible%20Reading%20Notes">
+      <i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;">
+          <i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;">
+          <i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;">
+          <i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">
+          <i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+
+  <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2021  You 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/posts">Writings</a></li>
+         
+        <li><a href="/tags">Tags</a></li>
+         
+        <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+  </div>
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+
+
+
+</html>

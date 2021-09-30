@@ -7,7 +7,34 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>You</copyright>
-    <lastBuildDate>Thu, 20 May 2021 00:11:23 +0800</lastBuildDate><atom:link href="https://kp0zhiqian.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 01 Sep 2021 00:18:57 +0800</lastBuildDate><atom:link href="https://kp0zhiqian.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>multi-queue</title>
+      <link>https://kp0zhiqian.github.io/tags/multi-queue/</link>
+      <pubDate>Wed, 01 Sep 2021 00:18:57 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/tags/multi-queue/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>nic</title>
+      <link>https://kp0zhiqian.github.io/tags/nic/</link>
+      <pubDate>Wed, 01 Sep 2021 00:18:57 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/tags/nic/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>queue</title>
+      <link>https://kp0zhiqian.github.io/tags/queue/</link>
+      <pubDate>Wed, 01 Sep 2021 00:18:57 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/tags/queue/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>ovs</title>
       <link>https://kp0zhiqian.github.io/tags/ovs/</link>
@@ -27,20 +54,38 @@
     </item>
     
     <item>
-      <title>leetcode</title>
-      <link>https://kp0zhiqian.github.io/tags/leetcode/</link>
-      <pubDate>Wed, 28 Apr 2021 00:11:23 +0800</pubDate>
-      
-      <guid>https://kp0zhiqian.github.io/tags/leetcode/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>系统</title>
       <link>https://kp0zhiqian.github.io/tags/%E7%B3%BB%E7%BB%9F/</link>
       <pubDate>Tue, 20 Oct 2020 00:11:23 +0800</pubDate>
       
       <guid>https://kp0zhiqian.github.io/tags/%E7%B3%BB%E7%BB%9F/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ansible</title>
+      <link>https://kp0zhiqian.github.io/tags/ansible/</link>
+      <pubDate>Wed, 30 Sep 2020 00:10:57 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/tags/ansible/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>automation</title>
+      <link>https://kp0zhiqian.github.io/tags/automation/</link>
+      <pubDate>Wed, 30 Sep 2020 00:10:57 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/tags/automation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>system</title>
+      <link>https://kp0zhiqian.github.io/tags/system/</link>
+      <pubDate>Wed, 30 Sep 2020 00:10:57 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/tags/system/</guid>
       <description></description>
     </item>
     

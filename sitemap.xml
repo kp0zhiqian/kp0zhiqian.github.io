@@ -4,21 +4,41 @@
   
   <url>
     <loc>https://kp0zhiqian.github.io/</loc>
-    <lastmod>2021-05-20T00:11:23+08:00</lastmod>
+    <lastmod>2021-09-01T00:18:57+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://kp0zhiqian.github.io/tags/ovs/</loc>
-    <lastmod>2021-05-20T00:11:23+08:00</lastmod>
+    <loc>https://kp0zhiqian.github.io/tags/multi-queue/</loc>
+    <lastmod>2021-09-01T00:18:57+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kp0zhiqian.github.io/tags/nic/</loc>
+    <lastmod>2021-09-01T00:18:57+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://kp0zhiqian.github.io/posts/</loc>
-    <lastmod>2021-05-20T00:11:23+08:00</lastmod>
+    <lastmod>2021-09-01T00:18:57+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kp0zhiqian.github.io/tags/queue/</loc>
+    <lastmod>2021-09-01T00:18:57+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://kp0zhiqian.github.io/tags/</loc>
+    <lastmod>2021-09-01T00:18:57+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kp0zhiqian.github.io/posts/nic-multi-queue/</loc>
+    <lastmod>2021-09-01T00:18:57+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kp0zhiqian.github.io/tags/ovs/</loc>
     <lastmod>2021-05-20T00:11:23+08:00</lastmod>
   </url>
   
@@ -38,16 +58,6 @@
   </url>
   
   <url>
-    <loc>https://kp0zhiqian.github.io/tags/leetcode/</loc>
-    <lastmod>2021-04-28T00:11:23+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://kp0zhiqian.github.io/posts/leetcode-01/</loc>
-    <lastmod>2021-04-28T00:11:23+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://kp0zhiqian.github.io/posts/hugepage/</loc>
     <lastmod>2020-10-20T00:11:23+08:00</lastmod>
   </url>
@@ -60,6 +70,26 @@
   <url>
     <loc>https://kp0zhiqian.github.io/tags/%E7%B3%BB%E7%BB%9F/</loc>
     <lastmod>2020-10-20T00:11:23+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kp0zhiqian.github.io/tags/ansible/</loc>
+    <lastmod>2020-09-30T00:10:57+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kp0zhiqian.github.io/posts/ansible/</loc>
+    <lastmod>2020-09-30T00:10:57+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kp0zhiqian.github.io/tags/automation/</loc>
+    <lastmod>2020-09-30T00:10:57+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kp0zhiqian.github.io/tags/system/</loc>
+    <lastmod>2020-09-30T00:10:57+08:00</lastmod>
   </url>
   
   <url>
@@ -77,11 +107,11 @@
   </url>
   
   <url>
-    <loc>https://kp0zhiqian.github.io/tags/xdp/</loc>
+    <loc>https://kp0zhiqian.github.io/posts/xdp-tech-talk-script/</loc>
   </url>
   
   <url>
-    <loc>https://kp0zhiqian.github.io/posts/xdp-blogs-archive/</loc>
+    <loc>https://kp0zhiqian.github.io/tags/xdp/</loc>
   </url>
   
 </urlset>
