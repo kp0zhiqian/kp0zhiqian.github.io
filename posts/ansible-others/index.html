@@ -10,10 +10,10 @@
   <meta name="googlebot" content="index,follow,snippet,archive">
   <meta property="og:title" content="Ansible Reading Notes - Others" />
 <meta property="og:description" content="lookup to access external file or database Basic usage:
---- - hosts: all remote_user: root gather_facts: false vars: contents: &#34;{{ lookup(&#39;file&#39;, &#39;data/plain.txt&#39;) }}&#34; we can also read other data:lookup(&#39;file|env|pipe|template|ini|csvfile|dig|&#39;)
+1 2 3 4 5 6  --- - hosts: all remote_user: root gather_facts: false vars: contents: &#34;{{ lookup(&#39;file&#39;, &#39;data/plain.txt&#39;) }}&#34;   we can also read other data:lookup(&#39;file|env|pipe|template|ini|csvfile|dig|&#39;)
 filter filter excute commands in the management node and get responds.
 Usage of filters:
-- hosts: localhost remote_user: root gather_facts: false vars: my_test_string: &#34;This is the testing string&#34; tasks: - name: &#34;quote {{ my_test_string }}&#34; debug: msg=&#34;echo {{ my_test_string | quote }}&#34; different filters:" />
+1 2 3 4 5 6 7 8  - hosts: localhost remote_user: root gather_facts: false vars: my_test_string: &#34;This is the testing string&#34; tasks: - name: &#34;quote {{ my_test_string }}&#34; debug: msg=&#34;echo {{ my_test_string | quote }}&#34;   different filters:" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://kp0zhiqian.github.io/posts/ansible-others/" />
 <meta property="article:published_time" content="2021-10-04T00:10:57+08:00" />
@@ -22,10 +22,10 @@ Usage of filters:
   <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Ansible Reading Notes - Others"/>
 <meta name="twitter:description" content="lookup to access external file or database Basic usage:
---- - hosts: all remote_user: root gather_facts: false vars: contents: &#34;{{ lookup(&#39;file&#39;, &#39;data/plain.txt&#39;) }}&#34; we can also read other data:lookup(&#39;file|env|pipe|template|ini|csvfile|dig|&#39;)
+1 2 3 4 5 6  --- - hosts: all remote_user: root gather_facts: false vars: contents: &#34;{{ lookup(&#39;file&#39;, &#39;data/plain.txt&#39;) }}&#34;   we can also read other data:lookup(&#39;file|env|pipe|template|ini|csvfile|dig|&#39;)
 filter filter excute commands in the management node and get responds.
 Usage of filters:
-- hosts: localhost remote_user: root gather_facts: false vars: my_test_string: &#34;This is the testing string&#34; tasks: - name: &#34;quote {{ my_test_string }}&#34; debug: msg=&#34;echo {{ my_test_string | quote }}&#34; different filters:"/>
+1 2 3 4 5 6 7 8  - hosts: localhost remote_user: root gather_facts: false vars: my_test_string: &#34;This is the testing string&#34; tasks: - name: &#34;quote {{ my_test_string }}&#34; debug: msg=&#34;echo {{ my_test_string | quote }}&#34;   different filters:"/>
 
   
   
@@ -154,7 +154,7 @@ Usage of filters:
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-others%2f&name=Ansible%20Reading%20Notes%20-%20Others&description=lookup%20to%20access%20external%20file%20or%20database%20Basic%20usage%3a%0a---%20-%20hosts%3a%20all%20remote_user%3a%20root%20gather_facts%3a%20false%20vars%3a%20contents%3a%20%26%2334%3b%7b%7b%20lookup%28%26%2339%3bfile%26%2339%3b%2c%20%26%2339%3bdata%2fplain.txt%26%2339%3b%29%20%7d%7d%26%2334%3b%20we%20can%20also%20read%20other%20data%3alookup%28%27file%7cenv%7cpipe%7ctemplate%7cini%7ccsvfile%7cdig%7c%27%29%0afilter%20filter%20excute%20commands%20in%20the%20management%20node%20and%20get%20responds.%0aUsage%20of%20filters%3a%0a-%20hosts%3a%20localhost%20remote_user%3a%20root%20gather_facts%3a%20false%20vars%3a%20my_test_string%3a%20%26%2334%3bThis%20is%20the%20testing%20string%26%2334%3b%20tasks%3a%20-%20name%3a%20%26%2334%3bquote%20%7b%7b%20my_test_string%20%7d%7d%26%2334%3b%20debug%3a%20msg%3d%26%2334%3becho%20%7b%7b%20my_test_string%20%7c%20quote%20%7d%7d%26%2334%3b%20different%20filters%3a">
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-others%2f&name=Ansible%20Reading%20Notes%20-%20Others&description=lookup%20to%20access%20external%20file%20or%20database%20Basic%20usage%3a%0a1%202%203%204%205%206%20%20---%20-%20hosts%3a%20all%20remote_user%3a%20root%20gather_facts%3a%20false%20vars%3a%20contents%3a%20%26%2334%3b%7b%7b%20lookup%28%26%2339%3bfile%26%2339%3b%2c%20%26%2339%3bdata%2fplain.txt%26%2339%3b%29%20%7d%7d%26%2334%3b%20%20%20we%20can%20also%20read%20other%20data%3alookup%28%27file%7cenv%7cpipe%7ctemplate%7cini%7ccsvfile%7cdig%7c%27%29%0afilter%20filter%20excute%20commands%20in%20the%20management%20node%20and%20get%20responds.%0aUsage%20of%20filters%3a%0a1%202%203%204%205%206%207%208%20%20-%20hosts%3a%20localhost%20remote_user%3a%20root%20gather_facts%3a%20false%20vars%3a%20my_test_string%3a%20%26%2334%3bThis%20is%20the%20testing%20string%26%2334%3b%20tasks%3a%20-%20name%3a%20%26%2334%3bquote%20%7b%7b%20my_test_string%20%7d%7d%26%2334%3b%20debug%3a%20msg%3d%26%2334%3becho%20%7b%7b%20my_test_string%20%7c%20quote%20%7d%7d%26%2334%3b%20%20%20different%20filters%3a">
       <i class="fab fa-tumblr " aria-hidden="true"></i>
     </a>
   </li>
@@ -215,17 +215,41 @@ Usage of filters:
     <div class="content" itemprop="articleBody">
       <h2 id="lookup-to-access-external-file-or-database"><code>lookup</code> to access external file or database</h2>
 <p>Basic usage:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="2"><a style="outline: none; text-decoration:none; color:inherit" href="#2">2</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="3"><a style="outline: none; text-decoration:none; color:inherit" href="#3">3</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="4"><a style="outline: none; text-decoration:none; color:inherit" href="#4">4</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="5"><a style="outline: none; text-decoration:none; color:inherit" href="#5">5</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="6"><a style="outline: none; text-decoration:none; color:inherit" href="#6">6</a>
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---
 - <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">all</span>
   <span style="color:#f92672">remote_user</span>: <span style="color:#ae81ff">root</span>
   <span style="color:#f92672">gather_facts</span>: <span style="color:#66d9ef">false</span>
   <span style="color:#f92672">vars</span>:
     <span style="color:#f92672">contents</span>: <span style="color:#e6db74">&#34;{{ lookup(&#39;file&#39;, &#39;data/plain.txt&#39;) }}&#34;</span>
-</code></pre></div><p>we can also read other data:<code>lookup('file|env|pipe|template|ini|csvfile|dig|')</code></p>
+</code></pre></td></tr></table>
+</div>
+</div><p>we can also read other data:<code>lookup('file|env|pipe|template|ini|csvfile|dig|')</code></p>
 <h2 id="filter">filter</h2>
 <p>filter excute commands in the management node and get responds.</p>
 <p>Usage of filters:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">- <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">localhost</span>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="2"><a style="outline: none; text-decoration:none; color:inherit" href="#2">2</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="3"><a style="outline: none; text-decoration:none; color:inherit" href="#3">3</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="4"><a style="outline: none; text-decoration:none; color:inherit" href="#4">4</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="5"><a style="outline: none; text-decoration:none; color:inherit" href="#5">5</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="6"><a style="outline: none; text-decoration:none; color:inherit" href="#6">6</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="7"><a style="outline: none; text-decoration:none; color:inherit" href="#7">7</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="8"><a style="outline: none; text-decoration:none; color:inherit" href="#8">8</a>
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">- <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">localhost</span>
   <span style="color:#f92672">remote_user</span>: <span style="color:#ae81ff">root</span>
   <span style="color:#f92672">gather_facts</span>: <span style="color:#66d9ef">false</span>
   <span style="color:#f92672">vars</span>:
@@ -233,7 +257,9 @@ Usage of filters:
   <span style="color:#f92672">tasks</span>:
     - <span style="color:#f92672">name</span>: <span style="color:#e6db74">&#34;quote {{ my_test_string }}&#34;</span>
       <span style="color:#f92672">debug</span>: <span style="color:#ae81ff">msg=&#34;echo {{ my_test_string | quote }}&#34;</span>
-</code></pre></div><p>different filters:</p>
+</code></pre></td></tr></table>
+</div>
+</div><p>different filters:</p>
 <ul>
 <li>quote</li>
 <li>default(n)</li>
@@ -372,7 +398,7 @@ Usage of filters:
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-others%2f&name=Ansible%20Reading%20Notes%20-%20Others&description=lookup%20to%20access%20external%20file%20or%20database%20Basic%20usage%3a%0a---%20-%20hosts%3a%20all%20remote_user%3a%20root%20gather_facts%3a%20false%20vars%3a%20contents%3a%20%26%2334%3b%7b%7b%20lookup%28%26%2339%3bfile%26%2339%3b%2c%20%26%2339%3bdata%2fplain.txt%26%2339%3b%29%20%7d%7d%26%2334%3b%20we%20can%20also%20read%20other%20data%3alookup%28%27file%7cenv%7cpipe%7ctemplate%7cini%7ccsvfile%7cdig%7c%27%29%0afilter%20filter%20excute%20commands%20in%20the%20management%20node%20and%20get%20responds.%0aUsage%20of%20filters%3a%0a-%20hosts%3a%20localhost%20remote_user%3a%20root%20gather_facts%3a%20false%20vars%3a%20my_test_string%3a%20%26%2334%3bThis%20is%20the%20testing%20string%26%2334%3b%20tasks%3a%20-%20name%3a%20%26%2334%3bquote%20%7b%7b%20my_test_string%20%7d%7d%26%2334%3b%20debug%3a%20msg%3d%26%2334%3becho%20%7b%7b%20my_test_string%20%7c%20quote%20%7d%7d%26%2334%3b%20different%20filters%3a">
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-others%2f&name=Ansible%20Reading%20Notes%20-%20Others&description=lookup%20to%20access%20external%20file%20or%20database%20Basic%20usage%3a%0a1%202%203%204%205%206%20%20---%20-%20hosts%3a%20all%20remote_user%3a%20root%20gather_facts%3a%20false%20vars%3a%20contents%3a%20%26%2334%3b%7b%7b%20lookup%28%26%2339%3bfile%26%2339%3b%2c%20%26%2339%3bdata%2fplain.txt%26%2339%3b%29%20%7d%7d%26%2334%3b%20%20%20we%20can%20also%20read%20other%20data%3alookup%28%27file%7cenv%7cpipe%7ctemplate%7cini%7ccsvfile%7cdig%7c%27%29%0afilter%20filter%20excute%20commands%20in%20the%20management%20node%20and%20get%20responds.%0aUsage%20of%20filters%3a%0a1%202%203%204%205%206%207%208%20%20-%20hosts%3a%20localhost%20remote_user%3a%20root%20gather_facts%3a%20false%20vars%3a%20my_test_string%3a%20%26%2334%3bThis%20is%20the%20testing%20string%26%2334%3b%20tasks%3a%20-%20name%3a%20%26%2334%3bquote%20%7b%7b%20my_test_string%20%7d%7d%26%2334%3b%20debug%3a%20msg%3d%26%2334%3becho%20%7b%7b%20my_test_string%20%7c%20quote%20%7d%7d%26%2334%3b%20%20%20different%20filters%3a">
       <i class="fab fa-tumblr fa-lg" aria-hidden="true"></i>
     </a>
   </li>

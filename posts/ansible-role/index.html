@@ -11,7 +11,7 @@
   <meta property="og:title" content="Ansible Reading Notes - Role" />
 <meta property="og:description" content="role role is the ansible playbook&rsquo;s package.
 we can also define pre_tasks and post_tasks to run tasks before and after role.
-Location of Role  in the role directory of current directory in the ANSIBLE_ROLES_PATH in the roles_path of ansible configuration file. default directory: /etc/ansible/roles  Use Role --- # file site.yml - hosts: all remote_user: root roles: - simple tasks: - name: Taks in site.yml debug: msg=&#34;This is a task in site." />
+Location of Role  in the role directory of current directory in the ANSIBLE_ROLES_PATH in the roles_path of ansible configuration file. default directory: /etc/ansible/roles  Use Role 1 2 3 4 5 6 7 8 9 10  --- # file site.yml - hosts: all remote_user: root roles: - simple tasks: - name: Taks in site." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://kp0zhiqian.github.io/posts/ansible-role/" />
 <meta property="article:published_time" content="2021-10-03T00:10:57+08:00" />
@@ -21,7 +21,7 @@ Location of Role  in the role directory of current directory in the ANSIBLE_ROLE
 <meta name="twitter:title" content="Ansible Reading Notes - Role"/>
 <meta name="twitter:description" content="role role is the ansible playbook&rsquo;s package.
 we can also define pre_tasks and post_tasks to run tasks before and after role.
-Location of Role  in the role directory of current directory in the ANSIBLE_ROLES_PATH in the roles_path of ansible configuration file. default directory: /etc/ansible/roles  Use Role --- # file site.yml - hosts: all remote_user: root roles: - simple tasks: - name: Taks in site.yml debug: msg=&#34;This is a task in site."/>
+Location of Role  in the role directory of current directory in the ANSIBLE_ROLES_PATH in the roles_path of ansible configuration file. default directory: /etc/ansible/roles  Use Role 1 2 3 4 5 6 7 8 9 10  --- # file site.yml - hosts: all remote_user: root roles: - simple tasks: - name: Taks in site."/>
 
   
   
@@ -156,7 +156,7 @@ Location of Role  in the role directory of current directory in the ANSIBLE_ROLE
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-role%2f&name=Ansible%20Reading%20Notes%20-%20Role&description=role%20role%20is%20the%20ansible%20playbook%26rsquo%3bs%20package.%0awe%20can%20also%20define%20pre_tasks%20and%20post_tasks%20to%20run%20tasks%20before%20and%20after%20role.%0aLocation%20of%20Role%20%20in%20the%20role%20directory%20of%20current%20directory%20in%20the%20ANSIBLE_ROLES_PATH%20in%20the%20roles_path%20of%20ansible%20configuration%20file.%20default%20directory%3a%20%2fetc%2fansible%2froles%20%20Use%20Role%20---%20%23%20file%20site.yml%20-%20hosts%3a%20all%20remote_user%3a%20root%20roles%3a%20-%20simple%20tasks%3a%20-%20name%3a%20Taks%20in%20site.yml%20debug%3a%20msg%3d%26%2334%3bThis%20is%20a%20task%20in%20site.">
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-role%2f&name=Ansible%20Reading%20Notes%20-%20Role&description=role%20role%20is%20the%20ansible%20playbook%26rsquo%3bs%20package.%0awe%20can%20also%20define%20pre_tasks%20and%20post_tasks%20to%20run%20tasks%20before%20and%20after%20role.%0aLocation%20of%20Role%20%20in%20the%20role%20directory%20of%20current%20directory%20in%20the%20ANSIBLE_ROLES_PATH%20in%20the%20roles_path%20of%20ansible%20configuration%20file.%20default%20directory%3a%20%2fetc%2fansible%2froles%20%20Use%20Role%201%202%203%204%205%206%207%208%209%2010%20%20---%20%23%20file%20site.yml%20-%20hosts%3a%20all%20remote_user%3a%20root%20roles%3a%20-%20simple%20tasks%3a%20-%20name%3a%20Taks%20in%20site.">
       <i class="fab fa-tumblr " aria-hidden="true"></i>
     </a>
   </li>
@@ -232,7 +232,21 @@ Location of Role  in the role directory of current directory in the ANSIBLE_ROLE
 <li>default directory: <code>/etc/ansible/roles</code></li>
 </ul>
 <h2 id="use-role">Use Role</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1"> 1</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="2"><a style="outline: none; text-decoration:none; color:inherit" href="#2"> 2</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="3"><a style="outline: none; text-decoration:none; color:inherit" href="#3"> 3</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="4"><a style="outline: none; text-decoration:none; color:inherit" href="#4"> 4</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="5"><a style="outline: none; text-decoration:none; color:inherit" href="#5"> 5</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="6"><a style="outline: none; text-decoration:none; color:inherit" href="#6"> 6</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="7"><a style="outline: none; text-decoration:none; color:inherit" href="#7"> 7</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="8"><a style="outline: none; text-decoration:none; color:inherit" href="#8"> 8</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="9"><a style="outline: none; text-decoration:none; color:inherit" href="#9"> 9</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="10"><a style="outline: none; text-decoration:none; color:inherit" href="#10">10</a>
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---
 <span style="color:#75715e"># file site.yml</span>
 
 - <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">all</span>
@@ -242,16 +256,41 @@ Location of Role  in the role directory of current directory in the ANSIBLE_ROLE
   <span style="color:#f92672">tasks</span>:
     - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Taks in site.yml</span>
       <span style="color:#f92672">debug</span>: <span style="color:#ae81ff">msg=&#34;This is a task in site.yml&#34;</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---
+</code></pre></td></tr></table>
+</div>
+</div><div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="2"><a style="outline: none; text-decoration:none; color:inherit" href="#2">2</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="3"><a style="outline: none; text-decoration:none; color:inherit" href="#3">3</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="4"><a style="outline: none; text-decoration:none; color:inherit" href="#4">4</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="5"><a style="outline: none; text-decoration:none; color:inherit" href="#5">5</a>
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---
 <span style="color:#75715e"># foles/simple/tasks/main.yml</span>
 
 - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Task in role</span>
   <span style="color:#f92672">debug</span>: <span style="color:#ae81ff">msg=&#34;Simple role&#34;</span>
-</code></pre></div><h3 id="pre_task-and-post_task">pre_task and post_task</h3>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="pre_task-and-post_task">pre_task and post_task</h3>
 <p>we can use pre_task and post_task to do something before/after the role</p>
 <h3 id="use-roles-params">Use role&rsquo;s params</h3>
 <p>Use <code>vars</code> to pass params to role.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="2"><a style="outline: none; text-decoration:none; color:inherit" href="#2">2</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="3"><a style="outline: none; text-decoration:none; color:inherit" href="#3">3</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="4"><a style="outline: none; text-decoration:none; color:inherit" href="#4">4</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="5"><a style="outline: none; text-decoration:none; color:inherit" href="#5">5</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="6"><a style="outline: none; text-decoration:none; color:inherit" href="#6">6</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="7"><a style="outline: none; text-decoration:none; color:inherit" href="#7">7</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="8"><a style="outline: none; text-decoration:none; color:inherit" href="#8">8</a>
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---
 - <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">all</span>
   <span style="color:#f92672">remote_user</span>: <span style="color:#ae81ff">root</span>
   <span style="color:#f92672">roles</span>:
@@ -259,8 +298,23 @@ Location of Role  in the role directory of current directory in the ANSIBLE_ROLE
       <span style="color:#f92672">vars</span>:
         <span style="color:#f92672">ex_param</span>: <span style="color:#e6db74">&#34;test1&#34;</span>
         <span style="color:#f92672">in_param</span>: <span style="color:#e6db74">&#34;test2&#34;</span>
-</code></pre></div><p>Use <code>when</code></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---
+</code></pre></td></tr></table>
+</div>
+</div><p>Use <code>when</code></p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="2"><a style="outline: none; text-decoration:none; color:inherit" href="#2">2</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="3"><a style="outline: none; text-decoration:none; color:inherit" href="#3">3</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="4"><a style="outline: none; text-decoration:none; color:inherit" href="#4">4</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="5"><a style="outline: none; text-decoration:none; color:inherit" href="#5">5</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="6"><a style="outline: none; text-decoration:none; color:inherit" href="#6">6</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="7"><a style="outline: none; text-decoration:none; color:inherit" href="#7">7</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="8"><a style="outline: none; text-decoration:none; color:inherit" href="#8">8</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="9"><a style="outline: none; text-decoration:none; color:inherit" href="#9">9</a>
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---
 - <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">all</span>
   <span style="color:#f92672">remote_user</span>: <span style="color:#ae81ff">root</span>
   <span style="color:#f92672">roles</span>:
@@ -269,9 +323,33 @@ Location of Role  in the role directory of current directory in the ANSIBLE_ROLE
         <span style="color:#f92672">ex_param</span>: <span style="color:#e6db74">&#34;test1&#34;</span>
         <span style="color:#f92672">in_param</span>: <span style="color:#e6db74">&#34;test2&#34;</span>
       <span style="color:#f92672">when</span>: <span style="color:#e6db74">&#34;ansible_os_family == &#39;Debian&#39;&#34;</span>
-</code></pre></div><h2 id="how-to-write-role">How to write role</h2>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="how-to-write-role">How to write role</h2>
 <p>typical role directory structure:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># playbooks</span>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1"> 1</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="2"><a style="outline: none; text-decoration:none; color:inherit" href="#2"> 2</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="3"><a style="outline: none; text-decoration:none; color:inherit" href="#3"> 3</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="4"><a style="outline: none; text-decoration:none; color:inherit" href="#4"> 4</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="5"><a style="outline: none; text-decoration:none; color:inherit" href="#5"> 5</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="6"><a style="outline: none; text-decoration:none; color:inherit" href="#6"> 6</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="7"><a style="outline: none; text-decoration:none; color:inherit" href="#7"> 7</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="8"><a style="outline: none; text-decoration:none; color:inherit" href="#8"> 8</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="9"><a style="outline: none; text-decoration:none; color:inherit" href="#9"> 9</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="10"><a style="outline: none; text-decoration:none; color:inherit" href="#10">10</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="11"><a style="outline: none; text-decoration:none; color:inherit" href="#11">11</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="12"><a style="outline: none; text-decoration:none; color:inherit" href="#12">12</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="13"><a style="outline: none; text-decoration:none; color:inherit" href="#13">13</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="14"><a style="outline: none; text-decoration:none; color:inherit" href="#14">14</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="15"><a style="outline: none; text-decoration:none; color:inherit" href="#15">15</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="16"><a style="outline: none; text-decoration:none; color:inherit" href="#16">16</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="17"><a style="outline: none; text-decoration:none; color:inherit" href="#17">17</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="18"><a style="outline: none; text-decoration:none; color:inherit" href="#18">18</a>
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># playbooks</span>
 site.yml
 webservers.yml
 fooservers.yml
@@ -289,7 +367,9 @@ roles/
         tasks/
         defaults/
         meta/
-</code></pre></div><blockquote>
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
 <p>By default Ansible will look in each directory within a role for a main.yml file for relevant content (also <code>main.yaml</code> and <code>main</code>):</p>
 <ul>
 <li><code>tasks/main.yml</code> - the main list of tasks that the role executes.</li>
@@ -333,9 +413,17 @@ roles/
 <p>There&rsquo;re 2 types of resources in role, <code>main.yml</code> under these directories and other <code>yaml</code> files.</p>
 <h2 id="dependencies">Dependencies</h2>
 <p>we can use</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">dependencies</span>:
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="2"><a style="outline: none; text-decoration:none; color:inherit" href="#2">2</a>
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">dependencies</span>:
 - {<span style="color:#f92672">role</span>: <span style="color:#ae81ff">common}</span>
-</code></pre></div><p>to add dependencies.</p>
+</code></pre></td></tr></table>
+</div>
+</div><p>to add dependencies.</p>
 
     </div>
   </article>
@@ -435,7 +523,7 @@ roles/
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-role%2f&name=Ansible%20Reading%20Notes%20-%20Role&description=role%20role%20is%20the%20ansible%20playbook%26rsquo%3bs%20package.%0awe%20can%20also%20define%20pre_tasks%20and%20post_tasks%20to%20run%20tasks%20before%20and%20after%20role.%0aLocation%20of%20Role%20%20in%20the%20role%20directory%20of%20current%20directory%20in%20the%20ANSIBLE_ROLES_PATH%20in%20the%20roles_path%20of%20ansible%20configuration%20file.%20default%20directory%3a%20%2fetc%2fansible%2froles%20%20Use%20Role%20---%20%23%20file%20site.yml%20-%20hosts%3a%20all%20remote_user%3a%20root%20roles%3a%20-%20simple%20tasks%3a%20-%20name%3a%20Taks%20in%20site.yml%20debug%3a%20msg%3d%26%2334%3bThis%20is%20a%20task%20in%20site.">
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-role%2f&name=Ansible%20Reading%20Notes%20-%20Role&description=role%20role%20is%20the%20ansible%20playbook%26rsquo%3bs%20package.%0awe%20can%20also%20define%20pre_tasks%20and%20post_tasks%20to%20run%20tasks%20before%20and%20after%20role.%0aLocation%20of%20Role%20%20in%20the%20role%20directory%20of%20current%20directory%20in%20the%20ANSIBLE_ROLES_PATH%20in%20the%20roles_path%20of%20ansible%20configuration%20file.%20default%20directory%3a%20%2fetc%2fansible%2froles%20%20Use%20Role%201%202%203%204%205%206%207%208%209%2010%20%20---%20%23%20file%20site.yml%20-%20hosts%3a%20all%20remote_user%3a%20root%20roles%3a%20-%20simple%20tasks%3a%20-%20name%3a%20Taks%20in%20site.">
       <i class="fab fa-tumblr fa-lg" aria-hidden="true"></i>
     </a>
   </li>

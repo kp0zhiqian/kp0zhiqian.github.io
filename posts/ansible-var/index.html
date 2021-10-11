@@ -9,11 +9,10 @@
   <meta name="robots" content="all,follow">
   <meta name="googlebot" content="index,follow,snippet,archive">
   <meta property="og:title" content="Ansible Reading Notes - Var" />
-<meta property="og:description" content="Var Define Var in Playbook vars: http_port: 80 ... tasks: - name: xxx firewalld: port={{http_port}} Define Var in File file:
-http_port:80 usage
-- hosts: web vars_files: - vars/server_vars.yml Var Trap sometimes YAML and ansible playbook cannot work together. when it report syntex error, you could try add quote.
-Facts Facts are the information of remote hosts collected by &lsquo;setup&rsquo; module.
-we can directly use the vars in ansible all -m setup -u root like {{some_vars}}" />
+<meta property="og:description" content="Var Define Var in Playbook 1 2 3 4 5 6 7  vars: http_port: 80 ... tasks: - name: xxx firewalld: port={{http_port}}   Define Var in File file:
+1  http_port:80   usage
+1 2 3  - hosts: web vars_files: - vars/server_vars.yml   Var Trap sometimes YAML and ansible playbook cannot work together. when it report syntex error, you could try add quote.
+Facts Facts are the information of remote hosts collected by &lsquo;setup&rsquo; module." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://kp0zhiqian.github.io/posts/ansible-var/" />
 <meta property="article:published_time" content="2021-10-01T00:10:57+08:00" />
@@ -21,11 +20,10 @@ we can directly use the vars in ansible all -m setup -u root like {{some_vars}}"
 
   <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Ansible Reading Notes - Var"/>
-<meta name="twitter:description" content="Var Define Var in Playbook vars: http_port: 80 ... tasks: - name: xxx firewalld: port={{http_port}} Define Var in File file:
-http_port:80 usage
-- hosts: web vars_files: - vars/server_vars.yml Var Trap sometimes YAML and ansible playbook cannot work together. when it report syntex error, you could try add quote.
-Facts Facts are the information of remote hosts collected by &lsquo;setup&rsquo; module.
-we can directly use the vars in ansible all -m setup -u root like {{some_vars}}"/>
+<meta name="twitter:description" content="Var Define Var in Playbook 1 2 3 4 5 6 7  vars: http_port: 80 ... tasks: - name: xxx firewalld: port={{http_port}}   Define Var in File file:
+1  http_port:80   usage
+1 2 3  - hosts: web vars_files: - vars/server_vars.yml   Var Trap sometimes YAML and ansible playbook cannot work together. when it report syntex error, you could try add quote.
+Facts Facts are the information of remote hosts collected by &lsquo;setup&rsquo; module."/>
 
   
   
@@ -160,7 +158,7 @@ we can directly use the vars in ansible all -m setup -u root like {{some_vars}}"
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-var%2f&name=Ansible%20Reading%20Notes%20-%20Var&description=Var%20Define%20Var%20in%20Playbook%20vars%3a%20http_port%3a%2080%20...%20tasks%3a%20-%20name%3a%20xxx%20firewalld%3a%20port%3d%7b%7bhttp_port%7d%7d%20Define%20Var%20in%20File%20file%3a%0ahttp_port%3a80%20usage%0a-%20hosts%3a%20web%20vars_files%3a%20-%20vars%2fserver_vars.yml%20Var%20Trap%20sometimes%20YAML%20and%20ansible%20playbook%20cannot%20work%20together.%20when%20it%20report%20syntex%20error%2c%20you%20could%20try%20add%20quote.%0aFacts%20Facts%20are%20the%20information%20of%20remote%20hosts%20collected%20by%20%26lsquo%3bsetup%26rsquo%3b%20module.%0awe%20can%20directly%20use%20the%20vars%20in%20ansible%20all%20-m%20setup%20-u%20root%20like%20%7b%7bsome_vars%7d%7d">
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-var%2f&name=Ansible%20Reading%20Notes%20-%20Var&description=Var%20Define%20Var%20in%20Playbook%201%202%203%204%205%206%207%20%20vars%3a%20http_port%3a%2080%20...%20tasks%3a%20-%20name%3a%20xxx%20firewalld%3a%20port%3d%7b%7bhttp_port%7d%7d%20%20%20Define%20Var%20in%20File%20file%3a%0a1%20%20http_port%3a80%20%20%20usage%0a1%202%203%20%20-%20hosts%3a%20web%20vars_files%3a%20-%20vars%2fserver_vars.yml%20%20%20Var%20Trap%20sometimes%20YAML%20and%20ansible%20playbook%20cannot%20work%20together.%20when%20it%20report%20syntex%20error%2c%20you%20could%20try%20add%20quote.%0aFacts%20Facts%20are%20the%20information%20of%20remote%20hosts%20collected%20by%20%26lsquo%3bsetup%26rsquo%3b%20module.">
       <i class="fab fa-tumblr " aria-hidden="true"></i>
     </a>
   </li>
@@ -225,21 +223,50 @@ we can directly use the vars in ansible all -m setup -u root like {{some_vars}}"
     <div class="content" itemprop="articleBody">
       <h1 id="var">Var</h1>
 <h2 id="define-var-in-playbook">Define Var in Playbook</h2>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vars:
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="2"><a style="outline: none; text-decoration:none; color:inherit" href="#2">2</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="3"><a style="outline: none; text-decoration:none; color:inherit" href="#3">3</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="4"><a style="outline: none; text-decoration:none; color:inherit" href="#4">4</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="5"><a style="outline: none; text-decoration:none; color:inherit" href="#5">5</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="6"><a style="outline: none; text-decoration:none; color:inherit" href="#6">6</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="7"><a style="outline: none; text-decoration:none; color:inherit" href="#7">7</a>
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vars:
   http_port: <span style="color:#ae81ff">80</span>
 ...
 tasks:
 - name: xxx
   firewalld: port<span style="color:#f92672">={{</span>http_port<span style="color:#f92672">}}</span>
   
-</code></pre></div><h2 id="define-var-in-file">Define Var in File</h2>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="define-var-in-file">Define Var in File</h2>
 <p>file:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">http_port:80
-</code></pre></div><p>usage</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">- hosts: web
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">http_port:80
+</code></pre></td></tr></table>
+</div>
+</div><p>usage</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="2"><a style="outline: none; text-decoration:none; color:inherit" href="#2">2</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="3"><a style="outline: none; text-decoration:none; color:inherit" href="#3">3</a>
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">- hosts: web
   vars_files:
     - vars/server_vars.yml
-</code></pre></div><h2 id="var-trap">Var Trap</h2>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="var-trap">Var Trap</h2>
 <p>sometimes YAML and ansible playbook cannot work together. when it report syntex error, you could try add quote.</p>
 <h2 id="facts">Facts</h2>
 <p>Facts are the information of remote hosts collected by &lsquo;setup&rsquo; module.</p>
@@ -247,17 +274,37 @@ tasks:
 <p>the vars we collected will be in a json format, we could use <code>.</code> to access different level of json like <code>{{ansible_ens3.ipv4.address}}</code></p>
 <h2 id="register-vars">Register Vars</h2>
 <p>we can register var in the playbook and use it later.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">- hosts: web
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="2"><a style="outline: none; text-decoration:none; color:inherit" href="#2">2</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="3"><a style="outline: none; text-decoration:none; color:inherit" href="#3">3</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="4"><a style="outline: none; text-decoration:none; color:inherit" href="#4">4</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="5"><a style="outline: none; text-decoration:none; color:inherit" href="#5">5</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="6"><a style="outline: none; text-decoration:none; color:inherit" href="#6">6</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="7"><a style="outline: none; text-decoration:none; color:inherit" href="#7">7</a>
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">- hosts: web
   tasks:
     - shell: ls
       register: result
       ignore_errors: True
     - shell: echo <span style="color:#e6db74">&#34;{{ result.stdout }}&#34;</span>
       when: result.rc <span style="color:#f92672">==</span> <span style="color:#ae81ff">5</span>
-</code></pre></div><h2 id="pass-vars-through-cmd">Pass Vars Through CMD</h2>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="pass-vars-through-cmd">Pass Vars Through CMD</h2>
 <p>we could use</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ansible-playbook xxx.yml --extra-vars <span style="color:#e6db74">&#34;hsots=web user=root&#34;</span>
-</code></pre></div><p>to pass vars to playbook.yml</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1">1</a>
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ansible-playbook xxx.yml --extra-vars <span style="color:#e6db74">&#34;hsots=web user=root&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>to pass vars to playbook.yml</p>
 <p>we could use vars in playbook just like other type of vars</p>
 <h2 id="var-scope">Var Scope</h2>
 <ul>
@@ -406,7 +453,7 @@ tasks:
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-var%2f&name=Ansible%20Reading%20Notes%20-%20Var&description=Var%20Define%20Var%20in%20Playbook%20vars%3a%20http_port%3a%2080%20...%20tasks%3a%20-%20name%3a%20xxx%20firewalld%3a%20port%3d%7b%7bhttp_port%7d%7d%20Define%20Var%20in%20File%20file%3a%0ahttp_port%3a80%20usage%0a-%20hosts%3a%20web%20vars_files%3a%20-%20vars%2fserver_vars.yml%20Var%20Trap%20sometimes%20YAML%20and%20ansible%20playbook%20cannot%20work%20together.%20when%20it%20report%20syntex%20error%2c%20you%20could%20try%20add%20quote.%0aFacts%20Facts%20are%20the%20information%20of%20remote%20hosts%20collected%20by%20%26lsquo%3bsetup%26rsquo%3b%20module.%0awe%20can%20directly%20use%20the%20vars%20in%20ansible%20all%20-m%20setup%20-u%20root%20like%20%7b%7bsome_vars%7d%7d">
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-var%2f&name=Ansible%20Reading%20Notes%20-%20Var&description=Var%20Define%20Var%20in%20Playbook%201%202%203%204%205%206%207%20%20vars%3a%20http_port%3a%2080%20...%20tasks%3a%20-%20name%3a%20xxx%20firewalld%3a%20port%3d%7b%7bhttp_port%7d%7d%20%20%20Define%20Var%20in%20File%20file%3a%0a1%20%20http_port%3a80%20%20%20usage%0a1%202%203%20%20-%20hosts%3a%20web%20vars_files%3a%20-%20vars%2fserver_vars.yml%20%20%20Var%20Trap%20sometimes%20YAML%20and%20ansible%20playbook%20cannot%20work%20together.%20when%20it%20report%20syntex%20error%2c%20you%20could%20try%20add%20quote.%0aFacts%20Facts%20are%20the%20information%20of%20remote%20hosts%20collected%20by%20%26lsquo%3bsetup%26rsquo%3b%20module.">
       <i class="fab fa-tumblr fa-lg" aria-hidden="true"></i>
     </a>
   </li>
