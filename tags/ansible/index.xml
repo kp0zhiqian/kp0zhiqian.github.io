@@ -7,14 +7,64 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>You</copyright>
-    <lastBuildDate>Wed, 30 Sep 2020 00:10:57 +0800</lastBuildDate><atom:link href="https://kp0zhiqian.github.io/tags/ansible/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 04 Oct 2021 00:10:57 +0800</lastBuildDate><atom:link href="https://kp0zhiqian.github.io/tags/ansible/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Ansible Reading Notes</title>
-      <link>https://kp0zhiqian.github.io/posts/ansible/</link>
-      <pubDate>Wed, 30 Sep 2020 00:10:57 +0800</pubDate>
+      <title>Ansible Reading Notes - Others</title>
+      <link>https://kp0zhiqian.github.io/posts/ansible-others/</link>
+      <pubDate>Mon, 04 Oct 2021 00:10:57 +0800</pubDate>
       
-      <guid>https://kp0zhiqian.github.io/posts/ansible/</guid>
-      <description>Installation&amp;amp;setup  Redhat/Centos need to Install EPEL, fedora has it in its default source Generate ssh, copy ssh to remote, save remote hosts to known_hosts  Host Inventory  default host file: /etc/ansible/hosts We can use [group_name] to setup group, but it&amp;rsquo;s not required [webservers] foo.example.com bar.example.com   CLI tools  ansible &amp;lt;host&amp;gt; [options] ansibel &amp;lt;host&amp;gt; -m &amp;lt;modules&amp;gt;  Playbook: A yaml file that can be excuted by ansible  ansible-playbook deploy.</description>
+      <guid>https://kp0zhiqian.github.io/posts/ansible-others/</guid>
+      <description>lookup to access external file or database Basic usage:
+--- - hosts: all remote_user: root gather_facts: false vars: contents: &amp;#34;{{ lookup(&amp;#39;file&amp;#39;, &amp;#39;data/plain.txt&amp;#39;) }}&amp;#34; we can also read other data:lookup(&#39;file|env|pipe|template|ini|csvfile|dig|&#39;)
+filter filter excute commands in the management node and get responds.
+Usage of filters:
+- hosts: localhost remote_user: root gather_facts: false vars: my_test_string: &amp;#34;This is the testing string&amp;#34; tasks: - name: &amp;#34;quote {{ my_test_string }}&amp;#34; debug: msg=&amp;#34;echo {{ my_test_string | quote }}&amp;#34; different filters:</description>
+    </item>
+    
+    <item>
+      <title>Ansible Reading Notes - Role</title>
+      <link>https://kp0zhiqian.github.io/posts/ansible-role/</link>
+      <pubDate>Sun, 03 Oct 2021 00:10:57 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/posts/ansible-role/</guid>
+      <description>role role is the ansible playbook&amp;rsquo;s package.
+we can also define pre_tasks and post_tasks to run tasks before and after role.
+Location of Role  in the role directory of current directory in the ANSIBLE_ROLES_PATH in the roles_path of ansible configuration file. default directory: /etc/ansible/roles  Use Role --- # file site.yml - hosts: all remote_user: root roles: - simple tasks: - name: Taks in site.yml debug: msg=&amp;#34;This is a task in site.</description>
+    </item>
+    
+    <item>
+      <title>Ansible Reading Notes - Playbook&amp;Role</title>
+      <link>https://kp0zhiqian.github.io/posts/ansible-playbook/</link>
+      <pubDate>Sat, 02 Oct 2021 00:10:57 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/posts/ansible-playbook/</guid>
+      <description>Playbook: A yaml file that can be excuted by ansible Before playbook, we need to understand YAML: what is yaml
+CMD  ansible-playbook deploy.yml ansible-playbook playbook.yml --verbose ansible-playbook playbook.yml --list-hosts ansible-playbook playbook.yml -f 10  Basic Playbook Structure playbook is basically about 3 questions:
+ what hosts do we want to run playbook on? what tasks do we want to run? what aftercare tasks do we want to run?  Q1: what hosts do we want to run playbook on?</description>
+    </item>
+    
+    <item>
+      <title>Ansible Reading Notes - Var</title>
+      <link>https://kp0zhiqian.github.io/posts/ansible-var/</link>
+      <pubDate>Fri, 01 Oct 2021 00:10:57 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/posts/ansible-var/</guid>
+      <description>Var Define Var in Playbook vars: http_port: 80 ... tasks: - name: xxx firewalld: port={{http_port}} Define Var in File file:
+http_port:80 usage
+- hosts: web vars_files: - vars/server_vars.yml Var Trap sometimes YAML and ansible playbook cannot work together. when it report syntex error, you could try add quote.
+Facts Facts are the information of remote hosts collected by &amp;lsquo;setup&amp;rsquo; module.
+we can directly use the vars in ansible all -m setup -u root like {{some_vars}}</description>
+    </item>
+    
+    <item>
+      <title>Ansible Reading Notes - Basic</title>
+      <link>https://kp0zhiqian.github.io/posts/ansible-basic/</link>
+      <pubDate>Thu, 30 Sep 2021 00:10:57 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/posts/ansible-basic/</guid>
+      <description>Installation&amp;amp;setup  Redhat/Centos need to Install EPEL, fedora has it in its default source Generate ssh, copy ssh to remote, save remote hosts to known_hosts  Configuration default configuration file: /etc/ansible/ansible.cfg
+basic options:
+ inventory: path to host list file library: path to extra module remote_tmp: remote host temp files path local_tmp: management node temp fiels path  configuration file priority Ansible will try to find configuration file in below order:</description>
     </item>
     
   </channel>

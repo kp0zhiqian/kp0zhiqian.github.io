@@ -7,14 +7,75 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>You</copyright>
-    <lastBuildDate>Wed, 01 Sep 2021 00:18:57 +0800</lastBuildDate><atom:link href="https://kp0zhiqian.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 04 Oct 2021 00:10:57 +0800</lastBuildDate><atom:link href="https://kp0zhiqian.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>网卡多队列</title>
-      <link>https://kp0zhiqian.github.io/posts/nic-multi-queue/</link>
-      <pubDate>Wed, 01 Sep 2021 00:18:57 +0800</pubDate>
+      <title>Ansible Reading Notes - Others</title>
+      <link>https://kp0zhiqian.github.io/posts/ansible-others/</link>
+      <pubDate>Mon, 04 Oct 2021 00:10:57 +0800</pubDate>
       
-      <guid>https://kp0zhiqian.github.io/posts/nic-multi-queue/</guid>
-      <description></description>
+      <guid>https://kp0zhiqian.github.io/posts/ansible-others/</guid>
+      <description>lookup to access external file or database Basic usage:
+--- - hosts: all remote_user: root gather_facts: false vars: contents: &amp;#34;{{ lookup(&amp;#39;file&amp;#39;, &amp;#39;data/plain.txt&amp;#39;) }}&amp;#34; we can also read other data:lookup(&#39;file|env|pipe|template|ini|csvfile|dig|&#39;)
+filter filter excute commands in the management node and get responds.
+Usage of filters:
+- hosts: localhost remote_user: root gather_facts: false vars: my_test_string: &amp;#34;This is the testing string&amp;#34; tasks: - name: &amp;#34;quote {{ my_test_string }}&amp;#34; debug: msg=&amp;#34;echo {{ my_test_string | quote }}&amp;#34; different filters:</description>
+    </item>
+    
+    <item>
+      <title>Ansible Reading Notes - Role</title>
+      <link>https://kp0zhiqian.github.io/posts/ansible-role/</link>
+      <pubDate>Sun, 03 Oct 2021 00:10:57 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/posts/ansible-role/</guid>
+      <description>role role is the ansible playbook&amp;rsquo;s package.
+we can also define pre_tasks and post_tasks to run tasks before and after role.
+Location of Role  in the role directory of current directory in the ANSIBLE_ROLES_PATH in the roles_path of ansible configuration file. default directory: /etc/ansible/roles  Use Role --- # file site.yml - hosts: all remote_user: root roles: - simple tasks: - name: Taks in site.yml debug: msg=&amp;#34;This is a task in site.</description>
+    </item>
+    
+    <item>
+      <title>Ansible Reading Notes - Playbook&amp;Role</title>
+      <link>https://kp0zhiqian.github.io/posts/ansible-playbook/</link>
+      <pubDate>Sat, 02 Oct 2021 00:10:57 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/posts/ansible-playbook/</guid>
+      <description>Playbook: A yaml file that can be excuted by ansible Before playbook, we need to understand YAML: what is yaml
+CMD  ansible-playbook deploy.yml ansible-playbook playbook.yml --verbose ansible-playbook playbook.yml --list-hosts ansible-playbook playbook.yml -f 10  Basic Playbook Structure playbook is basically about 3 questions:
+ what hosts do we want to run playbook on? what tasks do we want to run? what aftercare tasks do we want to run?  Q1: what hosts do we want to run playbook on?</description>
+    </item>
+    
+    <item>
+      <title>Ansible Reading Notes - Var</title>
+      <link>https://kp0zhiqian.github.io/posts/ansible-var/</link>
+      <pubDate>Fri, 01 Oct 2021 00:10:57 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/posts/ansible-var/</guid>
+      <description>Var Define Var in Playbook vars: http_port: 80 ... tasks: - name: xxx firewalld: port={{http_port}} Define Var in File file:
+http_port:80 usage
+- hosts: web vars_files: - vars/server_vars.yml Var Trap sometimes YAML and ansible playbook cannot work together. when it report syntex error, you could try add quote.
+Facts Facts are the information of remote hosts collected by &amp;lsquo;setup&amp;rsquo; module.
+we can directly use the vars in ansible all -m setup -u root like {{some_vars}}</description>
+    </item>
+    
+    <item>
+      <title>Ansible Reading Notes - Basic</title>
+      <link>https://kp0zhiqian.github.io/posts/ansible-basic/</link>
+      <pubDate>Thu, 30 Sep 2021 00:10:57 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/posts/ansible-basic/</guid>
+      <description>Installation&amp;amp;setup  Redhat/Centos need to Install EPEL, fedora has it in its default source Generate ssh, copy ssh to remote, save remote hosts to known_hosts  Configuration default configuration file: /etc/ansible/ansible.cfg
+basic options:
+ inventory: path to host list file library: path to extra module remote_tmp: remote host temp files path local_tmp: management node temp fiels path  configuration file priority Ansible will try to find configuration file in below order:</description>
+    </item>
+    
+    <item>
+      <title>Transcript of XDP Tech Talk</title>
+      <link>https://kp0zhiqian.github.io/posts/xdp-tech-talk-script/</link>
+      <pubDate>Fri, 21 May 2021 00:11:23 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/posts/xdp-tech-talk-script/</guid>
+      <description>This is the transcript of my XDP 5 mins tech talk in QE all hands. Only for sharing and archiving.
+ XDP is a technology that can achieve high-speed networking performance. Allowing packets to be reflected, filtered, or redirected, but without traversing kernel networking stack.
+After hearing this, some may think: Oh, I’ve heard of this! Like the famous DPDK, I can bypass the Kernel and do whatever I want in userspace to the incoming packets.</description>
     </item>
     
     <item>
@@ -40,52 +101,12 @@ Checksum Imagine you&amp;rsquo;re designing a reliable transport protocol. You&a
     </item>
     
     <item>
-      <title>理解Hugepage</title>
+      <title>Understanding Hugepage</title>
       <link>https://kp0zhiqian.github.io/posts/hugepage/</link>
       <pubDate>Tue, 20 Oct 2020 00:11:23 +0800</pubDate>
       
       <guid>https://kp0zhiqian.github.io/posts/hugepage/</guid>
-      <description>Hugepage Linux中的虚拟内存 在任务处理中，多个进程对内存的操作会有冲突的问题，为了解决这个问题，则提出了虚拟内存的概念。在进程开始运行时，操作系统会给进程分配虚拟内存地址供进程使用。而操作系统会将这部分虚拟内存地址根据进程的使用情况，来映射到具体的物理内存地址上。而因为有了这个映射关系，则操作系统就需要维护一个映射表。但是，如果将虚拟内存的地址一对一的映射到物理内存上，则需要维护的映射表的大小就太大了，所以为了解决这个问题，则引出了分页和页表的概念。
-Linux中的分页和页表 在Linux的内存管理中，为了节省空间，操作系统会在启动的时候将物理内存以默认4k的大小分割成各个页。而后在为虚拟内存分配物理内存时，都以页为单位。这样一来，虚拟内存到物理内存的这张映射表的大小就会小了很多。而对于某些大内存的情况，操作系统还设计了多级的映射表，这样映射表的大小又进一步的减小。这虚拟内存页到物理内存页的映射表，则被称为页表。
-Hugepages的来源 由上面我们可以知道，操作系统默认情况下会将内存以4k为单位分成不同的页。但是，在内存非常大的情况下，页的数量也会变的特别多，页的数量变大时，CPU检索内存地址的效率也会下降。所以，为了解决这个问题，只有增大页的大小，以此来减少页的数量，提高检索效率。这也就是Hugepages的由来。我们可以将Hugepages定义为2m, 4m, 6m等大小，最大可以定义为1G。
-Hugepage相关术语 TLB Translation Lookside Buffer，是CPU中一块固定大小的cache，用来保存一部分页表的对应关系，用来快速进行虚拟内存到物理内存的映射。
-hugetlb hugetlb指的是 TLB中，一条hugepage的条目。可以说hugetlb是用来处理映射hugepage的。
-hugetlbfs hugetlbfs是一种机遇内存的文件系统类型，TLB通过hugetlb来指向hugepage，而这些操作系统分配的hugepage则会作为hugetlbfs内存文件系统中的文件来供内存使用。
-Hugepage配置 永久配置 修改/etc/default/grub的内容，在内核的启动参数GRUB_CMDLINE_LINUX_DEFAULT内增加：
-default_hugepagesz=1G hugepagesz=1G hugepages=16 hugepagesz=2M hugepages=2048 iommu=pt intel_iommu=on isolcpus=1-13,15-27 ## isolcpus根据本身机器的cpu数量来配置 ## iommu和isolcpus用于虚拟化和dpdk隔离cpu上，与hugepage实际上关系不大 生成grub配置
-grub2-mkconfig -o /boot/grub2/grub.cfg 重启
-reboot 重启后查看内核cmdline
-grep Huge /proc/cmdline 安装hugepage文件系统
-mkdir -p /mnt/hugepage mount -t hugetlbfs hugetlbfs /mnt/hugepage #不指定-o参数的话，挂在的hugepage会按照系统默认的大小挂载 #或者 mkdir -p /mnt/hugepage_2M mount -t hugetlbfs none /mnt/hugepage_2M -o pagesize=2MB #指定挂在了2MB大小的hugepage 临时配置 TODO
-检查Hugepage配置 grep Huge /proc/meminfo AnonHugePages: 0 kB HugePages_Total: 0 # Hugepage的总数量 HugePages_Free: 0 # 剩余的Hugepage数量 HugePages_Rsvd: 0 # 保留的Hugepage数量 HugePages_Surp: 0 #  Hugepagesize: 2048 kB # hugepage的大小 mount -l | grep hugetlbfs #查看hugetlbfs是否挂载成功 参考 理解linux虚拟内存</description>
-    </item>
-    
-    <item>
-      <title>理解Numa</title>
-      <link>https://kp0zhiqian.github.io/posts/numa/</link>
-      <pubDate>Tue, 20 Oct 2020 00:11:23 +0800</pubDate>
-      
-      <guid>https://kp0zhiqian.github.io/posts/numa/</guid>
-      <description>Numa What is Numa NUMA 的全名是Non-Uniform-Memory-Access(Architecture)。对于单核的CPU来说，CPU通过bus访问内存的速度完全取决于bus能够有多大的传输速度，一般来说这种架构下，CPU和内存之间的传输速度并不是一个问题。
-graph LR; CPU --- BUS; BUS --- RAM; 但对于多核CPU来说，如果使用传统的这种方式连接，则在CPU访问内存的过程中会产生冲突和等待的问题，CPU越多，这个问题越严重。
-graph LR; CPU1 --- BUS; CPU2 --- BUS; CPU3 --- BUS; CPU4 --- BUS; BUS --- RAM; 所以NUMA的出现解决了这个问题，NUMA将不同的CPU绑定到不同的内存上，作为CPU的local RAM，而其他的内存则仍然对该CPU可见，作为CPU的remote RAM。在本地RAM不够用时，可以使用remote RAM，只不过效率要低上一些。而这样一个cpu+ram的组合，则在NUMA中被称为一个 numa node。在实际应用中，可能不是单个cpu使用单个ram，有可能是多个cpu使用某个ram或者某几个ram。
-查看numa node numactl numactl --hardware 可以用来查看本机的numa node分配情况，可能需要进行安装
-lstopo lstopo --of png可以将系统的物理结构展示出来
-numa和虚拟机 一般来说，在进行虚拟机资源分配的时候，我们不希望同一台虚拟机使用的cpu资源和内存资源分布在不同的numa node上，这样会造成性能下降。所以在创建虚拟机的时候我们一般会将虚拟机与单个的numa node进行绑定，以达到虚拟机的最大性能。
-vcpu：虚拟机的虚拟机cpu
-pcpu：宿主机的物理cpu
-host numa node：宿主机的numa node拓扑
-guest numa node：虚拟机的numa node拓扑
-在虚拟机需要较大资源，宿主机的单个numa node资源不够的情况下，我们就需要给虚拟机分配多个numa node的资源。在这种情况下，如果我们的虚拟机对宿主机的numa topo不可见的话，则依旧会产生同样的性能问题。所以在这种场景下，会将宿主机的numa topo暴露给虚拟机，虚拟机上同样创建numa node，将host numa node与 guest numa node进行绑定。这样一来，虚拟机依旧会保持着同一进程在同一个numa node上运行的原则。</description>
-    </item>
-    
-    <item>
-      <title>Ansible Reading Notes</title>
-      <link>https://kp0zhiqian.github.io/posts/ansible/</link>
-      <pubDate>Wed, 30 Sep 2020 00:10:57 +0800</pubDate>
-      
-      <guid>https://kp0zhiqian.github.io/posts/ansible/</guid>
-      <description>Installation&amp;amp;setup  Redhat/Centos need to Install EPEL, fedora has it in its default source Generate ssh, copy ssh to remote, save remote hosts to known_hosts  Host Inventory  default host file: /etc/ansible/hosts We can use [group_name] to setup group, but it&amp;rsquo;s not required [webservers] foo.example.com bar.example.com   CLI tools  ansible &amp;lt;host&amp;gt; [options] ansibel &amp;lt;host&amp;gt; -m &amp;lt;modules&amp;gt;  Playbook: A yaml file that can be excuted by ansible  ansible-playbook deploy.</description>
+      <description>Virtual Memory in Linux In a multi-task system, the operation to the memory of different processes will have conflict problems. To solve this problem, the concept of virtual memory comes. When the process starting, OS will assign virtual memory addresses for the process to use. Also, OS will map the virtual memory addresses to physical memory addresses. So we need to mapping the table to maintain the relationship between the virtual memory address and the physical memory address.</description>
     </item>
     
     <item>
@@ -95,17 +116,6 @@ guest numa node：虚拟机的numa node拓扑
       
       <guid>https://kp0zhiqian.github.io/posts/dma-iommu-vfio/</guid>
       <description>DMA (Direct Memory Access) Generally speaking, the read and write operation of memory will all issue by the CPU. The read and write of memory of other devices must issue through the CPU. DMA, as in Direct Memory Access, will release the CPU from such a process. When devices need to r/w the memory, they will report to the CPU. The CPU will give the system bus to the DMA controller.</description>
-    </item>
-    
-    <item>
-      <title>Transcript of XDP Tech Talk</title>
-      <link>https://kp0zhiqian.github.io/posts/xdp-tech-talk-script/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://kp0zhiqian.github.io/posts/xdp-tech-talk-script/</guid>
-      <description>This is the transcript of my XDP 5 mins tech talk in QE all hands. Only for sharing and archiving.
- XDP is a technology that can achieve high-speed networking performance. Allowing packets to be reflected, filtered, or redirected, but without traversing kernel networking stack.
-After hearing this, some may think: Oh, I’ve heard of this! Like the famous DPDK, I can bypass the Kernel and do whatever I want in userspace to the incoming packets.</description>
     </item>
     
   </channel>

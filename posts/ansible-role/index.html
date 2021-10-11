@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Ansible Reading Notes - Role | kp0zhiqian&#39;s</title>
+  <meta name="description" content="This is the way.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Ansible Reading Notes - Role" />
+<meta property="og:description" content="role role is the ansible playbook&rsquo;s package.
+we can also define pre_tasks and post_tasks to run tasks before and after role.
+Location of Role  in the role directory of current directory in the ANSIBLE_ROLES_PATH in the roles_path of ansible configuration file. default directory: /etc/ansible/roles  Use Role --- # file site.yml - hosts: all remote_user: root roles: - simple tasks: - name: Taks in site.yml debug: msg=&#34;This is a task in site." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kp0zhiqian.github.io/posts/ansible-role/" />
+<meta property="article:published_time" content="2021-10-03T00:10:57+08:00" />
+<meta property="article:modified_time" content="2021-10-03T00:10:57+08:00" />
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Ansible Reading Notes - Role"/>
+<meta name="twitter:description" content="role role is the ansible playbook&rsquo;s package.
+we can also define pre_tasks and post_tasks to run tasks before and after role.
+Location of Role  in the role directory of current directory in the ANSIBLE_ROLES_PATH in the roles_path of ansible configuration file. default directory: /etc/ansible/roles  Use Role --- # file site.yml - hosts: all remote_user: root roles: - simple tasks: - name: Taks in site.yml debug: msg=&#34;This is a task in site."/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="https://kp0zhiqian.github.io/css/style-classic.css">
+  
+  
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://kp0zhiqian.github.io/images/favicon.ico" />
+
+  
+  
+  
+  
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+  <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/posts">Writings</a></li>
+         
+        <li><a href="/tags">Tags</a></li>
+         
+        <li><a href="/about">About</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li>
+          <a class="icon" href=" https://kp0zhiqian.github.io/posts/ansible-playbook/">
+            <i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i>
+          </a>
+        </li>
+        
+        
+        <li>
+          <a class="icon" href="https://kp0zhiqian.github.io/posts/ansible-others/">
+            <i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i>
+          </a>
+        </li>
+        
+        <li>
+          <a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">
+            <i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i>
+          </a>
+        </li>
+        <li>
+          <a class="icon" href="#">
+            <i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i>
+          </a>
+        </li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      
+      <ul>
+  
+  
+    
+  
+  
+  <li>
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-role%2f">
+      <i class="fab fa-facebook " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-role%2f&text=Ansible%20Reading%20Notes%20-%20Role">
+      <i class="fab fa-twitter " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-role%2f&title=Ansible%20Reading%20Notes%20-%20Role">
+      <i class="fab fa-linkedin " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-role%2f&is_video=false&description=Ansible%20Reading%20Notes%20-%20Role">
+      <i class="fab fa-pinterest " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="mailto:?subject=Ansible%20Reading%20Notes%20-%20Role&body=Check out this article: https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-role%2f">
+      <i class="fas fa-envelope " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-role%2f&title=Ansible%20Reading%20Notes%20-%20Role">
+      <i class="fab fa-get-pocket " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-role%2f&title=Ansible%20Reading%20Notes%20-%20Role">
+      <i class="fab fa-reddit " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.stumbleupon.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-role%2f&title=Ansible%20Reading%20Notes%20-%20Role">
+      <i class="fab fa-stumbleupon " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://digg.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-role%2f&title=Ansible%20Reading%20Notes%20-%20Role">
+      <i class="fab fa-digg " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-role%2f&name=Ansible%20Reading%20Notes%20-%20Role&description=role%20role%20is%20the%20ansible%20playbook%26rsquo%3bs%20package.%0awe%20can%20also%20define%20pre_tasks%20and%20post_tasks%20to%20run%20tasks%20before%20and%20after%20role.%0aLocation%20of%20Role%20%20in%20the%20role%20directory%20of%20current%20directory%20in%20the%20ANSIBLE_ROLES_PATH%20in%20the%20roles_path%20of%20ansible%20configuration%20file.%20default%20directory%3a%20%2fetc%2fansible%2froles%20%20Use%20Role%20---%20%23%20file%20site.yml%20-%20hosts%3a%20all%20remote_user%3a%20root%20roles%3a%20-%20simple%20tasks%3a%20-%20name%3a%20Taks%20in%20site.yml%20debug%3a%20msg%3d%26%2334%3bThis%20is%20a%20task%20in%20site.">
+      <i class="fab fa-tumblr " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-role%2f&t=Ansible%20Reading%20Notes%20-%20Role">
+      <i class="fab fa-hacker-news " aria-hidden="true"></i>
+    </a>
+  </li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#role">role</a></li>
+    <li><a href="#location-of-role">Location of Role</a></li>
+    <li><a href="#use-role">Use Role</a>
+      <ul>
+        <li><a href="#pre_task-and-post_task">pre_task and post_task</a></li>
+        <li><a href="#use-roles-params">Use role&rsquo;s params</a></li>
+      </ul>
+    </li>
+    <li><a href="#how-to-write-role">How to write role</a></li>
+    <li><a href="#dependencies">Dependencies</a></li>
+  </ul>
+</nav>
+    </div>
+  </span>
+</div>
+
+
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+      <h1 class="posttitle" itemprop="name headline">
+        Ansible Reading Notes - Role
+      </h1>
+      <div class="meta">
+        
+        <div class="postdate">
+          
+          <time datetime="2021-10-03 00:10:57 &#43;0800 CST" itemprop="datePublished">2021-10-03</time>
+          
+        </div>
+        
+        
+        <div class="article-tag">
+            <i class="fas fa-tag"></i>
+            
+            
+            <a class="tag-link" href="/tags/ansible" rel="tag">ansible</a>
+            
+             ,  
+            <a class="tag-link" href="/tags/system" rel="tag">system</a>
+            
+             ,  
+            <a class="tag-link" href="/tags/automation" rel="tag">automation</a>
+            
+        </div>
+        
+      </div>
+    </header>
+
+  
+    <div class="content" itemprop="articleBody">
+      <h2 id="role">role</h2>
+<p><code>role</code> is the ansible playbook&rsquo;s package.</p>
+<p>we can also define <code>pre_tasks</code> and <code>post_tasks</code> to run tasks before and after role.</p>
+<h2 id="location-of-role">Location of Role</h2>
+<ul>
+<li>in the role directory of current directory</li>
+<li>in the <code>ANSIBLE_ROLES_PATH</code></li>
+<li>in the <code>roles_path</code> of ansible configuration file.</li>
+<li>default directory: <code>/etc/ansible/roles</code></li>
+</ul>
+<h2 id="use-role">Use Role</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---
+<span style="color:#75715e"># file site.yml</span>
+
+- <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">all</span>
+  <span style="color:#f92672">remote_user</span>: <span style="color:#ae81ff">root</span>
+  <span style="color:#f92672">roles</span>:
+    - <span style="color:#ae81ff">simple</span>
+  <span style="color:#f92672">tasks</span>:
+    - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Taks in site.yml</span>
+      <span style="color:#f92672">debug</span>: <span style="color:#ae81ff">msg=&#34;This is a task in site.yml&#34;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---
+<span style="color:#75715e"># foles/simple/tasks/main.yml</span>
+
+- <span style="color:#f92672">name</span>: <span style="color:#ae81ff">Task in role</span>
+  <span style="color:#f92672">debug</span>: <span style="color:#ae81ff">msg=&#34;Simple role&#34;</span>
+</code></pre></div><h3 id="pre_task-and-post_task">pre_task and post_task</h3>
+<p>we can use pre_task and post_task to do something before/after the role</p>
+<h3 id="use-roles-params">Use role&rsquo;s params</h3>
+<p>Use <code>vars</code> to pass params to role.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---
+- <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">all</span>
+  <span style="color:#f92672">remote_user</span>: <span style="color:#ae81ff">root</span>
+  <span style="color:#f92672">roles</span>:
+    - <span style="color:#f92672">role</span>: <span style="color:#ae81ff">my_role_with_vars</span>
+      <span style="color:#f92672">vars</span>:
+        <span style="color:#f92672">ex_param</span>: <span style="color:#e6db74">&#34;test1&#34;</span>
+        <span style="color:#f92672">in_param</span>: <span style="color:#e6db74">&#34;test2&#34;</span>
+</code></pre></div><p>Use <code>when</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml">---
+- <span style="color:#f92672">hosts</span>: <span style="color:#ae81ff">all</span>
+  <span style="color:#f92672">remote_user</span>: <span style="color:#ae81ff">root</span>
+  <span style="color:#f92672">roles</span>:
+    - <span style="color:#f92672">role</span>: <span style="color:#ae81ff">my_role_with_vars</span>
+      <span style="color:#f92672">vars</span>:
+        <span style="color:#f92672">ex_param</span>: <span style="color:#e6db74">&#34;test1&#34;</span>
+        <span style="color:#f92672">in_param</span>: <span style="color:#e6db74">&#34;test2&#34;</span>
+      <span style="color:#f92672">when</span>: <span style="color:#e6db74">&#34;ansible_os_family == &#39;Debian&#39;&#34;</span>
+</code></pre></div><h2 id="how-to-write-role">How to write role</h2>
+<p>typical role directory structure:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># playbooks</span>
+site.yml
+webservers.yml
+fooservers.yml
+roles/
+    common/
+        tasks/
+        handlers/
+        library/
+        files/
+        templates/
+        vars/
+        defaults/
+        meta/
+    webservers/
+        tasks/
+        defaults/
+        meta/
+</code></pre></div><blockquote>
+<p>By default Ansible will look in each directory within a role for a main.yml file for relevant content (also <code>main.yaml</code> and <code>main</code>):</p>
+<ul>
+<li><code>tasks/main.yml</code> - the main list of tasks that the role executes.</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><code>handlers/main.yml</code> - handlers, which may be used within or outside this role.</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><code>library/my_module.py</code> - modules, which may be used within this role (see Embedding modules and plugins in roles for more information).</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><code>defaults/main.yml</code> - default variables for the role (see Using Variables for more information). These variables have the lowest priority of any variables available, and can be easily overridden by any other variable, including inventory variables.</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><code>vars/main.yml</code> - other variables for the role (see Using Variables for more information).</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><code>files/main.yml</code> - files that the role deploys.</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><code>templates/main.yml</code> - templates that the role deploys.</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li><code>meta/main.yml</code> - metadata for the role, including role dependencies.</li>
+</ul>
+</blockquote>
+<p>There&rsquo;re 2 types of resources in role, <code>main.yml</code> under these directories and other <code>yaml</code> files.</p>
+<h2 id="dependencies">Dependencies</h2>
+<p>we can use</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">dependencies</span>:
+- {<span style="color:#f92672">role</span>: <span style="color:#ae81ff">common}</span>
+</code></pre></div><p>to add dependencies.</p>
+
+    </div>
+  </article>
+
+  
+  
+
+
+
+
+
+  <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/posts">Writings</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#role">role</a></li>
+    <li><a href="#location-of-role">Location of Role</a></li>
+    <li><a href="#use-role">Use Role</a>
+      <ul>
+        <li><a href="#pre_task-and-post_task">pre_task and post_task</a></li>
+        <li><a href="#use-roles-params">Use role&rsquo;s params</a></li>
+      </ul>
+    </li>
+    <li><a href="#how-to-write-role">How to write role</a></li>
+    <li><a href="#dependencies">Dependencies</a></li>
+  </ul>
+</nav>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      
+      <ul>
+  
+  
+    
+  
+  
+  <li>
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-role%2f">
+      <i class="fab fa-facebook fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-role%2f&text=Ansible%20Reading%20Notes%20-%20Role">
+      <i class="fab fa-twitter fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-role%2f&title=Ansible%20Reading%20Notes%20-%20Role">
+      <i class="fab fa-linkedin fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-role%2f&is_video=false&description=Ansible%20Reading%20Notes%20-%20Role">
+      <i class="fab fa-pinterest fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="mailto:?subject=Ansible%20Reading%20Notes%20-%20Role&body=Check out this article: https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-role%2f">
+      <i class="fas fa-envelope fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-role%2f&title=Ansible%20Reading%20Notes%20-%20Role">
+      <i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-role%2f&title=Ansible%20Reading%20Notes%20-%20Role">
+      <i class="fab fa-reddit fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.stumbleupon.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-role%2f&title=Ansible%20Reading%20Notes%20-%20Role">
+      <i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://digg.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-role%2f&title=Ansible%20Reading%20Notes%20-%20Role">
+      <i class="fab fa-digg fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-role%2f&name=Ansible%20Reading%20Notes%20-%20Role&description=role%20role%20is%20the%20ansible%20playbook%26rsquo%3bs%20package.%0awe%20can%20also%20define%20pre_tasks%20and%20post_tasks%20to%20run%20tasks%20before%20and%20after%20role.%0aLocation%20of%20Role%20%20in%20the%20role%20directory%20of%20current%20directory%20in%20the%20ANSIBLE_ROLES_PATH%20in%20the%20roles_path%20of%20ansible%20configuration%20file.%20default%20directory%3a%20%2fetc%2fansible%2froles%20%20Use%20Role%20---%20%23%20file%20site.yml%20-%20hosts%3a%20all%20remote_user%3a%20root%20roles%3a%20-%20simple%20tasks%3a%20-%20name%3a%20Taks%20in%20site.yml%20debug%3a%20msg%3d%26%2334%3bThis%20is%20a%20task%20in%20site.">
+      <i class="fab fa-tumblr fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fansible-role%2f&t=Ansible%20Reading%20Notes%20-%20Role">
+      <i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;">
+          <i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;">
+          <i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;">
+          <i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">
+          <i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+
+  <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2021  You 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/posts">Writings</a></li>
+         
+        <li><a href="/tags">Tags</a></li>
+         
+        <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+  </div>
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+
+
+
+</html>

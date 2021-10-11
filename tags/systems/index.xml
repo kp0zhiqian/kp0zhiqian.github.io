@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>systems on kp0zhiqian&#39;s</title>
+    <link>https://kp0zhiqian.github.io/tags/systems/</link>
+    <description>Recent content in systems on kp0zhiqian&#39;s</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>You</copyright>
+    <lastBuildDate>Tue, 20 Oct 2020 00:11:23 +0800</lastBuildDate><atom:link href="https://kp0zhiqian.github.io/tags/systems/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Understanding Hugepage</title>
+      <link>https://kp0zhiqian.github.io/posts/hugepage/</link>
+      <pubDate>Tue, 20 Oct 2020 00:11:23 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/posts/hugepage/</guid>
+      <description>Virtual Memory in Linux In a multi-task system, the operation to the memory of different processes will have conflict problems. To solve this problem, the concept of virtual memory comes. When the process starting, OS will assign virtual memory addresses for the process to use. Also, OS will map the virtual memory addresses to physical memory addresses. So we need to mapping the table to maintain the relationship between the virtual memory address and the physical memory address.</description>
+    </item>
+    
+  </channel>
+</rss>

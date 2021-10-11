@@ -3,45 +3,21 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title> 理解Hugepage | kp0zhiqian&#39;s</title>
+  <title> Understanding Hugepage | kp0zhiqian&#39;s</title>
   <meta name="description" content="This is the way.">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="all,follow">
   <meta name="googlebot" content="index,follow,snippet,archive">
-  <meta property="og:title" content="理解Hugepage" />
-<meta property="og:description" content="Hugepage Linux中的虚拟内存 在任务处理中，多个进程对内存的操作会有冲突的问题，为了解决这个问题，则提出了虚拟内存的概念。在进程开始运行时，操作系统会给进程分配虚拟内存地址供进程使用。而操作系统会将这部分虚拟内存地址根据进程的使用情况，来映射到具体的物理内存地址上。而因为有了这个映射关系，则操作系统就需要维护一个映射表。但是，如果将虚拟内存的地址一对一的映射到物理内存上，则需要维护的映射表的大小就太大了，所以为了解决这个问题，则引出了分页和页表的概念。
-Linux中的分页和页表 在Linux的内存管理中，为了节省空间，操作系统会在启动的时候将物理内存以默认4k的大小分割成各个页。而后在为虚拟内存分配物理内存时，都以页为单位。这样一来，虚拟内存到物理内存的这张映射表的大小就会小了很多。而对于某些大内存的情况，操作系统还设计了多级的映射表，这样映射表的大小又进一步的减小。这虚拟内存页到物理内存页的映射表，则被称为页表。
-Hugepages的来源 由上面我们可以知道，操作系统默认情况下会将内存以4k为单位分成不同的页。但是，在内存非常大的情况下，页的数量也会变的特别多，页的数量变大时，CPU检索内存地址的效率也会下降。所以，为了解决这个问题，只有增大页的大小，以此来减少页的数量，提高检索效率。这也就是Hugepages的由来。我们可以将Hugepages定义为2m, 4m, 6m等大小，最大可以定义为1G。
-Hugepage相关术语 TLB Translation Lookside Buffer，是CPU中一块固定大小的cache，用来保存一部分页表的对应关系，用来快速进行虚拟内存到物理内存的映射。
-hugetlb hugetlb指的是 TLB中，一条hugepage的条目。可以说hugetlb是用来处理映射hugepage的。
-hugetlbfs hugetlbfs是一种机遇内存的文件系统类型，TLB通过hugetlb来指向hugepage，而这些操作系统分配的hugepage则会作为hugetlbfs内存文件系统中的文件来供内存使用。
-Hugepage配置 永久配置 修改/etc/default/grub的内容，在内核的启动参数GRUB_CMDLINE_LINUX_DEFAULT内增加：
-default_hugepagesz=1G hugepagesz=1G hugepages=16 hugepagesz=2M hugepages=2048 iommu=pt intel_iommu=on isolcpus=1-13,15-27 ## isolcpus根据本身机器的cpu数量来配置 ## iommu和isolcpus用于虚拟化和dpdk隔离cpu上，与hugepage实际上关系不大 生成grub配置
-grub2-mkconfig -o /boot/grub2/grub.cfg 重启
-reboot 重启后查看内核cmdline
-grep Huge /proc/cmdline 安装hugepage文件系统
-mkdir -p /mnt/hugepage mount -t hugetlbfs hugetlbfs /mnt/hugepage #不指定-o参数的话，挂在的hugepage会按照系统默认的大小挂载 #或者 mkdir -p /mnt/hugepage_2M mount -t hugetlbfs none /mnt/hugepage_2M -o pagesize=2MB #指定挂在了2MB大小的hugepage 临时配置 TODO
-检查Hugepage配置 grep Huge /proc/meminfo AnonHugePages: 0 kB HugePages_Total: 0 # Hugepage的总数量 HugePages_Free: 0 # 剩余的Hugepage数量 HugePages_Rsvd: 0 # 保留的Hugepage数量 HugePages_Surp: 0 #  Hugepagesize: 2048 kB # hugepage的大小 mount -l | grep hugetlbfs #查看hugetlbfs是否挂载成功 参考 理解linux虚拟内存" />
+  <meta property="og:title" content="Understanding Hugepage" />
+<meta property="og:description" content="Virtual Memory in Linux In a multi-task system, the operation to the memory of different processes will have conflict problems. To solve this problem, the concept of virtual memory comes. When the process starting, OS will assign virtual memory addresses for the process to use. Also, OS will map the virtual memory addresses to physical memory addresses. So we need to mapping the table to maintain the relationship between the virtual memory address and the physical memory address." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://kp0zhiqian.github.io/posts/hugepage/" />
 <meta property="article:published_time" content="2020-10-20T00:11:23+08:00" />
 <meta property="article:modified_time" content="2020-10-20T00:11:23+08:00" />
 
   <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="理解Hugepage"/>
-<meta name="twitter:description" content="Hugepage Linux中的虚拟内存 在任务处理中，多个进程对内存的操作会有冲突的问题，为了解决这个问题，则提出了虚拟内存的概念。在进程开始运行时，操作系统会给进程分配虚拟内存地址供进程使用。而操作系统会将这部分虚拟内存地址根据进程的使用情况，来映射到具体的物理内存地址上。而因为有了这个映射关系，则操作系统就需要维护一个映射表。但是，如果将虚拟内存的地址一对一的映射到物理内存上，则需要维护的映射表的大小就太大了，所以为了解决这个问题，则引出了分页和页表的概念。
-Linux中的分页和页表 在Linux的内存管理中，为了节省空间，操作系统会在启动的时候将物理内存以默认4k的大小分割成各个页。而后在为虚拟内存分配物理内存时，都以页为单位。这样一来，虚拟内存到物理内存的这张映射表的大小就会小了很多。而对于某些大内存的情况，操作系统还设计了多级的映射表，这样映射表的大小又进一步的减小。这虚拟内存页到物理内存页的映射表，则被称为页表。
-Hugepages的来源 由上面我们可以知道，操作系统默认情况下会将内存以4k为单位分成不同的页。但是，在内存非常大的情况下，页的数量也会变的特别多，页的数量变大时，CPU检索内存地址的效率也会下降。所以，为了解决这个问题，只有增大页的大小，以此来减少页的数量，提高检索效率。这也就是Hugepages的由来。我们可以将Hugepages定义为2m, 4m, 6m等大小，最大可以定义为1G。
-Hugepage相关术语 TLB Translation Lookside Buffer，是CPU中一块固定大小的cache，用来保存一部分页表的对应关系，用来快速进行虚拟内存到物理内存的映射。
-hugetlb hugetlb指的是 TLB中，一条hugepage的条目。可以说hugetlb是用来处理映射hugepage的。
-hugetlbfs hugetlbfs是一种机遇内存的文件系统类型，TLB通过hugetlb来指向hugepage，而这些操作系统分配的hugepage则会作为hugetlbfs内存文件系统中的文件来供内存使用。
-Hugepage配置 永久配置 修改/etc/default/grub的内容，在内核的启动参数GRUB_CMDLINE_LINUX_DEFAULT内增加：
-default_hugepagesz=1G hugepagesz=1G hugepages=16 hugepagesz=2M hugepages=2048 iommu=pt intel_iommu=on isolcpus=1-13,15-27 ## isolcpus根据本身机器的cpu数量来配置 ## iommu和isolcpus用于虚拟化和dpdk隔离cpu上，与hugepage实际上关系不大 生成grub配置
-grub2-mkconfig -o /boot/grub2/grub.cfg 重启
-reboot 重启后查看内核cmdline
-grep Huge /proc/cmdline 安装hugepage文件系统
-mkdir -p /mnt/hugepage mount -t hugetlbfs hugetlbfs /mnt/hugepage #不指定-o参数的话，挂在的hugepage会按照系统默认的大小挂载 #或者 mkdir -p /mnt/hugepage_2M mount -t hugetlbfs none /mnt/hugepage_2M -o pagesize=2MB #指定挂在了2MB大小的hugepage 临时配置 TODO
-检查Hugepage配置 grep Huge /proc/meminfo AnonHugePages: 0 kB HugePages_Total: 0 # Hugepage的总数量 HugePages_Free: 0 # 剩余的Hugepage数量 HugePages_Rsvd: 0 # 保留的Hugepage数量 HugePages_Surp: 0 #  Hugepagesize: 2048 kB # hugepage的大小 mount -l | grep hugetlbfs #查看hugetlbfs是否挂载成功 参考 理解linux虚拟内存"/>
+<meta name="twitter:title" content="Understanding Hugepage"/>
+<meta name="twitter:description" content="Virtual Memory in Linux In a multi-task system, the operation to the memory of different processes will have conflict problems. To solve this problem, the concept of virtual memory comes. When the process starting, OS will assign virtual memory addresses for the process to use. Also, OS will map the virtual memory addresses to physical memory addresses. So we need to mapping the table to maintain the relationship between the virtual memory address and the physical memory address."/>
 
   
   
@@ -93,7 +69,7 @@ mkdir -p /mnt/hugepage mount -t hugetlbfs hugetlbfs /mnt/hugepage #不指定-o�
       <ul>
         
         <li>
-          <a class="icon" href=" https://kp0zhiqian.github.io/posts/numa/">
+          <a class="icon" href=" https://kp0zhiqian.github.io/posts/dma-iommu-vfio/">
             <i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i>
           </a>
         </li>
@@ -136,52 +112,52 @@ mkdir -p /mnt/hugepage mount -t hugetlbfs hugetlbfs /mnt/hugepage #不指定-o�
     </a>
   </li>
   <li>
-    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&text=%e7%90%86%e8%a7%a3Hugepage">
+    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&text=Understanding%20Hugepage">
       <i class="fab fa-twitter " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&title=%e7%90%86%e8%a7%a3Hugepage">
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&title=Understanding%20Hugepage">
       <i class="fab fa-linkedin " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&is_video=false&description=%e7%90%86%e8%a7%a3Hugepage">
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&is_video=false&description=Understanding%20Hugepage">
       <i class="fab fa-pinterest " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="mailto:?subject=%e7%90%86%e8%a7%a3Hugepage&body=Check out this article: https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f">
+    <a class="icon" href="mailto:?subject=Understanding%20Hugepage&body=Check out this article: https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f">
       <i class="fas fa-envelope " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&title=%e7%90%86%e8%a7%a3Hugepage">
+    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&title=Understanding%20Hugepage">
       <i class="fab fa-get-pocket " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&title=%e7%90%86%e8%a7%a3Hugepage">
+    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&title=Understanding%20Hugepage">
       <i class="fab fa-reddit " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.stumbleupon.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&title=%e7%90%86%e8%a7%a3Hugepage">
+    <a class="icon" href="http://www.stumbleupon.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&title=Understanding%20Hugepage">
       <i class="fab fa-stumbleupon " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://digg.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&title=%e7%90%86%e8%a7%a3Hugepage">
+    <a class="icon" href="http://digg.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&title=Understanding%20Hugepage">
       <i class="fab fa-digg " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&name=%e7%90%86%e8%a7%a3Hugepage&description=Hugepage%20Linux%e4%b8%ad%e7%9a%84%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98%20%e5%9c%a8%e4%bb%bb%e5%8a%a1%e5%a4%84%e7%90%86%e4%b8%ad%ef%bc%8c%e5%a4%9a%e4%b8%aa%e8%bf%9b%e7%a8%8b%e5%af%b9%e5%86%85%e5%ad%98%e7%9a%84%e6%93%8d%e4%bd%9c%e4%bc%9a%e6%9c%89%e5%86%b2%e7%aa%81%e7%9a%84%e9%97%ae%e9%a2%98%ef%bc%8c%e4%b8%ba%e4%ba%86%e8%a7%a3%e5%86%b3%e8%bf%99%e4%b8%aa%e9%97%ae%e9%a2%98%ef%bc%8c%e5%88%99%e6%8f%90%e5%87%ba%e4%ba%86%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98%e7%9a%84%e6%a6%82%e5%bf%b5%e3%80%82%e5%9c%a8%e8%bf%9b%e7%a8%8b%e5%bc%80%e5%a7%8b%e8%bf%90%e8%a1%8c%e6%97%b6%ef%bc%8c%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f%e4%bc%9a%e7%bb%99%e8%bf%9b%e7%a8%8b%e5%88%86%e9%85%8d%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98%e5%9c%b0%e5%9d%80%e4%be%9b%e8%bf%9b%e7%a8%8b%e4%bd%bf%e7%94%a8%e3%80%82%e8%80%8c%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f%e4%bc%9a%e5%b0%86%e8%bf%99%e9%83%a8%e5%88%86%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98%e5%9c%b0%e5%9d%80%e6%a0%b9%e6%8d%ae%e8%bf%9b%e7%a8%8b%e7%9a%84%e4%bd%bf%e7%94%a8%e6%83%85%e5%86%b5%ef%bc%8c%e6%9d%a5%e6%98%a0%e5%b0%84%e5%88%b0%e5%85%b7%e4%bd%93%e7%9a%84%e7%89%a9%e7%90%86%e5%86%85%e5%ad%98%e5%9c%b0%e5%9d%80%e4%b8%8a%e3%80%82%e8%80%8c%e5%9b%a0%e4%b8%ba%e6%9c%89%e4%ba%86%e8%bf%99%e4%b8%aa%e6%98%a0%e5%b0%84%e5%85%b3%e7%b3%bb%ef%bc%8c%e5%88%99%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f%e5%b0%b1%e9%9c%80%e8%a6%81%e7%bb%b4%e6%8a%a4%e4%b8%80%e4%b8%aa%e6%98%a0%e5%b0%84%e8%a1%a8%e3%80%82%e4%bd%86%e6%98%af%ef%bc%8c%e5%a6%82%e6%9e%9c%e5%b0%86%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98%e7%9a%84%e5%9c%b0%e5%9d%80%e4%b8%80%e5%af%b9%e4%b8%80%e7%9a%84%e6%98%a0%e5%b0%84%e5%88%b0%e7%89%a9%e7%90%86%e5%86%85%e5%ad%98%e4%b8%8a%ef%bc%8c%e5%88%99%e9%9c%80%e8%a6%81%e7%bb%b4%e6%8a%a4%e7%9a%84%e6%98%a0%e5%b0%84%e8%a1%a8%e7%9a%84%e5%a4%a7%e5%b0%8f%e5%b0%b1%e5%a4%aa%e5%a4%a7%e4%ba%86%ef%bc%8c%e6%89%80%e4%bb%a5%e4%b8%ba%e4%ba%86%e8%a7%a3%e5%86%b3%e8%bf%99%e4%b8%aa%e9%97%ae%e9%a2%98%ef%bc%8c%e5%88%99%e5%bc%95%e5%87%ba%e4%ba%86%e5%88%86%e9%a1%b5%e5%92%8c%e9%a1%b5%e8%a1%a8%e7%9a%84%e6%a6%82%e5%bf%b5%e3%80%82%0aLinux%e4%b8%ad%e7%9a%84%e5%88%86%e9%a1%b5%e5%92%8c%e9%a1%b5%e8%a1%a8%20%e5%9c%a8Linux%e7%9a%84%e5%86%85%e5%ad%98%e7%ae%a1%e7%90%86%e4%b8%ad%ef%bc%8c%e4%b8%ba%e4%ba%86%e8%8a%82%e7%9c%81%e7%a9%ba%e9%97%b4%ef%bc%8c%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f%e4%bc%9a%e5%9c%a8%e5%90%af%e5%8a%a8%e7%9a%84%e6%97%b6%e5%80%99%e5%b0%86%e7%89%a9%e7%90%86%e5%86%85%e5%ad%98%e4%bb%a5%e9%bb%98%e8%ae%a44k%e7%9a%84%e5%a4%a7%e5%b0%8f%e5%88%86%e5%89%b2%e6%88%90%e5%90%84%e4%b8%aa%e9%a1%b5%e3%80%82%e8%80%8c%e5%90%8e%e5%9c%a8%e4%b8%ba%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98%e5%88%86%e9%85%8d%e7%89%a9%e7%90%86%e5%86%85%e5%ad%98%e6%97%b6%ef%bc%8c%e9%83%bd%e4%bb%a5%e9%a1%b5%e4%b8%ba%e5%8d%95%e4%bd%8d%e3%80%82%e8%bf%99%e6%a0%b7%e4%b8%80%e6%9d%a5%ef%bc%8c%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98%e5%88%b0%e7%89%a9%e7%90%86%e5%86%85%e5%ad%98%e7%9a%84%e8%bf%99%e5%bc%a0%e6%98%a0%e5%b0%84%e8%a1%a8%e7%9a%84%e5%a4%a7%e5%b0%8f%e5%b0%b1%e4%bc%9a%e5%b0%8f%e4%ba%86%e5%be%88%e5%a4%9a%e3%80%82%e8%80%8c%e5%af%b9%e4%ba%8e%e6%9f%90%e4%ba%9b%e5%a4%a7%e5%86%85%e5%ad%98%e7%9a%84%e6%83%85%e5%86%b5%ef%bc%8c%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f%e8%bf%98%e8%ae%be%e8%ae%a1%e4%ba%86%e5%a4%9a%e7%ba%a7%e7%9a%84%e6%98%a0%e5%b0%84%e8%a1%a8%ef%bc%8c%e8%bf%99%e6%a0%b7%e6%98%a0%e5%b0%84%e8%a1%a8%e7%9a%84%e5%a4%a7%e5%b0%8f%e5%8f%88%e8%bf%9b%e4%b8%80%e6%ad%a5%e7%9a%84%e5%87%8f%e5%b0%8f%e3%80%82%e8%bf%99%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98%e9%a1%b5%e5%88%b0%e7%89%a9%e7%90%86%e5%86%85%e5%ad%98%e9%a1%b5%e7%9a%84%e6%98%a0%e5%b0%84%e8%a1%a8%ef%bc%8c%e5%88%99%e8%a2%ab%e7%a7%b0%e4%b8%ba%e9%a1%b5%e8%a1%a8%e3%80%82%0aHugepages%e7%9a%84%e6%9d%a5%e6%ba%90%20%e7%94%b1%e4%b8%8a%e9%9d%a2%e6%88%91%e4%bb%ac%e5%8f%af%e4%bb%a5%e7%9f%a5%e9%81%93%ef%bc%8c%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f%e9%bb%98%e8%ae%a4%e6%83%85%e5%86%b5%e4%b8%8b%e4%bc%9a%e5%b0%86%e5%86%85%e5%ad%98%e4%bb%a54k%e4%b8%ba%e5%8d%95%e4%bd%8d%e5%88%86%e6%88%90%e4%b8%8d%e5%90%8c%e7%9a%84%e9%a1%b5%e3%80%82%e4%bd%86%e6%98%af%ef%bc%8c%e5%9c%a8%e5%86%85%e5%ad%98%e9%9d%9e%e5%b8%b8%e5%a4%a7%e7%9a%84%e6%83%85%e5%86%b5%e4%b8%8b%ef%bc%8c%e9%a1%b5%e7%9a%84%e6%95%b0%e9%87%8f%e4%b9%9f%e4%bc%9a%e5%8f%98%e7%9a%84%e7%89%b9%e5%88%ab%e5%a4%9a%ef%bc%8c%e9%a1%b5%e7%9a%84%e6%95%b0%e9%87%8f%e5%8f%98%e5%a4%a7%e6%97%b6%ef%bc%8cCPU%e6%a3%80%e7%b4%a2%e5%86%85%e5%ad%98%e5%9c%b0%e5%9d%80%e7%9a%84%e6%95%88%e7%8e%87%e4%b9%9f%e4%bc%9a%e4%b8%8b%e9%99%8d%e3%80%82%e6%89%80%e4%bb%a5%ef%bc%8c%e4%b8%ba%e4%ba%86%e8%a7%a3%e5%86%b3%e8%bf%99%e4%b8%aa%e9%97%ae%e9%a2%98%ef%bc%8c%e5%8f%aa%e6%9c%89%e5%a2%9e%e5%a4%a7%e9%a1%b5%e7%9a%84%e5%a4%a7%e5%b0%8f%ef%bc%8c%e4%bb%a5%e6%ad%a4%e6%9d%a5%e5%87%8f%e5%b0%91%e9%a1%b5%e7%9a%84%e6%95%b0%e9%87%8f%ef%bc%8c%e6%8f%90%e9%ab%98%e6%a3%80%e7%b4%a2%e6%95%88%e7%8e%87%e3%80%82%e8%bf%99%e4%b9%9f%e5%b0%b1%e6%98%afHugepages%e7%9a%84%e7%94%b1%e6%9d%a5%e3%80%82%e6%88%91%e4%bb%ac%e5%8f%af%e4%bb%a5%e5%b0%86Hugepages%e5%ae%9a%e4%b9%89%e4%b8%ba2m%2c%204m%2c%206m%e7%ad%89%e5%a4%a7%e5%b0%8f%ef%bc%8c%e6%9c%80%e5%a4%a7%e5%8f%af%e4%bb%a5%e5%ae%9a%e4%b9%89%e4%b8%ba1G%e3%80%82%0aHugepage%e7%9b%b8%e5%85%b3%e6%9c%af%e8%af%ad%20TLB%20Translation%20Lookside%20Buffer%ef%bc%8c%e6%98%afCPU%e4%b8%ad%e4%b8%80%e5%9d%97%e5%9b%ba%e5%ae%9a%e5%a4%a7%e5%b0%8f%e7%9a%84cache%ef%bc%8c%e7%94%a8%e6%9d%a5%e4%bf%9d%e5%ad%98%e4%b8%80%e9%83%a8%e5%88%86%e9%a1%b5%e8%a1%a8%e7%9a%84%e5%af%b9%e5%ba%94%e5%85%b3%e7%b3%bb%ef%bc%8c%e7%94%a8%e6%9d%a5%e5%bf%ab%e9%80%9f%e8%bf%9b%e8%a1%8c%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98%e5%88%b0%e7%89%a9%e7%90%86%e5%86%85%e5%ad%98%e7%9a%84%e6%98%a0%e5%b0%84%e3%80%82%0ahugetlb%20hugetlb%e6%8c%87%e7%9a%84%e6%98%af%20TLB%e4%b8%ad%ef%bc%8c%e4%b8%80%e6%9d%a1hugepage%e7%9a%84%e6%9d%a1%e7%9b%ae%e3%80%82%e5%8f%af%e4%bb%a5%e8%af%b4hugetlb%e6%98%af%e7%94%a8%e6%9d%a5%e5%a4%84%e7%90%86%e6%98%a0%e5%b0%84hugepage%e7%9a%84%e3%80%82%0ahugetlbfs%20hugetlbfs%e6%98%af%e4%b8%80%e7%a7%8d%e6%9c%ba%e9%81%87%e5%86%85%e5%ad%98%e7%9a%84%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f%e7%b1%bb%e5%9e%8b%ef%bc%8cTLB%e9%80%9a%e8%bf%87hugetlb%e6%9d%a5%e6%8c%87%e5%90%91hugepage%ef%bc%8c%e8%80%8c%e8%bf%99%e4%ba%9b%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f%e5%88%86%e9%85%8d%e7%9a%84hugepage%e5%88%99%e4%bc%9a%e4%bd%9c%e4%b8%bahugetlbfs%e5%86%85%e5%ad%98%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f%e4%b8%ad%e7%9a%84%e6%96%87%e4%bb%b6%e6%9d%a5%e4%be%9b%e5%86%85%e5%ad%98%e4%bd%bf%e7%94%a8%e3%80%82%0aHugepage%e9%85%8d%e7%bd%ae%20%e6%b0%b8%e4%b9%85%e9%85%8d%e7%bd%ae%20%e4%bf%ae%e6%94%b9%2fetc%2fdefault%2fgrub%e7%9a%84%e5%86%85%e5%ae%b9%ef%bc%8c%e5%9c%a8%e5%86%85%e6%a0%b8%e7%9a%84%e5%90%af%e5%8a%a8%e5%8f%82%e6%95%b0GRUB_CMDLINE_LINUX_DEFAULT%e5%86%85%e5%a2%9e%e5%8a%a0%ef%bc%9a%0adefault_hugepagesz%3d1G%20hugepagesz%3d1G%20hugepages%3d16%20hugepagesz%3d2M%20hugepages%3d2048%20iommu%3dpt%20intel_iommu%3don%20isolcpus%3d1-13%2c15-27%20%23%23%20isolcpus%e6%a0%b9%e6%8d%ae%e6%9c%ac%e8%ba%ab%e6%9c%ba%e5%99%a8%e7%9a%84cpu%e6%95%b0%e9%87%8f%e6%9d%a5%e9%85%8d%e7%bd%ae%20%23%23%20iommu%e5%92%8cisolcpus%e7%94%a8%e4%ba%8e%e8%99%9a%e6%8b%9f%e5%8c%96%e5%92%8cdpdk%e9%9a%94%e7%a6%bbcpu%e4%b8%8a%ef%bc%8c%e4%b8%8ehugepage%e5%ae%9e%e9%99%85%e4%b8%8a%e5%85%b3%e7%b3%bb%e4%b8%8d%e5%a4%a7%20%e7%94%9f%e6%88%90grub%e9%85%8d%e7%bd%ae%0agrub2-mkconfig%20-o%20%2fboot%2fgrub2%2fgrub.cfg%20%e9%87%8d%e5%90%af%0areboot%20%e9%87%8d%e5%90%af%e5%90%8e%e6%9f%a5%e7%9c%8b%e5%86%85%e6%a0%b8cmdline%0agrep%20Huge%20%2fproc%2fcmdline%20%e5%ae%89%e8%a3%85hugepage%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f%0amkdir%20-p%20%2fmnt%2fhugepage%20mount%20-t%20hugetlbfs%20hugetlbfs%20%2fmnt%2fhugepage%20%23%e4%b8%8d%e6%8c%87%e5%ae%9a-o%e5%8f%82%e6%95%b0%e7%9a%84%e8%af%9d%ef%bc%8c%e6%8c%82%e5%9c%a8%e7%9a%84hugepage%e4%bc%9a%e6%8c%89%e7%85%a7%e7%b3%bb%e7%bb%9f%e9%bb%98%e8%ae%a4%e7%9a%84%e5%a4%a7%e5%b0%8f%e6%8c%82%e8%bd%bd%20%23%e6%88%96%e8%80%85%20mkdir%20-p%20%2fmnt%2fhugepage_2M%20mount%20-t%20hugetlbfs%20none%20%2fmnt%2fhugepage_2M%20-o%20pagesize%3d2MB%20%23%e6%8c%87%e5%ae%9a%e6%8c%82%e5%9c%a8%e4%ba%862MB%e5%a4%a7%e5%b0%8f%e7%9a%84hugepage%20%e4%b8%b4%e6%97%b6%e9%85%8d%e7%bd%ae%20TODO%0a%e6%a3%80%e6%9f%a5Hugepage%e9%85%8d%e7%bd%ae%20grep%20Huge%20%2fproc%2fmeminfo%20AnonHugePages%3a%200%20kB%20HugePages_Total%3a%200%20%23%20Hugepage%e7%9a%84%e6%80%bb%e6%95%b0%e9%87%8f%20HugePages_Free%3a%200%20%23%20%e5%89%a9%e4%bd%99%e7%9a%84Hugepage%e6%95%b0%e9%87%8f%20HugePages_Rsvd%3a%200%20%23%20%e4%bf%9d%e7%95%99%e7%9a%84Hugepage%e6%95%b0%e9%87%8f%20HugePages_Surp%3a%200%20%23%20%20Hugepagesize%3a%202048%20kB%20%23%20hugepage%e7%9a%84%e5%a4%a7%e5%b0%8f%20mount%20-l%20%7c%20grep%20hugetlbfs%20%23%e6%9f%a5%e7%9c%8bhugetlbfs%e6%98%af%e5%90%a6%e6%8c%82%e8%bd%bd%e6%88%90%e5%8a%9f%20%e5%8f%82%e8%80%83%20%e7%90%86%e8%a7%a3linux%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98">
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&name=Understanding%20Hugepage&description=Virtual%20Memory%20in%20Linux%20%08In%20a%20multi-task%20system%2c%20the%20operation%20to%20the%20memory%20of%20different%20processes%20will%20have%20conflict%20problems.%20To%20solve%20this%20problem%2c%20the%20concept%20of%20virtual%20memory%20comes.%20When%20the%20process%20starting%2c%20OS%20will%20assign%20virtual%20memory%20addresses%20for%20the%20process%20to%20use.%20Also%2c%20OS%20will%20map%20the%20virtual%20memory%20addresses%20to%20physical%20memory%20addresses.%20So%20we%20need%20to%20mapping%20the%20table%20to%20maintain%20the%20relationship%20between%20the%20virtual%20memory%20address%20and%20the%20physical%20memory%20address.">
       <i class="fab fa-tumblr " aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&t=%e7%90%86%e8%a7%a3Hugepage">
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&t=Understanding%20Hugepage">
       <i class="fab fa-hacker-news " aria-hidden="true"></i>
     </a>
   </li>
@@ -191,10 +167,10 @@ mkdir -p /mnt/hugepage mount -t hugetlbfs hugetlbfs /mnt/hugepage #不指定-o�
     <div id="toc">
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#linux中的虚拟内存">Linux中的虚拟内存</a></li>
-    <li><a href="#linux中的分页和页表">Linux中的分页和页表</a></li>
-    <li><a href="#hugepages的来源">Hugepages的来源</a></li>
-    <li><a href="#hugepage相关术语">Hugepage相关术语</a>
+    <li><a href="#virtual-memory-in-linux">Virtual Memory in Linux</a></li>
+    <li><a href="#linux-paging-and-page-table">Linux Paging and Page Table</a></li>
+    <li><a href="#hugepages">Hugepages</a></li>
+    <li><a href="#hugepage-terminology">Hugepage Terminology</a>
       <ul>
         <li><a href="#tlb">TLB</a></li>
         <li><a href="#hugetlb">hugetlb</a></li>
@@ -203,12 +179,11 @@ mkdir -p /mnt/hugepage mount -t hugetlbfs hugetlbfs /mnt/hugepage #不指定-o�
     </li>
     <li><a href="#hugepage配置">Hugepage配置</a>
       <ul>
-        <li><a href="#永久配置">永久配置</a></li>
-        <li><a href="#临时配置">临时配置</a></li>
-        <li><a href="#检查hugepage配置">检查Hugepage配置</a></li>
+        <li><a href="#permanent-config">Permanent Config</a></li>
+        <li><a href="#check-hugepages">Check hugepages</a></li>
       </ul>
     </li>
-    <li><a href="#参考">参考</a></li>
+    <li><a href="#references">References</a></li>
   </ul>
 </nav>
     </div>
@@ -219,7 +194,7 @@ mkdir -p /mnt/hugepage mount -t hugetlbfs hugetlbfs /mnt/hugepage #不指定-o�
   <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
     <header>
       <h1 class="posttitle" itemprop="name headline">
-        理解Hugepage
+        Understanding Hugepage
       </h1>
       <div class="meta">
         
@@ -234,7 +209,7 @@ mkdir -p /mnt/hugepage mount -t hugetlbfs hugetlbfs /mnt/hugepage #不指定-o�
             <i class="fas fa-tag"></i>
             
             
-            <a class="tag-link" href="/tags/%E7%B3%BB%E7%BB%9F" rel="tag">系统</a>
+            <a class="tag-link" href="/tags/systems" rel="tag">systems</a>
             
         </div>
         
@@ -243,54 +218,54 @@ mkdir -p /mnt/hugepage mount -t hugetlbfs hugetlbfs /mnt/hugepage #不指定-o�
 
   
     <div class="content" itemprop="articleBody">
-      <h1 id="hugepage">Hugepage</h1>
-<h2 id="linux中的虚拟内存">Linux中的虚拟内存</h2>
-<p>在任务处理中，多个进程对内存的操作会有冲突的问题，为了解决这个问题，则提出了虚拟内存的概念。在进程开始运行时，操作系统会给进程分配虚拟内存地址供进程使用。而操作系统会将这部分虚拟内存地址根据进程的使用情况，来映射到具体的物理内存地址上。而因为有了这个映射关系，则操作系统就需要维护一个映射表。但是，如果将虚拟内存的地址一对一的映射到物理内存上，则需要维护的映射表的大小就太大了，所以为了解决这个问题，则引出了分页和页表的概念。</p>
-<h2 id="linux中的分页和页表">Linux中的分页和页表</h2>
-<p>在Linux的内存管理中，为了节省空间，操作系统会在启动的时候将物理内存以默认4k的大小分割成各个页。而后在为虚拟内存分配物理内存时，都以页为单位。这样一来，虚拟内存到物理内存的这张映射表的大小就会小了很多。而对于某些大内存的情况，操作系统还设计了多级的映射表，这样映射表的大小又进一步的减小。这虚拟内存页到物理内存页的映射表，则被称为页表。</p>
-<h2 id="hugepages的来源">Hugepages的来源</h2>
-<p>由上面我们可以知道，操作系统默认情况下会将内存以4k为单位分成不同的页。但是，在内存非常大的情况下，页的数量也会变的特别多，页的数量变大时，CPU检索内存地址的效率也会下降。所以，为了解决这个问题，只有增大页的大小，以此来减少页的数量，提高检索效率。这也就是Hugepages的由来。我们可以将Hugepages定义为2m, 4m, 6m等大小，最大可以定义为1G。</p>
-<h2 id="hugepage相关术语">Hugepage相关术语</h2>
+      <h2 id="virtual-memory-in-linux">Virtual Memory in Linux</h2>
+<p>In a multi-task system, the operation to the memory of different processes will have conflict problems. To solve this problem, the concept of virtual memory comes. When the process starting, OS will assign virtual memory addresses for the process to use. Also, OS will map the virtual memory addresses to physical memory addresses. So we need to mapping the table to maintain the relationship between the virtual memory address and the physical memory address.</p>
+<p>However, if we 1:1 map the virtual and physical memory address, the table would be too large to search and maintain. To solve this problem, the concept of paging and page table comes.</p>
+<h2 id="linux-paging-and-page-table">Linux Paging and Page Table</h2>
+<p>In memory management, the OS will separate the physical memory into many pages (default size 4K). When the OS needs to allocate virtual memory addresses from physical memory addresses, it will assign pages. So that the mapping table between virtual memory address to physical memory address will be much smaller. In this case, we also need a table to maintain the mapping between the virtual pages and the physical pages. We called this table a paging table.</p>
+<h2 id="hugepages">Hugepages</h2>
+<p>The OS will use a 4K size to divide memory into many pages by default. However, when the memory size becomes large, the number of pages will also be large, which will cause low efficiency when the CPU searches the memory address page by page. To solve this problem, we can only extend the size of the pages to reduce the number of pages. That&rsquo;s the original concept of hugepages. We can define hugepages as 2M, 4M, 6M, and 1G max.</p>
+<h2 id="hugepage-terminology">Hugepage Terminology</h2>
 <h3 id="tlb">TLB</h3>
-<p>Translation Lookside Buffer，是CPU中一块固定大小的cache，用来保存一部分页表的对应关系，用来快速进行虚拟内存到物理内存的映射。</p>
+<p>Translation Lookside Buffer is a cache in CPU with a certain size to store parts of the paging table to accelerate the mapping between virtual memory and physical memory.</p>
 <h3 id="hugetlb">hugetlb</h3>
-<p>hugetlb指的是 TLB中，一条hugepage的条目。可以说hugetlb是用来处理映射hugepage的。</p>
+<p>hugetlb is the TLBs to process the mapping of hugepages.</p>
 <h3 id="hugetlbfs">hugetlbfs</h3>
-<p>hugetlbfs是一种机遇内存的文件系统类型，TLB通过hugetlb来指向hugepage，而这些操作系统分配的hugepage则会作为hugetlbfs内存文件系统中的文件来供内存使用。</p>
+<p>hugetlbfs is a file system type based on memory. TLB can point to the actual hugepage memory through hugetlb. The hugepages assigned by the OS will be used by the memory as the file in the hugetlbfs.</p>
 <h2 id="hugepage配置">Hugepage配置</h2>
-<h3 id="永久配置">永久配置</h3>
-<p>修改<code>/etc/default/grub</code>的内容，在内核的启动参数<code>GRUB_CMDLINE_LINUX_DEFAULT</code>内增加：</p>
+<h3 id="permanent-config">Permanent Config</h3>
+<p>Change <code>/etc/default/grub</code> content，add</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">default_hugepagesz<span style="color:#f92672">=</span>1G hugepagesz<span style="color:#f92672">=</span>1G hugepages<span style="color:#f92672">=</span><span style="color:#ae81ff">16</span> hugepagesz<span style="color:#f92672">=</span>2M hugepages<span style="color:#f92672">=</span><span style="color:#ae81ff">2048</span> iommu<span style="color:#f92672">=</span>pt intel_iommu<span style="color:#f92672">=</span>on isolcpus<span style="color:#f92672">=</span>1-13,15-27
 
-<span style="color:#75715e">## isolcpus根据本身机器的cpu数量来配置</span>
-<span style="color:#75715e">## iommu和isolcpus用于虚拟化和dpdk隔离cpu上，与hugepage实际上关系不大</span>
-</code></pre></div><p>生成grub配置</p>
+<span style="color:#75715e">## isolcpus depends on the cpu of your hosts</span>
+<span style="color:#75715e">## iommu and isolcpus is actually not related to hugepage</span>
+</code></pre></div><p>after <code>GRUB_CMDLINE_LINUX_DEFAULT</code>.</p>
+<p>generate grub2 configuration</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">grub2-mkconfig -o /boot/grub2/grub.cfg
-</code></pre></div><p>重启</p>
+</code></pre></div><p>reboot</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">reboot
-</code></pre></div><p>重启后查看内核cmdline</p>
+</code></pre></div><p>Check kernel params in cmdline</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">grep Huge /proc/cmdline
-</code></pre></div><p>安装hugepage文件系统</p>
+</code></pre></div><p>install hugepage filesystem</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">mkdir -p /mnt/hugepage
 mount -t hugetlbfs hugetlbfs /mnt/hugepage 
 <span style="color:#75715e">#不指定-o参数的话，挂在的hugepage会按照系统默认的大小挂载</span>
-<span style="color:#75715e">#或者</span>
+<span style="color:#75715e"># without -o option, it will use the default size to mount the hugepage</span>
+<span style="color:#75715e"># or</span>
 mkdir -p /mnt/hugepage_2M
 mount -t hugetlbfs none /mnt/hugepage_2M -o pagesize<span style="color:#f92672">=</span>2MB
-<span style="color:#75715e">#指定挂在了2MB大小的hugepage</span>
-</code></pre></div><h3 id="临时配置">临时配置</h3>
-<p>TODO</p>
-<h3 id="检查hugepage配置">检查Hugepage配置</h3>
+<span style="color:#75715e"># mount 2M huagepages</span>
+</code></pre></div><h3 id="check-hugepages">Check hugepages</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">grep Huge /proc/meminfo
 AnonHugePages:         <span style="color:#ae81ff">0</span> kB
-HugePages_Total:       <span style="color:#ae81ff">0</span> <span style="color:#75715e"># Hugepage的总数量</span>
-HugePages_Free:        <span style="color:#ae81ff">0</span> <span style="color:#75715e"># 剩余的Hugepage数量</span>
-HugePages_Rsvd:        <span style="color:#ae81ff">0</span> <span style="color:#75715e"># 保留的Hugepage数量</span>
-HugePages_Surp:        <span style="color:#ae81ff">0</span> <span style="color:#75715e"># </span>
-Hugepagesize:       <span style="color:#ae81ff">2048</span> kB <span style="color:#75715e"># hugepage的大小</span>
+HugePages_Total:       <span style="color:#ae81ff">0</span>  
+HugePages_Free:        <span style="color:#ae81ff">0</span>
+HugePages_Rsvd:        <span style="color:#ae81ff">0</span>
+HugePages_Surp:        <span style="color:#ae81ff">0</span>
+Hugepagesize:       <span style="color:#ae81ff">2048</span> kB
 
-mount -l | grep hugetlbfs <span style="color:#75715e">#查看hugetlbfs是否挂载成功</span>
-</code></pre></div><h2 id="参考">参考</h2>
+mount -l | grep hugetlbfs <span style="color:#75715e">#check if hugepages successfully mounted</span>
+</code></pre></div><h2 id="references">References</h2>
 <p><a href="https://zhenbianshu.github.io/2018/11/understand_virtual_memory.html">理解linux虚拟内存</a></p>
 <p><a href="http://www.linuxboy.net/linuxjc/55724.html">linux Hugepages特性</a></p>
 <p><a href="http://www.linuxboy.net/linuxjc/33901.html">内存大页基础讲解</a></p>
@@ -325,10 +300,10 @@ mount -l | grep hugetlbfs <span style="color:#75715e">#查看hugetlbfs是否挂�
     <div id="toc-footer" style="display: none">
       <nav id="TableOfContents">
   <ul>
-    <li><a href="#linux中的虚拟内存">Linux中的虚拟内存</a></li>
-    <li><a href="#linux中的分页和页表">Linux中的分页和页表</a></li>
-    <li><a href="#hugepages的来源">Hugepages的来源</a></li>
-    <li><a href="#hugepage相关术语">Hugepage相关术语</a>
+    <li><a href="#virtual-memory-in-linux">Virtual Memory in Linux</a></li>
+    <li><a href="#linux-paging-and-page-table">Linux Paging and Page Table</a></li>
+    <li><a href="#hugepages">Hugepages</a></li>
+    <li><a href="#hugepage-terminology">Hugepage Terminology</a>
       <ul>
         <li><a href="#tlb">TLB</a></li>
         <li><a href="#hugetlb">hugetlb</a></li>
@@ -337,12 +312,11 @@ mount -l | grep hugetlbfs <span style="color:#75715e">#查看hugetlbfs是否挂�
     </li>
     <li><a href="#hugepage配置">Hugepage配置</a>
       <ul>
-        <li><a href="#永久配置">永久配置</a></li>
-        <li><a href="#临时配置">临时配置</a></li>
-        <li><a href="#检查hugepage配置">检查Hugepage配置</a></li>
+        <li><a href="#permanent-config">Permanent Config</a></li>
+        <li><a href="#check-hugepages">Check hugepages</a></li>
       </ul>
     </li>
-    <li><a href="#参考">参考</a></li>
+    <li><a href="#references">References</a></li>
   </ul>
 </nav>
     </div>
@@ -361,52 +335,52 @@ mount -l | grep hugetlbfs <span style="color:#75715e">#查看hugetlbfs是否挂�
     </a>
   </li>
   <li>
-    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&text=%e7%90%86%e8%a7%a3Hugepage">
+    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&text=Understanding%20Hugepage">
       <i class="fab fa-twitter fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&title=%e7%90%86%e8%a7%a3Hugepage">
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&title=Understanding%20Hugepage">
       <i class="fab fa-linkedin fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&is_video=false&description=%e7%90%86%e8%a7%a3Hugepage">
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&is_video=false&description=Understanding%20Hugepage">
       <i class="fab fa-pinterest fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="mailto:?subject=%e7%90%86%e8%a7%a3Hugepage&body=Check out this article: https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f">
+    <a class="icon" href="mailto:?subject=Understanding%20Hugepage&body=Check out this article: https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f">
       <i class="fas fa-envelope fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&title=%e7%90%86%e8%a7%a3Hugepage">
+    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&title=Understanding%20Hugepage">
       <i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&title=%e7%90%86%e8%a7%a3Hugepage">
+    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&title=Understanding%20Hugepage">
       <i class="fab fa-reddit fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.stumbleupon.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&title=%e7%90%86%e8%a7%a3Hugepage">
+    <a class="icon" href="http://www.stumbleupon.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&title=Understanding%20Hugepage">
       <i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://digg.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&title=%e7%90%86%e8%a7%a3Hugepage">
+    <a class="icon" href="http://digg.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&title=Understanding%20Hugepage">
       <i class="fab fa-digg fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&name=%e7%90%86%e8%a7%a3Hugepage&description=Hugepage%20Linux%e4%b8%ad%e7%9a%84%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98%20%e5%9c%a8%e4%bb%bb%e5%8a%a1%e5%a4%84%e7%90%86%e4%b8%ad%ef%bc%8c%e5%a4%9a%e4%b8%aa%e8%bf%9b%e7%a8%8b%e5%af%b9%e5%86%85%e5%ad%98%e7%9a%84%e6%93%8d%e4%bd%9c%e4%bc%9a%e6%9c%89%e5%86%b2%e7%aa%81%e7%9a%84%e9%97%ae%e9%a2%98%ef%bc%8c%e4%b8%ba%e4%ba%86%e8%a7%a3%e5%86%b3%e8%bf%99%e4%b8%aa%e9%97%ae%e9%a2%98%ef%bc%8c%e5%88%99%e6%8f%90%e5%87%ba%e4%ba%86%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98%e7%9a%84%e6%a6%82%e5%bf%b5%e3%80%82%e5%9c%a8%e8%bf%9b%e7%a8%8b%e5%bc%80%e5%a7%8b%e8%bf%90%e8%a1%8c%e6%97%b6%ef%bc%8c%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f%e4%bc%9a%e7%bb%99%e8%bf%9b%e7%a8%8b%e5%88%86%e9%85%8d%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98%e5%9c%b0%e5%9d%80%e4%be%9b%e8%bf%9b%e7%a8%8b%e4%bd%bf%e7%94%a8%e3%80%82%e8%80%8c%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f%e4%bc%9a%e5%b0%86%e8%bf%99%e9%83%a8%e5%88%86%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98%e5%9c%b0%e5%9d%80%e6%a0%b9%e6%8d%ae%e8%bf%9b%e7%a8%8b%e7%9a%84%e4%bd%bf%e7%94%a8%e6%83%85%e5%86%b5%ef%bc%8c%e6%9d%a5%e6%98%a0%e5%b0%84%e5%88%b0%e5%85%b7%e4%bd%93%e7%9a%84%e7%89%a9%e7%90%86%e5%86%85%e5%ad%98%e5%9c%b0%e5%9d%80%e4%b8%8a%e3%80%82%e8%80%8c%e5%9b%a0%e4%b8%ba%e6%9c%89%e4%ba%86%e8%bf%99%e4%b8%aa%e6%98%a0%e5%b0%84%e5%85%b3%e7%b3%bb%ef%bc%8c%e5%88%99%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f%e5%b0%b1%e9%9c%80%e8%a6%81%e7%bb%b4%e6%8a%a4%e4%b8%80%e4%b8%aa%e6%98%a0%e5%b0%84%e8%a1%a8%e3%80%82%e4%bd%86%e6%98%af%ef%bc%8c%e5%a6%82%e6%9e%9c%e5%b0%86%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98%e7%9a%84%e5%9c%b0%e5%9d%80%e4%b8%80%e5%af%b9%e4%b8%80%e7%9a%84%e6%98%a0%e5%b0%84%e5%88%b0%e7%89%a9%e7%90%86%e5%86%85%e5%ad%98%e4%b8%8a%ef%bc%8c%e5%88%99%e9%9c%80%e8%a6%81%e7%bb%b4%e6%8a%a4%e7%9a%84%e6%98%a0%e5%b0%84%e8%a1%a8%e7%9a%84%e5%a4%a7%e5%b0%8f%e5%b0%b1%e5%a4%aa%e5%a4%a7%e4%ba%86%ef%bc%8c%e6%89%80%e4%bb%a5%e4%b8%ba%e4%ba%86%e8%a7%a3%e5%86%b3%e8%bf%99%e4%b8%aa%e9%97%ae%e9%a2%98%ef%bc%8c%e5%88%99%e5%bc%95%e5%87%ba%e4%ba%86%e5%88%86%e9%a1%b5%e5%92%8c%e9%a1%b5%e8%a1%a8%e7%9a%84%e6%a6%82%e5%bf%b5%e3%80%82%0aLinux%e4%b8%ad%e7%9a%84%e5%88%86%e9%a1%b5%e5%92%8c%e9%a1%b5%e8%a1%a8%20%e5%9c%a8Linux%e7%9a%84%e5%86%85%e5%ad%98%e7%ae%a1%e7%90%86%e4%b8%ad%ef%bc%8c%e4%b8%ba%e4%ba%86%e8%8a%82%e7%9c%81%e7%a9%ba%e9%97%b4%ef%bc%8c%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f%e4%bc%9a%e5%9c%a8%e5%90%af%e5%8a%a8%e7%9a%84%e6%97%b6%e5%80%99%e5%b0%86%e7%89%a9%e7%90%86%e5%86%85%e5%ad%98%e4%bb%a5%e9%bb%98%e8%ae%a44k%e7%9a%84%e5%a4%a7%e5%b0%8f%e5%88%86%e5%89%b2%e6%88%90%e5%90%84%e4%b8%aa%e9%a1%b5%e3%80%82%e8%80%8c%e5%90%8e%e5%9c%a8%e4%b8%ba%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98%e5%88%86%e9%85%8d%e7%89%a9%e7%90%86%e5%86%85%e5%ad%98%e6%97%b6%ef%bc%8c%e9%83%bd%e4%bb%a5%e9%a1%b5%e4%b8%ba%e5%8d%95%e4%bd%8d%e3%80%82%e8%bf%99%e6%a0%b7%e4%b8%80%e6%9d%a5%ef%bc%8c%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98%e5%88%b0%e7%89%a9%e7%90%86%e5%86%85%e5%ad%98%e7%9a%84%e8%bf%99%e5%bc%a0%e6%98%a0%e5%b0%84%e8%a1%a8%e7%9a%84%e5%a4%a7%e5%b0%8f%e5%b0%b1%e4%bc%9a%e5%b0%8f%e4%ba%86%e5%be%88%e5%a4%9a%e3%80%82%e8%80%8c%e5%af%b9%e4%ba%8e%e6%9f%90%e4%ba%9b%e5%a4%a7%e5%86%85%e5%ad%98%e7%9a%84%e6%83%85%e5%86%b5%ef%bc%8c%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f%e8%bf%98%e8%ae%be%e8%ae%a1%e4%ba%86%e5%a4%9a%e7%ba%a7%e7%9a%84%e6%98%a0%e5%b0%84%e8%a1%a8%ef%bc%8c%e8%bf%99%e6%a0%b7%e6%98%a0%e5%b0%84%e8%a1%a8%e7%9a%84%e5%a4%a7%e5%b0%8f%e5%8f%88%e8%bf%9b%e4%b8%80%e6%ad%a5%e7%9a%84%e5%87%8f%e5%b0%8f%e3%80%82%e8%bf%99%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98%e9%a1%b5%e5%88%b0%e7%89%a9%e7%90%86%e5%86%85%e5%ad%98%e9%a1%b5%e7%9a%84%e6%98%a0%e5%b0%84%e8%a1%a8%ef%bc%8c%e5%88%99%e8%a2%ab%e7%a7%b0%e4%b8%ba%e9%a1%b5%e8%a1%a8%e3%80%82%0aHugepages%e7%9a%84%e6%9d%a5%e6%ba%90%20%e7%94%b1%e4%b8%8a%e9%9d%a2%e6%88%91%e4%bb%ac%e5%8f%af%e4%bb%a5%e7%9f%a5%e9%81%93%ef%bc%8c%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f%e9%bb%98%e8%ae%a4%e6%83%85%e5%86%b5%e4%b8%8b%e4%bc%9a%e5%b0%86%e5%86%85%e5%ad%98%e4%bb%a54k%e4%b8%ba%e5%8d%95%e4%bd%8d%e5%88%86%e6%88%90%e4%b8%8d%e5%90%8c%e7%9a%84%e9%a1%b5%e3%80%82%e4%bd%86%e6%98%af%ef%bc%8c%e5%9c%a8%e5%86%85%e5%ad%98%e9%9d%9e%e5%b8%b8%e5%a4%a7%e7%9a%84%e6%83%85%e5%86%b5%e4%b8%8b%ef%bc%8c%e9%a1%b5%e7%9a%84%e6%95%b0%e9%87%8f%e4%b9%9f%e4%bc%9a%e5%8f%98%e7%9a%84%e7%89%b9%e5%88%ab%e5%a4%9a%ef%bc%8c%e9%a1%b5%e7%9a%84%e6%95%b0%e9%87%8f%e5%8f%98%e5%a4%a7%e6%97%b6%ef%bc%8cCPU%e6%a3%80%e7%b4%a2%e5%86%85%e5%ad%98%e5%9c%b0%e5%9d%80%e7%9a%84%e6%95%88%e7%8e%87%e4%b9%9f%e4%bc%9a%e4%b8%8b%e9%99%8d%e3%80%82%e6%89%80%e4%bb%a5%ef%bc%8c%e4%b8%ba%e4%ba%86%e8%a7%a3%e5%86%b3%e8%bf%99%e4%b8%aa%e9%97%ae%e9%a2%98%ef%bc%8c%e5%8f%aa%e6%9c%89%e5%a2%9e%e5%a4%a7%e9%a1%b5%e7%9a%84%e5%a4%a7%e5%b0%8f%ef%bc%8c%e4%bb%a5%e6%ad%a4%e6%9d%a5%e5%87%8f%e5%b0%91%e9%a1%b5%e7%9a%84%e6%95%b0%e9%87%8f%ef%bc%8c%e6%8f%90%e9%ab%98%e6%a3%80%e7%b4%a2%e6%95%88%e7%8e%87%e3%80%82%e8%bf%99%e4%b9%9f%e5%b0%b1%e6%98%afHugepages%e7%9a%84%e7%94%b1%e6%9d%a5%e3%80%82%e6%88%91%e4%bb%ac%e5%8f%af%e4%bb%a5%e5%b0%86Hugepages%e5%ae%9a%e4%b9%89%e4%b8%ba2m%2c%204m%2c%206m%e7%ad%89%e5%a4%a7%e5%b0%8f%ef%bc%8c%e6%9c%80%e5%a4%a7%e5%8f%af%e4%bb%a5%e5%ae%9a%e4%b9%89%e4%b8%ba1G%e3%80%82%0aHugepage%e7%9b%b8%e5%85%b3%e6%9c%af%e8%af%ad%20TLB%20Translation%20Lookside%20Buffer%ef%bc%8c%e6%98%afCPU%e4%b8%ad%e4%b8%80%e5%9d%97%e5%9b%ba%e5%ae%9a%e5%a4%a7%e5%b0%8f%e7%9a%84cache%ef%bc%8c%e7%94%a8%e6%9d%a5%e4%bf%9d%e5%ad%98%e4%b8%80%e9%83%a8%e5%88%86%e9%a1%b5%e8%a1%a8%e7%9a%84%e5%af%b9%e5%ba%94%e5%85%b3%e7%b3%bb%ef%bc%8c%e7%94%a8%e6%9d%a5%e5%bf%ab%e9%80%9f%e8%bf%9b%e8%a1%8c%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98%e5%88%b0%e7%89%a9%e7%90%86%e5%86%85%e5%ad%98%e7%9a%84%e6%98%a0%e5%b0%84%e3%80%82%0ahugetlb%20hugetlb%e6%8c%87%e7%9a%84%e6%98%af%20TLB%e4%b8%ad%ef%bc%8c%e4%b8%80%e6%9d%a1hugepage%e7%9a%84%e6%9d%a1%e7%9b%ae%e3%80%82%e5%8f%af%e4%bb%a5%e8%af%b4hugetlb%e6%98%af%e7%94%a8%e6%9d%a5%e5%a4%84%e7%90%86%e6%98%a0%e5%b0%84hugepage%e7%9a%84%e3%80%82%0ahugetlbfs%20hugetlbfs%e6%98%af%e4%b8%80%e7%a7%8d%e6%9c%ba%e9%81%87%e5%86%85%e5%ad%98%e7%9a%84%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f%e7%b1%bb%e5%9e%8b%ef%bc%8cTLB%e9%80%9a%e8%bf%87hugetlb%e6%9d%a5%e6%8c%87%e5%90%91hugepage%ef%bc%8c%e8%80%8c%e8%bf%99%e4%ba%9b%e6%93%8d%e4%bd%9c%e7%b3%bb%e7%bb%9f%e5%88%86%e9%85%8d%e7%9a%84hugepage%e5%88%99%e4%bc%9a%e4%bd%9c%e4%b8%bahugetlbfs%e5%86%85%e5%ad%98%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f%e4%b8%ad%e7%9a%84%e6%96%87%e4%bb%b6%e6%9d%a5%e4%be%9b%e5%86%85%e5%ad%98%e4%bd%bf%e7%94%a8%e3%80%82%0aHugepage%e9%85%8d%e7%bd%ae%20%e6%b0%b8%e4%b9%85%e9%85%8d%e7%bd%ae%20%e4%bf%ae%e6%94%b9%2fetc%2fdefault%2fgrub%e7%9a%84%e5%86%85%e5%ae%b9%ef%bc%8c%e5%9c%a8%e5%86%85%e6%a0%b8%e7%9a%84%e5%90%af%e5%8a%a8%e5%8f%82%e6%95%b0GRUB_CMDLINE_LINUX_DEFAULT%e5%86%85%e5%a2%9e%e5%8a%a0%ef%bc%9a%0adefault_hugepagesz%3d1G%20hugepagesz%3d1G%20hugepages%3d16%20hugepagesz%3d2M%20hugepages%3d2048%20iommu%3dpt%20intel_iommu%3don%20isolcpus%3d1-13%2c15-27%20%23%23%20isolcpus%e6%a0%b9%e6%8d%ae%e6%9c%ac%e8%ba%ab%e6%9c%ba%e5%99%a8%e7%9a%84cpu%e6%95%b0%e9%87%8f%e6%9d%a5%e9%85%8d%e7%bd%ae%20%23%23%20iommu%e5%92%8cisolcpus%e7%94%a8%e4%ba%8e%e8%99%9a%e6%8b%9f%e5%8c%96%e5%92%8cdpdk%e9%9a%94%e7%a6%bbcpu%e4%b8%8a%ef%bc%8c%e4%b8%8ehugepage%e5%ae%9e%e9%99%85%e4%b8%8a%e5%85%b3%e7%b3%bb%e4%b8%8d%e5%a4%a7%20%e7%94%9f%e6%88%90grub%e9%85%8d%e7%bd%ae%0agrub2-mkconfig%20-o%20%2fboot%2fgrub2%2fgrub.cfg%20%e9%87%8d%e5%90%af%0areboot%20%e9%87%8d%e5%90%af%e5%90%8e%e6%9f%a5%e7%9c%8b%e5%86%85%e6%a0%b8cmdline%0agrep%20Huge%20%2fproc%2fcmdline%20%e5%ae%89%e8%a3%85hugepage%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f%0amkdir%20-p%20%2fmnt%2fhugepage%20mount%20-t%20hugetlbfs%20hugetlbfs%20%2fmnt%2fhugepage%20%23%e4%b8%8d%e6%8c%87%e5%ae%9a-o%e5%8f%82%e6%95%b0%e7%9a%84%e8%af%9d%ef%bc%8c%e6%8c%82%e5%9c%a8%e7%9a%84hugepage%e4%bc%9a%e6%8c%89%e7%85%a7%e7%b3%bb%e7%bb%9f%e9%bb%98%e8%ae%a4%e7%9a%84%e5%a4%a7%e5%b0%8f%e6%8c%82%e8%bd%bd%20%23%e6%88%96%e8%80%85%20mkdir%20-p%20%2fmnt%2fhugepage_2M%20mount%20-t%20hugetlbfs%20none%20%2fmnt%2fhugepage_2M%20-o%20pagesize%3d2MB%20%23%e6%8c%87%e5%ae%9a%e6%8c%82%e5%9c%a8%e4%ba%862MB%e5%a4%a7%e5%b0%8f%e7%9a%84hugepage%20%e4%b8%b4%e6%97%b6%e9%85%8d%e7%bd%ae%20TODO%0a%e6%a3%80%e6%9f%a5Hugepage%e9%85%8d%e7%bd%ae%20grep%20Huge%20%2fproc%2fmeminfo%20AnonHugePages%3a%200%20kB%20HugePages_Total%3a%200%20%23%20Hugepage%e7%9a%84%e6%80%bb%e6%95%b0%e9%87%8f%20HugePages_Free%3a%200%20%23%20%e5%89%a9%e4%bd%99%e7%9a%84Hugepage%e6%95%b0%e9%87%8f%20HugePages_Rsvd%3a%200%20%23%20%e4%bf%9d%e7%95%99%e7%9a%84Hugepage%e6%95%b0%e9%87%8f%20HugePages_Surp%3a%200%20%23%20%20Hugepagesize%3a%202048%20kB%20%23%20hugepage%e7%9a%84%e5%a4%a7%e5%b0%8f%20mount%20-l%20%7c%20grep%20hugetlbfs%20%23%e6%9f%a5%e7%9c%8bhugetlbfs%e6%98%af%e5%90%a6%e6%8c%82%e8%bd%bd%e6%88%90%e5%8a%9f%20%e5%8f%82%e8%80%83%20%e7%90%86%e8%a7%a3linux%e8%99%9a%e6%8b%9f%e5%86%85%e5%ad%98">
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&name=Understanding%20Hugepage&description=Virtual%20Memory%20in%20Linux%20%08In%20a%20multi-task%20system%2c%20the%20operation%20to%20the%20memory%20of%20different%20processes%20will%20have%20conflict%20problems.%20To%20solve%20this%20problem%2c%20the%20concept%20of%20virtual%20memory%20comes.%20When%20the%20process%20starting%2c%20OS%20will%20assign%20virtual%20memory%20addresses%20for%20the%20process%20to%20use.%20Also%2c%20OS%20will%20map%20the%20virtual%20memory%20addresses%20to%20physical%20memory%20addresses.%20So%20we%20need%20to%20mapping%20the%20table%20to%20maintain%20the%20relationship%20between%20the%20virtual%20memory%20address%20and%20the%20physical%20memory%20address.">
       <i class="fab fa-tumblr fa-lg" aria-hidden="true"></i>
     </a>
   </li>
   <li>
-    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&t=%e7%90%86%e8%a7%a3Hugepage">
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fhugepage%2f&t=Understanding%20Hugepage">
       <i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i>
     </a>
   </li>
