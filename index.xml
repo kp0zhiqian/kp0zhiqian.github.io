@@ -143,10 +143,10 @@ Test results  PASSED(.): test pass FAILED(F): test fail SKIPPED(s): test skipped
     <item>
       <title>About me</title>
       <link>https://kp0zhiqian.github.io/about/</link>
-      <pubDate>Wed, 24 Aug 2016 17:51:42 +0000</pubDate>
+      <pubDate>Fri, 21 Dec 2012 12:12:12 +0000</pubDate>
       
       <guid>https://kp0zhiqian.github.io/about/</guid>
-      <description></description>
+      <description>An engineer who has passion about networking and quality engineering. I used to be a Datacenter Network Engineer and currently a Software Quality Engineer in Red Hat, focus on Linux networking, including Openvswitch, eXpress DataPath and etc.</description>
     </item>
     
   </channel>
