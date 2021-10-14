@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title> Container, Kubernetes and SR-IOV | kp0zhiqian&#39;s</title>
+  <meta name="description" content="This is the way.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="all,follow">
+  <meta name="googlebot" content="index,follow,snippet,archive">
+  <meta property="og:title" content="Container, Kubernetes and SR-IOV" />
+<meta property="og:description" content="This article is the transcript of a tech sharing in my team and assumed the audiences have already knew some background knowladge.
+ Container Basic  &ldquo;Container is NOT virtual machine!&rdquo;
+ Linux provides namespace and cgroup to isolate or limit resources between different process.
+Container is a technology that uses namespace and cgroup (also the union file system) to create an isolated environment that can be used by a process." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://kp0zhiqian.github.io/posts/container-k8s/" />
+<meta property="article:published_time" content="2021-10-14T00:10:57+08:00" />
+<meta property="article:modified_time" content="2021-10-14T00:10:57+08:00" />
+
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Container, Kubernetes and SR-IOV"/>
+<meta name="twitter:description" content="This article is the transcript of a tech sharing in my team and assumed the audiences have already knew some background knowladge.
+ Container Basic  &ldquo;Container is NOT virtual machine!&rdquo;
+ Linux provides namespace and cgroup to isolate or limit resources between different process.
+Container is a technology that uses namespace and cgroup (also the union file system) to create an isolated environment that can be used by a process."/>
+
+  
+  
+    
+  
+  
+  <link rel="stylesheet" href="https://kp0zhiqian.github.io/css/style-classic.css">
+  
+  
+  
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+  
+<link rel="icon" type="image/png" href="https://kp0zhiqian.github.io/images/favicon.ico" />
+
+  
+  
+  
+  
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+  <div class="content index py4">
+
+  <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/posts">Writings</a></li>
+         
+        <li><a href="/tags">Tags</a></li>
+         
+        <li><a href="/about">About</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li>
+          <a class="icon" href=" https://kp0zhiqian.github.io/posts/ansible-others/">
+            <i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i>
+          </a>
+        </li>
+        
+        
+        <li>
+          <a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">
+            <i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i>
+          </a>
+        </li>
+        <li>
+          <a class="icon" href="#">
+            <i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i>
+          </a>
+        </li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      
+      <ul>
+  
+  
+    
+  
+  
+  <li>
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fcontainer-k8s%2f">
+      <i class="fab fa-facebook " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fcontainer-k8s%2f&text=Container%2c%20Kubernetes%20and%20SR-IOV">
+      <i class="fab fa-twitter " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fcontainer-k8s%2f&title=Container%2c%20Kubernetes%20and%20SR-IOV">
+      <i class="fab fa-linkedin " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fcontainer-k8s%2f&is_video=false&description=Container%2c%20Kubernetes%20and%20SR-IOV">
+      <i class="fab fa-pinterest " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="mailto:?subject=Container%2c%20Kubernetes%20and%20SR-IOV&body=Check out this article: https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fcontainer-k8s%2f">
+      <i class="fas fa-envelope " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fcontainer-k8s%2f&title=Container%2c%20Kubernetes%20and%20SR-IOV">
+      <i class="fab fa-get-pocket " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fcontainer-k8s%2f&title=Container%2c%20Kubernetes%20and%20SR-IOV">
+      <i class="fab fa-reddit " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.stumbleupon.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fcontainer-k8s%2f&title=Container%2c%20Kubernetes%20and%20SR-IOV">
+      <i class="fab fa-stumbleupon " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://digg.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fcontainer-k8s%2f&title=Container%2c%20Kubernetes%20and%20SR-IOV">
+      <i class="fab fa-digg " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fcontainer-k8s%2f&name=Container%2c%20Kubernetes%20and%20SR-IOV&description=This%20article%20is%20the%20transcript%20of%20a%20tech%20sharing%20in%20my%20team%20and%20assumed%20the%20audiences%20have%20already%20knew%20some%20background%20knowladge.%0a%20Container%20Basic%20%20%26ldquo%3bContainer%20is%20NOT%20virtual%20machine%21%26rdquo%3b%0a%20Linux%20provides%20namespace%20and%20cgroup%20to%20isolate%20or%20limit%20resources%20between%20different%20process.%0aContainer%20is%20a%20technology%20that%20uses%20namespace%20and%20cgroup%20%28also%20the%20union%20file%20system%29%20to%20create%20an%20isolated%20environment%20that%20can%20be%20used%20by%20a%20process.">
+      <i class="fab fa-tumblr " aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fcontainer-k8s%2f&t=Container%2c%20Kubernetes%20and%20SR-IOV">
+      <i class="fab fa-hacker-news " aria-hidden="true"></i>
+    </a>
+  </li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#container-basic">Container Basic</a></li>
+    <li><a href="#container-runtime">Container Runtime</a>
+      <ul>
+        <li><a href="#oci---open-container-initiative">OCI - Open Container Initiative</a></li>
+        <li><a href="#cri---container-runtime-interface">CRI - Container Runtime Interface</a></li>
+      </ul>
+    </li>
+    <li><a href="#docker">Docker</a></li>
+    <li><a href="#podman">Podman</a></li>
+    <li><a href="#cri-o--crictl">Cri-o &amp; Crictl</a></li>
+    <li><a href="#cni">CNI</a></li>
+    <li><a href="#cni-plugin">CNI Plugin</a>
+      <ul>
+        <li><a href="#sr-iov-cni-plugin">SR-IOV CNI Plugin</a></li>
+      </ul>
+    </li>
+    <li><a href="#how-does-the-openshift-create-sr-iov-network">How does the Openshift create SR-IOV network?</a>
+      <ul>
+        <li><a href="#openshiftkubernetes-basic-concepts">Openshift/Kubernetes Basic Concepts</a></li>
+        <li><a href="#how-to-operate-openshiftkubernetes">How to operate Openshift/Kubernetes</a></li>
+        <li><a href="#how-does-the-openshift-know-which-worker-node-has-the-sr-iov-function">⁉️How does the openshift know which worker node has the SR-IOV function?</a></li>
+        <li><a href="#script-to-create-and-run-a-container-that-use-sr-iov">Script to create and run a container that use SR-IOV</a></li>
+        <li><a href="#steps-for-using-sr-iov-in-container-against-a-rhel-baremetal-simulation-enviroment">Steps for using SR-IOV in container against a RHEL baremetal simulation enviroment.</a></li>
+      </ul>
+    </li>
+    <li><a href="#more-what-is-pod-and-why-we-use-it">MORE: What is Pod and why we use it.</a>
+      <ul>
+        <li><a href="#why-use-pod">Why use Pod?</a></li>
+        <li><a href="#pod-is-also-a-container">Pod is also a container?</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+  </span>
+</div>
+
+
+  <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+    <header>
+      <h1 class="posttitle" itemprop="name headline">
+        Container, Kubernetes and SR-IOV
+      </h1>
+      <div class="meta">
+        
+        <div class="postdate">
+          
+          <time datetime="2021-10-14 00:10:57 &#43;0800 CST" itemprop="datePublished">2021-10-14</time>
+          
+        </div>
+        
+        
+        <div class="article-tag">
+            <i class="fas fa-tag"></i>
+            
+            
+            <a class="tag-link" href="/tags/container" rel="tag">container</a>
+            
+             ,  
+            <a class="tag-link" href="/tags/kubernetes" rel="tag">kubernetes</a>
+            
+             ,  
+            <a class="tag-link" href="/tags/networking" rel="tag">networking</a>
+            
+        </div>
+        
+      </div>
+    </header>
+
+  
+    <div class="content" itemprop="articleBody">
+      <blockquote>
+<p>This article is the transcript of a tech sharing in my team and assumed the audiences have already knew some background knowladge.</p>
+</blockquote>
+<h2 id="container-basic">Container Basic</h2>
+<blockquote>
+<p>&ldquo;Container is NOT virtual machine!&rdquo;</p>
+</blockquote>
+<p><img src="../../post-imagek8s-container/Untitled.png" alt="SR-IOV%20Container%20Test%20f0bdf8e02a57412cbecc70845fe60bb0/Untitled.png"></p>
+<p>Linux provides namespace and cgroup to isolate or limit resources between different process.</p>
+<p>Container is a technology that uses namespace and cgroup (also the union file system) to create an isolated environment that can be used by a process.</p>
+<h2 id="container-runtime">Container Runtime</h2>
+<p>Namespace and cgroup are the mechanisms provided by Linux. The container is only a tech that uses these machines. Container Runtime is the software that actually uses the mechanisms to achieve container tech. However, different people may have different ideas about the way to use the mechanisms. So comes to the two standards, OCI (Open Container Initiative) and CRI (Container Runtime Interface)</p>
+<h3 id="oci---open-container-initiative">OCI - Open Container Initiative</h3>
+<p><img src="../../post-imagek8s-container/Untitled%201.png" alt="SR-IOV%20Container%20Test%20f0bdf8e02a57412cbecc70845fe60bb0/Untitled%201.png"></p>
+<p>Docker leads the OCI. OCI defines the way to run a container, how to set up the namespace and cgroup, also includes the format of a container image, configuration, and metadata.</p>
+<p>runC is a full implementation of OCI on Linux.</p>
+<p><a href="https://opencontainers.org/">Open Container Initiative</a></p>
+<p><a href="https://github.com/opencontainers/runc">opencontainers/runc</a></p>
+<h3 id="cri---container-runtime-interface">CRI - Container Runtime Interface</h3>
+<p>Container Runtime Interface is a container runtime standard published by Kubernetes. Kubernetes is a platform that manages and orchestrates large-scale containers. This platform combines many components, container run time is one of them. Any runtime software that achieves the CRI can be used by Kubernetes as a container runtime component. Besides CRI, Kubernetes also have standards like CNI(Container Network Interface) and CSI (Container Storage Interface)</p>
+<p>OCI is a standard that defines how to create/run/manage a container. CRI is a standard that defines how runtime software can be used by Kubernetes.</p>
+<p><a href="https://github.com/kubernetes/kubernetes/blob/242a97307b34076d5d8f5bbeb154fa4d97c9ef1d/docs/devel/container-runtime-interface.md">kubernetes/kubernetes</a></p>
+<p><a href="https://kubernetes.io/blog/2016/12/container-runtime-interface-cri-in-kubernetes/">Introducing Container Runtime Interface (CRI) in Kubernetes</a></p>
+<h2 id="docker">Docker</h2>
+<p>Docker is a container management tool that has features like build/pull/run container. After installing Docker, you will get at least 3 components: runC, containerd, dockerd, also include a docker cli client. The relationship between the 3 main components can be described as below chart.</p>
+<p><img src="../../post-imagek8s-container/Untitled%202.png" alt="SR-IOV%20Container%20Test%20f0bdf8e02a57412cbecc70845fe60bb0/Untitled%202.png"></p>
+<ol>
+<li>Docker CLI client send commands to the Dockerd who is the daemon of Docker.</li>
+<li>Dockerd then call containerd to create container.</li>
+<li>Containerd will fork a child process containerd-shim</li>
+<li>containerd-shim will use runC to create the target container.</li>
+</ol>
+<p><img src="../../post-imagek8s-container/Untitled%203.png" alt="SR-IOV%20Container%20Test%20f0bdf8e02a57412cbecc70845fe60bb0/Untitled%203.png"></p>
+<h2 id="podman">Podman</h2>
+<p>Podman is also a container management tool. But unlike Docker needs a daemon running at the backend, Podman directly creates and manages the container. Podman also uses runC, which means it implements OCI standards.</p>
+<p><img src="../../post-imagek8s-container/Untitled%204.png" alt="SR-IOV%20Container%20Test%20f0bdf8e02a57412cbecc70845fe60bb0/Untitled%204.png"></p>
+<p>Podman and Docker are the same when you using the cli</p>
+<h2 id="cri-o--crictl">Cri-o &amp; Crictl</h2>
+<p>cri-o is a container runtime published by Redhat, implementing both OCI and CRI standards. It uses OCI to communicate with runC, CRI to communicate with Kubernetes. The purpose of cri-o is not a tool like Docker or Podman but a runtime component that can be used by Kubernetes. For this reason, cri-o is actually only running as a daemon. cri-o works like a component of Kubernetes, so it has no cli interface, which means we cannot use cri-o directly from cli. But there&rsquo;s also an open-source tool called crictl. crictl works as a cri-o client, but only has limited features. crictl is usually used by k8s developers as a dev tool. Cri-o achieves CRI to the north Kubernetes, achieves OCI to the south by runC.</p>
+<p><img src="../../post-imagek8s-container/Untitled%205.png" alt="SR-IOV%20Container%20Test%20f0bdf8e02a57412cbecc70845fe60bb0/Untitled%205.png"></p>
+<p>Openshift is just a platform developed based on Kubernetes with many more advanced features. From the perspective of the low-level implementation, Openshift and Kubernetes is basically the same. It uses cri-o as it&rsquo;s container runtime, which is why we use cri-o and crictl in our SR-IOV container testing.</p>
+<h2 id="cni">CNI</h2>
+<p>Similar with CRI, CNI is also a standard published by Kubernetes. Instead of defining how to be a container runtime component, CNI defines how to config and use the container network. CNI is made up by some network api standard and library. CNI only focus on configure the network resource when creating the container and releasing the network resource when deleting the container.</p>
+<p>Currently, CNI has already Kubernetes built-in component.</p>
+<h2 id="cni-plugin">CNI Plugin</h2>
+<p>CNI plugin must be an executable file in a certain path. This file will be called by Kubernetes to insert the network port to the container namespace (like one point of a veth pair) and also do necessary change on the host (like connect the other point of a veth pair to bridge), and then assign IP to the port and route.</p>
+<h3 id="sr-iov-cni-plugin">SR-IOV CNI Plugin</h3>
+<p><a href="https://github.com/openshift/sriov-cni">openshift/sriov-cni</a></p>
+<p>🕹️ Example with SR-IOV CNI Plugin</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1"> 1</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="2"><a style="outline: none; text-decoration:none; color:inherit" href="#2"> 2</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="3"><a style="outline: none; text-decoration:none; color:inherit" href="#3"> 3</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="4"><a style="outline: none; text-decoration:none; color:inherit" href="#4"> 4</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="5"><a style="outline: none; text-decoration:none; color:inherit" href="#5"> 5</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="6"><a style="outline: none; text-decoration:none; color:inherit" href="#6"> 6</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="7"><a style="outline: none; text-decoration:none; color:inherit" href="#7"> 7</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="8"><a style="outline: none; text-decoration:none; color:inherit" href="#8"> 8</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="9"><a style="outline: none; text-decoration:none; color:inherit" href="#9"> 9</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="10"><a style="outline: none; text-decoration:none; color:inherit" href="#10">10</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="11"><a style="outline: none; text-decoration:none; color:inherit" href="#11">11</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="12"><a style="outline: none; text-decoration:none; color:inherit" href="#12">12</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="13"><a style="outline: none; text-decoration:none; color:inherit" href="#13">13</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="14"><a style="outline: none; text-decoration:none; color:inherit" href="#14">14</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="15"><a style="outline: none; text-decoration:none; color:inherit" href="#15">15</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="16"><a style="outline: none; text-decoration:none; color:inherit" href="#16">16</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="17"><a style="outline: none; text-decoration:none; color:inherit" href="#17">17</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="18"><a style="outline: none; text-decoration:none; color:inherit" href="#18">18</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="19"><a style="outline: none; text-decoration:none; color:inherit" href="#19">19</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="20"><a style="outline: none; text-decoration:none; color:inherit" href="#20">20</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="21"><a style="outline: none; text-decoration:none; color:inherit" href="#21">21</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="22"><a style="outline: none; text-decoration:none; color:inherit" href="#22">22</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="23"><a style="outline: none; text-decoration:none; color:inherit" href="#23">23</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="24"><a style="outline: none; text-decoration:none; color:inherit" href="#24">24</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="25"><a style="outline: none; text-decoration:none; color:inherit" href="#25">25</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="26"><a style="outline: none; text-decoration:none; color:inherit" href="#26">26</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="27"><a style="outline: none; text-decoration:none; color:inherit" href="#27">27</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="28"><a style="outline: none; text-decoration:none; color:inherit" href="#28">28</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="29"><a style="outline: none; text-decoration:none; color:inherit" href="#29">29</a>
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># Complie the excutable</span>
+git clone https://github.com/openshift/sriov-cni.git
+pushd sriov-cni
+sudo yum install -yq go
+make build  <span style="color:#75715e"># build sriov-cni binary</span>
+
+<span style="color:#75715e"># Move excutable to certain path</span>
+cp -f build/sriov /usr/libexec/cni/
+
+<span style="color:#75715e"># Create configuation</span>
+<span style="color:#f92672">{</span> 
+    <span style="color:#e6db74">&#34;cniVersion&#34;</span>:<span style="color:#e6db74">&#34;0.3.1&#34;</span>,
+    <span style="color:#e6db74">&#34;name&#34;</span>:<span style="color:#e6db74">&#34;sriov-net&#34;</span>,
+    <span style="color:#e6db74">&#34;type&#34;</span>:<span style="color:#e6db74">&#34;sriov&#34;</span>,
+    <span style="color:#e6db74">&#34;vlan&#34;</span>:0,
+    <span style="color:#e6db74">&#34;spoofchk&#34;</span>:<span style="color:#e6db74">&#34;off&#34;</span>,
+    <span style="color:#e6db74">&#34;vlanQoS&#34;</span>:0,
+    <span style="color:#e6db74">&#34;ipam&#34;</span>: <span style="color:#f92672">{</span>
+      <span style="color:#e6db74">&#34;type&#34;</span>:<span style="color:#e6db74">&#34;host-local&#34;</span>,
+      <span style="color:#e6db74">&#34;subnet&#34;</span>:<span style="color:#e6db74">&#34;192.168.111.0/24&#34;</span>,
+      <span style="color:#e6db74">&#34;rangeStart&#34;</span>:<span style="color:#e6db74">&#34;192.168.111.</span><span style="color:#e6db74">${</span>START_IP<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>,
+      <span style="color:#e6db74">&#34;rangeEnd&#34;</span>:<span style="color:#e6db74">&#34;192.168.111.</span><span style="color:#e6db74">${</span>END_IP<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>,
+      <span style="color:#e6db74">&#34;routes&#34;</span>:<span style="color:#f92672">[{</span><span style="color:#e6db74">&#34;dst&#34;</span>:<span style="color:#e6db74">&#34;0.0.0.0/0&#34;</span><span style="color:#f92672">}]</span>,
+      <span style="color:#e6db74">&#34;gateway&#34;</span>:<span style="color:#e6db74">&#34;192.168.111.254&#34;</span>
+    <span style="color:#f92672">}</span>,
+    <span style="color:#e6db74">&#34;deviceID&#34;</span>: <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">${</span>VF_PCI_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#75715e"># Place the configuration file to /etc/cni/net.d/</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="how-does-the-openshift-create-sr-iov-network">How does the Openshift create SR-IOV network?</h2>
+<h3 id="openshiftkubernetes-basic-concepts">Openshift/Kubernetes Basic Concepts</h3>
+<p>Control plane: Where the brain of Kubernetes is, make decision, schedule container/jobs</p>
+<p>Worker plane(node): Where the actual container is running, worker node use kubelet to communicate with control node.</p>
+<p>The concept of control node and worker node is similar to the control plane and data plane in SDN.</p>
+<p><img src="../../post-imagek8s-container/Untitled%206.png" alt="SR-IOV%20Container%20Test%20f0bdf8e02a57412cbecc70845fe60bb0/Untitled%206.png"></p>
+<h3 id="how-to-operate-openshiftkubernetes">How to operate Openshift/Kubernetes</h3>
+<p>The way to config such container platform is to describe the state of the cluster, like the way we use in Ansible. And submit this yaml file to the k8s backend.</p>
+<div class="highlight"><div style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="1"><a style="outline: none; text-decoration:none; color:inherit" href="#1"> 1</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="2"><a style="outline: none; text-decoration:none; color:inherit" href="#2"> 2</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="3"><a style="outline: none; text-decoration:none; color:inherit" href="#3"> 3</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="4"><a style="outline: none; text-decoration:none; color:inherit" href="#4"> 4</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="5"><a style="outline: none; text-decoration:none; color:inherit" href="#5"> 5</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="6"><a style="outline: none; text-decoration:none; color:inherit" href="#6"> 6</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="7"><a style="outline: none; text-decoration:none; color:inherit" href="#7"> 7</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="8"><a style="outline: none; text-decoration:none; color:inherit" href="#8"> 8</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="9"><a style="outline: none; text-decoration:none; color:inherit" href="#9"> 9</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="10"><a style="outline: none; text-decoration:none; color:inherit" href="#10">10</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="11"><a style="outline: none; text-decoration:none; color:inherit" href="#11">11</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="12"><a style="outline: none; text-decoration:none; color:inherit" href="#12">12</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="13"><a style="outline: none; text-decoration:none; color:inherit" href="#13">13</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="14"><a style="outline: none; text-decoration:none; color:inherit" href="#14">14</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="15"><a style="outline: none; text-decoration:none; color:inherit" href="#15">15</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="16"><a style="outline: none; text-decoration:none; color:inherit" href="#16">16</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="17"><a style="outline: none; text-decoration:none; color:inherit" href="#17">17</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="18"><a style="outline: none; text-decoration:none; color:inherit" href="#18">18</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="19"><a style="outline: none; text-decoration:none; color:inherit" href="#19">19</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="20"><a style="outline: none; text-decoration:none; color:inherit" href="#20">20</a>
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f" id="21"><a style="outline: none; text-decoration:none; color:inherit" href="#21">21</a>
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yaml" data-lang="yaml"><span style="color:#f92672">apiVersion</span>: <span style="color:#ae81ff">apps/v1</span>
+<span style="color:#f92672">kind</span>: <span style="color:#ae81ff">Deployment</span>
+<span style="color:#f92672">metadata</span>:
+  <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx-deployment</span>
+  <span style="color:#f92672">labels</span>:
+    <span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx</span>
+<span style="color:#f92672">spec</span>:
+  <span style="color:#f92672">replicas</span>: <span style="color:#ae81ff">3</span>
+  <span style="color:#f92672">selector</span>:
+    <span style="color:#f92672">matchLabels</span>:
+      <span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx</span>
+  <span style="color:#f92672">template</span>:
+    <span style="color:#f92672">metadata</span>:
+      <span style="color:#f92672">labels</span>:
+        <span style="color:#f92672">app</span>: <span style="color:#ae81ff">nginx</span>
+    <span style="color:#f92672">spec</span>:
+      <span style="color:#f92672">containers</span>:
+      - <span style="color:#f92672">name</span>: <span style="color:#ae81ff">nginx</span>
+        <span style="color:#f92672">image</span>: <span style="color:#ae81ff">nginx:1.14.2</span>
+        <span style="color:#f92672">ports</span>:
+        - <span style="color:#f92672">containerPort</span>: <span style="color:#ae81ff">80</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>In a yaml file like this, we will define what our application needs. So if our application needs SR-IOV function, we will also define it in such yaml file.</p>
+<p>🎯After submitting such yaml file to the openshift control plane, openshift will find the worker node who has the SR-IOV function, and schedule the pod to it. Then CNI plugin will do its work.</p>
+<p><img src="../../post-imagek8s-container/Untitled%207.png" alt="SR-IOV%20Container%20Test%20f0bdf8e02a57412cbecc70845fe60bb0/Untitled%207.png"></p>
+<h3 id="how-does-the-openshift-know-which-worker-node-has-the-sr-iov-function">⁉️How does the openshift know which worker node has the SR-IOV function?</h3>
+<p>Openshift has a thing called operator, it&rsquo;s actually a customized controller. SR-IOV has its SR-IOV operator. This operator will run a deamonSet on every worker node to init and register the SR-IOV  function to the control node. Then when a Pod needs SR-IOV function, the controller will know where to schedule it. After the Pod is scheduled to this worker node, the operator will call the CNI to setup the container&rsquo;s network.</p>
+<p>CNI won&rsquo;t config the actually network resource like SR-IOV, it just move the network resource into the container. Operator will create the corresponding network function.</p>
+<p><a href="https://docs.openshift.com/container-platform/4.7/networking/hardware_networks/about-sriov.html">About Single Root I/O Virtualization (SR-IOV) hardware networks - Hardware networks | Networking | OpenShift Container Platform 4.7</a></p>
+<p>So the process will be like:</p>
+<ol>
+<li>Create SR-IOV network operator</li>
+<li>Operator create deamonSet on worker node.</li>
+<li>daemonSet and operator initiate the SR-IOV function and report to the openshift control node</li>
+<li>openshift receive a request to create a Pod with SR-IOV VF</li>
+<li>openshift pick up SR-IOV function worker node from its database, and schedule the Pod to the certain worker node</li>
+<li>Worker node call SR-IOV CNI Plugin to configure container network and IP/route 👈 <strong>THIS IS WHERE OUR TEST HAPPENS</strong></li>
+</ol>
+<h3 id="script-to-create-and-run-a-container-that-use-sr-iov">Script to create and run a container that use SR-IOV</h3>
+<p><a href="https://github.com/kp0zhiqian/crio-sriov-example">kp0zhiqian/crio-sriov-example</a></p>
+<h3 id="steps-for-using-sr-iov-in-container-against-a-rhel-baremetal-simulation-enviroment">Steps for using SR-IOV in container against a RHEL baremetal simulation enviroment.</h3>
+<ol>
+<li>Install crio, crictl</li>
+<li>pull container image</li>
+<li>install CNI plugin</li>
+<li>create CNI configuration</li>
+<li>create Pod configuration</li>
+<li>create Pod</li>
+<li>create container, put it into pod</li>
+<li>verify the container is using sriov vf</li>
+<li>send some traffic to check more.</li>
+</ol>
+<h2 id="more-what-is-pod-and-why-we-use-it">MORE: What is Pod and why we use it.</h2>
+<p>In a system like Kubernetes or Openshift, Pod is the thing that we normally deal with, not container. Pod is a group of container that share one network, storage and hostname. It&rsquo;s just like a logical host. Containers in a Pod are like processes on this host.</p>
+<h3 id="why-use-pod">Why use Pod?</h3>
+<ul>
+<li>In production, we normally have the env that different process who depend on each other. The recommendation is put process in its own container. So in this case, it will need a way to combine a group of contaienr — Pod</li>
+<li>If one of the containers from a service group die, how will we define the state of other container in the same group?</li>
+<li>The containers in a Pod share the same network namespace and storage, which will be more convenient for the same service.</li>
+</ul>
+<h3 id="pod-is-also-a-container">Pod is also a container?</h3>
+<p>The way to implement Pod is to create a container and run &ldquo;pause&rdquo; command inside the container. All the service container of the pod will inherit the namespace of &ldquo;pause&rdquo; container. When we create and delete a pod, we actually create and delete a pause container.</p>
+
+    </div>
+  </article>
+
+  
+  
+
+
+
+
+
+  <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/posts">Writings</a></li>
+         
+          <li><a href="/tags">Tags</a></li>
+         
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#container-basic">Container Basic</a></li>
+    <li><a href="#container-runtime">Container Runtime</a>
+      <ul>
+        <li><a href="#oci---open-container-initiative">OCI - Open Container Initiative</a></li>
+        <li><a href="#cri---container-runtime-interface">CRI - Container Runtime Interface</a></li>
+      </ul>
+    </li>
+    <li><a href="#docker">Docker</a></li>
+    <li><a href="#podman">Podman</a></li>
+    <li><a href="#cri-o--crictl">Cri-o &amp; Crictl</a></li>
+    <li><a href="#cni">CNI</a></li>
+    <li><a href="#cni-plugin">CNI Plugin</a>
+      <ul>
+        <li><a href="#sr-iov-cni-plugin">SR-IOV CNI Plugin</a></li>
+      </ul>
+    </li>
+    <li><a href="#how-does-the-openshift-create-sr-iov-network">How does the Openshift create SR-IOV network?</a>
+      <ul>
+        <li><a href="#openshiftkubernetes-basic-concepts">Openshift/Kubernetes Basic Concepts</a></li>
+        <li><a href="#how-to-operate-openshiftkubernetes">How to operate Openshift/Kubernetes</a></li>
+        <li><a href="#how-does-the-openshift-know-which-worker-node-has-the-sr-iov-function">⁉️How does the openshift know which worker node has the SR-IOV function?</a></li>
+        <li><a href="#script-to-create-and-run-a-container-that-use-sr-iov">Script to create and run a container that use SR-IOV</a></li>
+        <li><a href="#steps-for-using-sr-iov-in-container-against-a-rhel-baremetal-simulation-enviroment">Steps for using SR-IOV in container against a RHEL baremetal simulation enviroment.</a></li>
+      </ul>
+    </li>
+    <li><a href="#more-what-is-pod-and-why-we-use-it">MORE: What is Pod and why we use it.</a>
+      <ul>
+        <li><a href="#why-use-pod">Why use Pod?</a></li>
+        <li><a href="#pod-is-also-a-container">Pod is also a container?</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      
+      <ul>
+  
+  
+    
+  
+  
+  <li>
+    <a class="icon" href="http://www.facebook.com/sharer.php?u=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fcontainer-k8s%2f">
+      <i class="fab fa-facebook fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://twitter.com/share?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fcontainer-k8s%2f&text=Container%2c%20Kubernetes%20and%20SR-IOV">
+      <i class="fab fa-twitter fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.linkedin.com/shareArticle?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fcontainer-k8s%2f&title=Container%2c%20Kubernetes%20and%20SR-IOV">
+      <i class="fab fa-linkedin fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fcontainer-k8s%2f&is_video=false&description=Container%2c%20Kubernetes%20and%20SR-IOV">
+      <i class="fab fa-pinterest fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="mailto:?subject=Container%2c%20Kubernetes%20and%20SR-IOV&body=Check out this article: https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fcontainer-k8s%2f">
+      <i class="fas fa-envelope fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://getpocket.com/save?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fcontainer-k8s%2f&title=Container%2c%20Kubernetes%20and%20SR-IOV">
+      <i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://reddit.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fcontainer-k8s%2f&title=Container%2c%20Kubernetes%20and%20SR-IOV">
+      <i class="fab fa-reddit fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.stumbleupon.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fcontainer-k8s%2f&title=Container%2c%20Kubernetes%20and%20SR-IOV">
+      <i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://digg.com/submit?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fcontainer-k8s%2f&title=Container%2c%20Kubernetes%20and%20SR-IOV">
+      <i class="fab fa-digg fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="http://www.tumblr.com/share/link?url=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fcontainer-k8s%2f&name=Container%2c%20Kubernetes%20and%20SR-IOV&description=This%20article%20is%20the%20transcript%20of%20a%20tech%20sharing%20in%20my%20team%20and%20assumed%20the%20audiences%20have%20already%20knew%20some%20background%20knowladge.%0a%20Container%20Basic%20%20%26ldquo%3bContainer%20is%20NOT%20virtual%20machine%21%26rdquo%3b%0a%20Linux%20provides%20namespace%20and%20cgroup%20to%20isolate%20or%20limit%20resources%20between%20different%20process.%0aContainer%20is%20a%20technology%20that%20uses%20namespace%20and%20cgroup%20%28also%20the%20union%20file%20system%29%20to%20create%20an%20isolated%20environment%20that%20can%20be%20used%20by%20a%20process.">
+      <i class="fab fa-tumblr fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+  <li>
+    <a class="icon" href="https://news.ycombinator.com/submitlink?u=https%3a%2f%2fkp0zhiqian.github.io%2fposts%2fcontainer-k8s%2f&t=Container%2c%20Kubernetes%20and%20SR-IOV">
+      <i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i>
+    </a>
+  </li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+      
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;">
+          <i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;">
+          <i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;">
+          <i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');">
+          <i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+
+  <footer id="footer">
+  <div class="footer-left">
+    Copyright  &copy; 2021  You 
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+        <li><a href="/">Home</a></li>
+         
+        <li><a href="/posts">Writings</a></li>
+         
+        <li><a href="/tags">Tags</a></li>
+         
+        <li><a href="/about">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+  </div>
+</body>
+
+<link rel="stylesheet" href=/lib/font-awesome/css/all.min.css>
+<script src=/lib/jquery/jquery.min.js></script>
+<script src=/js/main.js></script>
+
+
+
+</html>

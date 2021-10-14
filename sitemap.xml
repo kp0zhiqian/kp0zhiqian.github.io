@@ -3,6 +3,41 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://kp0zhiqian.github.io/tags/container/</loc>
+    <lastmod>2021-10-14T00:10:57+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kp0zhiqian.github.io/posts/container-k8s/</loc>
+    <lastmod>2021-10-14T00:10:57+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kp0zhiqian.github.io/</loc>
+    <lastmod>2021-10-14T00:10:57+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kp0zhiqian.github.io/tags/kubernetes/</loc>
+    <lastmod>2021-10-14T00:10:57+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kp0zhiqian.github.io/tags/networking/</loc>
+    <lastmod>2021-10-14T00:10:57+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kp0zhiqian.github.io/posts/</loc>
+    <lastmod>2021-10-14T00:10:57+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kp0zhiqian.github.io/tags/</loc>
+    <lastmod>2021-10-14T00:10:57+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://kp0zhiqian.github.io/tags/ansible/</loc>
     <lastmod>2021-10-04T00:10:57+08:00</lastmod>
   </url>
@@ -18,22 +53,7 @@
   </url>
   
   <url>
-    <loc>https://kp0zhiqian.github.io/</loc>
-    <lastmod>2021-10-04T00:10:57+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://kp0zhiqian.github.io/posts/</loc>
-    <lastmod>2021-10-04T00:10:57+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://kp0zhiqian.github.io/tags/system/</loc>
-    <lastmod>2021-10-04T00:10:57+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://kp0zhiqian.github.io/tags/</loc>
     <lastmod>2021-10-04T00:10:57+08:00</lastmod>
   </url>
   
@@ -88,7 +108,22 @@
   </url>
   
   <url>
+    <loc>https://kp0zhiqian.github.io/posts/pytest/</loc>
+    <lastmod>2020-10-20T00:11:23+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kp0zhiqian.github.io/tags/python/</loc>
+    <lastmod>2020-10-20T00:11:23+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://kp0zhiqian.github.io/tags/systems/</loc>
+    <lastmod>2020-10-20T00:11:23+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kp0zhiqian.github.io/tags/test/</loc>
     <lastmod>2020-10-20T00:11:23+08:00</lastmod>
   </url>
   

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>python on kp0zhiqian&#39;s</title>
+    <link>https://kp0zhiqian.github.io/tags/python/</link>
+    <description>Recent content in python on kp0zhiqian&#39;s</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>You</copyright>
+    <lastBuildDate>Tue, 20 Oct 2020 00:11:23 +0800</lastBuildDate><atom:link href="https://kp0zhiqian.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Pytest Notes</title>
+      <link>https://kp0zhiqian.github.io/posts/pytest/</link>
+      <pubDate>Tue, 20 Oct 2020 00:11:23 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/posts/pytest/</guid>
+      <description>Test files and functions pytest will run all files of format test_*.py or *_test.py in the current path. And run the functions name start with test.
+Run tests pytest in the current directory will run the test pytest &amp;lt;filename&amp;gt; -v will run a specific file. pytest -k &amp;lt;string&amp;gt; -v will run the functions that containes a string &amp;lt;string&amp;gt;
+Test results  PASSED(.): test pass FAILED(F): test fail SKIPPED(s): test skipped, you can use @pytest.</description>
+    </item>
+    
+  </channel>
+</rss>

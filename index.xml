@@ -7,7 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>You</copyright>
-    <lastBuildDate>Mon, 04 Oct 2021 00:10:57 +0800</lastBuildDate><atom:link href="https://kp0zhiqian.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 14 Oct 2021 00:10:57 +0800</lastBuildDate><atom:link href="https://kp0zhiqian.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Container, Kubernetes and SR-IOV</title>
+      <link>https://kp0zhiqian.github.io/posts/container-k8s/</link>
+      <pubDate>Thu, 14 Oct 2021 00:10:57 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/posts/container-k8s/</guid>
+      <description>This article is the transcript of a tech sharing in my team and assumed the audiences have already knew some background knowladge.
+ Container Basic  &amp;ldquo;Container is NOT virtual machine!&amp;rdquo;
+ Linux provides namespace and cgroup to isolate or limit resources between different process.
+Container is a technology that uses namespace and cgroup (also the union file system) to create an isolated environment that can be used by a process.</description>
+    </item>
+    
     <item>
       <title>Ansible Reading Notes - Others</title>
       <link>https://kp0zhiqian.github.io/posts/ansible-others/</link>
@@ -97,6 +109,17 @@ ovs-vswitchd  A daemon that manages and controls any number of Open vSwitch swit
       <description>In the first article of this series of articles, we&amp;rsquo;ll discuss the concepts we need to implement to design a very basic reliable transport protocol. How to implement these concepts will be covered in future articles.
 If you found anything incorrect, please don&amp;rsquo;t hesitate to reach me.
 Checksum Imagine you&amp;rsquo;re designing a reliable transport protocol. You&amp;rsquo;ve already implemented the basic send and receive features, including segmenting the whole data when it&amp;rsquo;s too large.</description>
+    </item>
+    
+    <item>
+      <title>Pytest Notes</title>
+      <link>https://kp0zhiqian.github.io/posts/pytest/</link>
+      <pubDate>Tue, 20 Oct 2020 00:11:23 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/posts/pytest/</guid>
+      <description>Test files and functions pytest will run all files of format test_*.py or *_test.py in the current path. And run the functions name start with test.
+Run tests pytest in the current directory will run the test pytest &amp;lt;filename&amp;gt; -v will run a specific file. pytest -k &amp;lt;string&amp;gt; -v will run the functions that containes a string &amp;lt;string&amp;gt;
+Test results  PASSED(.): test pass FAILED(F): test fail SKIPPED(s): test skipped, you can use @pytest.</description>
     </item>
     
     <item>
