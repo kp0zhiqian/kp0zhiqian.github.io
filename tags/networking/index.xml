@@ -6,18 +6,28 @@
     <description>Recent content in networking on kp0zhiqian&#39;s</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>You</copyright>
-    <lastBuildDate>Thu, 14 Oct 2021 00:10:57 +0800</lastBuildDate><atom:link href="https://kp0zhiqian.github.io/tags/networking/index.xml" rel="self" type="application/rss+xml" />
+    <copyright>Zhiqian Guan</copyright>
+    <lastBuildDate>Fri, 21 May 2021 00:11:23 +0800</lastBuildDate><atom:link href="https://kp0zhiqian.github.io/tags/networking/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Container, Kubernetes and SR-IOV</title>
-      <link>https://kp0zhiqian.github.io/posts/container-k8s/</link>
-      <pubDate>Thu, 14 Oct 2021 00:10:57 +0800</pubDate>
+      <title>Transcript of XDP Tech Talk</title>
+      <link>https://kp0zhiqian.github.io/posts/xdp-tech-talk-script/</link>
+      <pubDate>Fri, 21 May 2021 00:11:23 +0800</pubDate>
       
-      <guid>https://kp0zhiqian.github.io/posts/container-k8s/</guid>
-      <description>This article is the transcript of a tech sharing in my team and assumed the audiences have already knew some background knowladge.
- Container Basic  &amp;ldquo;Container is NOT virtual machine!&amp;rdquo;
- Linux provides namespace and cgroup to isolate or limit resources between different process.
-Container is a technology that uses namespace and cgroup (also the union file system) to create an isolated environment that can be used by a process.</description>
+      <guid>https://kp0zhiqian.github.io/posts/xdp-tech-talk-script/</guid>
+      <description>This is the transcript of my XDP 5 mins tech talk in QE all hands. Only for sharing and archiving.
+ XDP is a technology that can achieve high-speed networking performance. Allowing packets to be reflected, filtered, or redirected, but without traversing kernel networking stack.
+After hearing this, some may think: Oh, I’ve heard of this! Like the famous DPDK, I can bypass the Kernel and do whatever I want in userspace to the incoming packets.</description>
+    </item>
+    
+    <item>
+      <title>From Simple Reliable Transport Protocol to TCP (1)</title>
+      <link>https://kp0zhiqian.github.io/posts/tcp-seq/</link>
+      <pubDate>Fri, 14 May 2021 00:11:23 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/posts/tcp-seq/</guid>
+      <description>In the first article of this series of articles, we&amp;rsquo;ll discuss the concepts we need to implement to design a very basic reliable transport protocol. How to implement these concepts will be covered in future articles.
+If you found anything incorrect, please don&amp;rsquo;t hesitate to reach me.
+Checksum Imagine you&amp;rsquo;re designing a reliable transport protocol. You&amp;rsquo;ve already implemented the basic send and receive features, including segmenting the whole data when it&amp;rsquo;s too large.</description>
     </item>
     
   </channel>

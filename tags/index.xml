@@ -6,32 +6,14 @@
     <description>Recent content in Tags on kp0zhiqian&#39;s</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>You</copyright>
+    <copyright>Zhiqian Guan</copyright>
     <lastBuildDate>Thu, 14 Oct 2021 00:10:57 +0800</lastBuildDate><atom:link href="https://kp0zhiqian.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>container</title>
-      <link>https://kp0zhiqian.github.io/tags/container/</link>
-      <pubDate>Thu, 14 Oct 2021 00:10:57 +0800</pubDate>
-      
-      <guid>https://kp0zhiqian.github.io/tags/container/</guid>
-      <description></description>
-    </item>
-    
     <item>
       <title>kubernetes</title>
       <link>https://kp0zhiqian.github.io/tags/kubernetes/</link>
       <pubDate>Thu, 14 Oct 2021 00:10:57 +0800</pubDate>
       
       <guid>https://kp0zhiqian.github.io/tags/kubernetes/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>networking</title>
-      <link>https://kp0zhiqian.github.io/tags/networking/</link>
-      <pubDate>Thu, 14 Oct 2021 00:10:57 +0800</pubDate>
-      
-      <guid>https://kp0zhiqian.github.io/tags/networking/</guid>
       <description></description>
     </item>
     
@@ -45,47 +27,20 @@
     </item>
     
     <item>
-      <title>automation</title>
-      <link>https://kp0zhiqian.github.io/tags/automation/</link>
-      <pubDate>Mon, 04 Oct 2021 00:10:57 +0800</pubDate>
-      
-      <guid>https://kp0zhiqian.github.io/tags/automation/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>system</title>
-      <link>https://kp0zhiqian.github.io/tags/system/</link>
-      <pubDate>Mon, 04 Oct 2021 00:10:57 +0800</pubDate>
-      
-      <guid>https://kp0zhiqian.github.io/tags/system/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>XDP</title>
-      <link>https://kp0zhiqian.github.io/tags/xdp/</link>
+      <title>networking</title>
+      <link>https://kp0zhiqian.github.io/tags/networking/</link>
       <pubDate>Fri, 21 May 2021 00:11:23 +0800</pubDate>
       
-      <guid>https://kp0zhiqian.github.io/tags/xdp/</guid>
+      <guid>https://kp0zhiqian.github.io/tags/networking/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>ovs</title>
-      <link>https://kp0zhiqian.github.io/tags/ovs/</link>
+      <title>openvswitch</title>
+      <link>https://kp0zhiqian.github.io/tags/openvswitch/</link>
       <pubDate>Thu, 20 May 2021 00:11:23 +0800</pubDate>
       
-      <guid>https://kp0zhiqian.github.io/tags/ovs/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>tcp</title>
-      <link>https://kp0zhiqian.github.io/tags/tcp/</link>
-      <pubDate>Fri, 14 May 2021 00:11:23 +0800</pubDate>
-      
-      <guid>https://kp0zhiqian.github.io/tags/tcp/</guid>
+      <guid>https://kp0zhiqian.github.io/tags/openvswitch/</guid>
       <description></description>
     </item>
     
@@ -99,20 +54,11 @@
     </item>
     
     <item>
-      <title>systems</title>
-      <link>https://kp0zhiqian.github.io/tags/systems/</link>
+      <title>system</title>
+      <link>https://kp0zhiqian.github.io/tags/system/</link>
       <pubDate>Tue, 20 Oct 2020 00:11:23 +0800</pubDate>
       
-      <guid>https://kp0zhiqian.github.io/tags/systems/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>test</title>
-      <link>https://kp0zhiqian.github.io/tags/test/</link>
-      <pubDate>Tue, 20 Oct 2020 00:11:23 +0800</pubDate>
-      
-      <guid>https://kp0zhiqian.github.io/tags/test/</guid>
+      <guid>https://kp0zhiqian.github.io/tags/system/</guid>
       <description></description>
     </item>
     

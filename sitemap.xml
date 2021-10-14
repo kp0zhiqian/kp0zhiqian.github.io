@@ -3,11 +3,6 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://kp0zhiqian.github.io/tags/container/</loc>
-    <lastmod>2021-10-14T00:10:57+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://kp0zhiqian.github.io/posts/container-k8s/</loc>
     <lastmod>2021-10-14T00:10:57+08:00</lastmod>
   </url>
@@ -19,11 +14,6 @@
   
   <url>
     <loc>https://kp0zhiqian.github.io/tags/kubernetes/</loc>
-    <lastmod>2021-10-14T00:10:57+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://kp0zhiqian.github.io/tags/networking/</loc>
     <lastmod>2021-10-14T00:10:57+08:00</lastmod>
   </url>
   
@@ -48,16 +38,6 @@
   </url>
   
   <url>
-    <loc>https://kp0zhiqian.github.io/tags/automation/</loc>
-    <lastmod>2021-10-04T00:10:57+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://kp0zhiqian.github.io/tags/system/</loc>
-    <lastmod>2021-10-04T00:10:57+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://kp0zhiqian.github.io/posts/ansible-role/</loc>
     <lastmod>2021-10-03T00:10:57+08:00</lastmod>
   </url>
@@ -78,17 +58,17 @@
   </url>
   
   <url>
+    <loc>https://kp0zhiqian.github.io/tags/networking/</loc>
+    <lastmod>2021-05-21T00:11:23+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://kp0zhiqian.github.io/posts/xdp-tech-talk-script/</loc>
     <lastmod>2021-05-21T00:11:23+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://kp0zhiqian.github.io/tags/xdp/</loc>
-    <lastmod>2021-05-21T00:11:23+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://kp0zhiqian.github.io/tags/ovs/</loc>
+    <loc>https://kp0zhiqian.github.io/tags/openvswitch/</loc>
     <lastmod>2021-05-20T00:11:23+08:00</lastmod>
   </url>
   
@@ -103,11 +83,6 @@
   </url>
   
   <url>
-    <loc>https://kp0zhiqian.github.io/tags/tcp/</loc>
-    <lastmod>2021-05-14T00:11:23+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://kp0zhiqian.github.io/posts/pytest/</loc>
     <lastmod>2020-10-20T00:11:23+08:00</lastmod>
   </url>
@@ -118,12 +93,7 @@
   </url>
   
   <url>
-    <loc>https://kp0zhiqian.github.io/tags/systems/</loc>
-    <lastmod>2020-10-20T00:11:23+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://kp0zhiqian.github.io/tags/test/</loc>
+    <loc>https://kp0zhiqian.github.io/tags/system/</loc>
     <lastmod>2020-10-20T00:11:23+08:00</lastmod>
   </url>
   

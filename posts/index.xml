@@ -6,7 +6,7 @@
     <description>Recent content in Posts on kp0zhiqian&#39;s</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>You</copyright>
+    <copyright>Zhiqian Guan</copyright>
     <lastBuildDate>Thu, 14 Oct 2021 00:10:57 +0800</lastBuildDate><atom:link href="https://kp0zhiqian.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Container, Kubernetes and SR-IOV</title>
@@ -21,7 +21,7 @@ Container is a technology that uses namespace and cgroup (also the union file sy
     </item>
     
     <item>
-      <title>Ansible Reading Notes - Others</title>
+      <title>Ansible - Others</title>
       <link>https://kp0zhiqian.github.io/posts/ansible-others/</link>
       <pubDate>Mon, 04 Oct 2021 00:10:57 +0800</pubDate>
       
@@ -34,7 +34,7 @@ Usage of filters:
     </item>
     
     <item>
-      <title>Ansible Reading Notes - Role</title>
+      <title>Ansible - Role</title>
       <link>https://kp0zhiqian.github.io/posts/ansible-role/</link>
       <pubDate>Sun, 03 Oct 2021 00:10:57 +0800</pubDate>
       
@@ -45,7 +45,7 @@ Location of Role  in the role directory of current directory in the ANSIBLE_ROLE
     </item>
     
     <item>
-      <title>Ansible Reading Notes - Playbook&amp;Role</title>
+      <title>Ansible - Playbook&amp;Role</title>
       <link>https://kp0zhiqian.github.io/posts/ansible-playbook/</link>
       <pubDate>Sat, 02 Oct 2021 00:10:57 +0800</pubDate>
       
@@ -56,7 +56,7 @@ CMD  ansible-playbook deploy.yml ansible-playbook playbook.yml --verbose ansible
     </item>
     
     <item>
-      <title>Ansible Reading Notes - Var</title>
+      <title>Ansible - Var</title>
       <link>https://kp0zhiqian.github.io/posts/ansible-var/</link>
       <pubDate>Fri, 01 Oct 2021 00:10:57 +0800</pubDate>
       
@@ -68,7 +68,7 @@ Facts Facts are the information of remote hosts collected by &amp;lsquo;setup&am
     </item>
     
     <item>
-      <title>Ansible Reading Notes - Basic</title>
+      <title>Ansible - Basic</title>
       <link>https://kp0zhiqian.github.io/posts/ansible-basic/</link>
       <pubDate>Thu, 30 Sep 2021 00:10:57 +0800</pubDate>
       
