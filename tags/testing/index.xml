@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>testing on kp0zhiqian&#39;s</title>
+    <link>https://kp0zhiqian.github.io/tags/testing/</link>
+    <description>Recent content in testing on kp0zhiqian&#39;s</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Zhiqian Guan</copyright>
+    <lastBuildDate>Mon, 25 Oct 2021 00:11:23 +0800</lastBuildDate><atom:link href="https://kp0zhiqian.github.io/tags/testing/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Principle of Software Testing</title>
+      <link>https://kp0zhiqian.github.io/posts/priciple-testing/</link>
+      <pubDate>Mon, 25 Oct 2021 00:11:23 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/posts/priciple-testing/</guid>
+      <description>Defination of expected results is a must of test case. Test cases must describe the input of the program and an expected output of the program.
+Programmers should avoid to test the programes they wrote. Most of the programmers cannot see the program in another perspective after they writing it.
+The development orgnization should avoid to test their own program. If the orgnization have a target to deliver program in a time and quota limitation process, then it will intend to see less problem.</description>
+    </item>
+    
+    <item>
+      <title>The Art of Software Testing - Reading Notes</title>
+      <link>https://kp0zhiqian.github.io/posts/testing-art/</link>
+      <pubDate>Mon, 25 Oct 2021 00:11:23 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/posts/testing-art/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

@@ -3,27 +3,42 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://kp0zhiqian.github.io/</loc>
+    <lastmod>2021-10-25T00:11:23+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kp0zhiqian.github.io/posts/</loc>
+    <lastmod>2021-10-25T00:11:23+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kp0zhiqian.github.io/posts/priciple-testing/</loc>
+    <lastmod>2021-10-25T00:11:23+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kp0zhiqian.github.io/tags/</loc>
+    <lastmod>2021-10-25T00:11:23+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kp0zhiqian.github.io/tags/testing/</loc>
+    <lastmod>2021-10-25T00:11:23+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://kp0zhiqian.github.io/posts/testing-art/</loc>
+    <lastmod>2021-10-25T00:11:23+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://kp0zhiqian.github.io/posts/container-k8s/</loc>
     <lastmod>2021-10-14T00:10:57+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://kp0zhiqian.github.io/</loc>
-    <lastmod>2021-10-14T00:10:57+08:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://kp0zhiqian.github.io/tags/kubernetes/</loc>
-    <lastmod>2021-10-14T00:10:57+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://kp0zhiqian.github.io/posts/</loc>
-    <lastmod>2021-10-14T00:10:57+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://kp0zhiqian.github.io/tags/</loc>
     <lastmod>2021-10-14T00:10:57+08:00</lastmod>
   </url>
   
