@@ -7,7 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Zhiqian Guan</copyright>
-    <lastBuildDate>Mon, 25 Oct 2021 00:11:23 +0800</lastBuildDate><atom:link href="https://kp0zhiqian.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 10 Jan 2022 00:11:23 +0800</lastBuildDate><atom:link href="https://kp0zhiqian.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SMFS and DMFS in Hardware Offloading</title>
+      <link>https://kp0zhiqian.github.io/posts/smfs-dmfs/</link>
+      <pubDate>Mon, 10 Jan 2022 00:11:23 +0800</pubDate>
+      
+      <guid>https://kp0zhiqian.github.io/posts/smfs-dmfs/</guid>
+      <description>SMFS and DMFS in Hardware Offloading switchdev (ethernet switch device driver model) kernel.org - switchdev
+ The Ethernet switch device driver model (switchdev) is an in-kernel driver model for switch devices which offload the forwarding (data) plane from the kernel.
+ Configuration  Use &amp;ldquo;depends NET_SWITCHDEV&amp;rdquo; in driver&amp;rsquo;s Kconfig to ensure switchdev model support is built for driver. use devlink tool to setup switch mode devlink dev eswitch set pci/$PF_PCI mode switchdev  switchdev Performance Tuning OVS Offload Using ASAP2 Direct</description>
+    </item>
+    
     <item>
       <title>Principle of Software Testing</title>
       <link>https://kp0zhiqian.github.io/posts/priciple-testing/</link>
